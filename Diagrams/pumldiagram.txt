@@ -9,11 +9,18 @@ entity User {
     *name: String
     *email: String <<Email>>
     *phone: Int <<PhoneNumber>>
-    *birthDate: DateTime
-    *group: Enumaration
+    *birthDate: Date
     *password: Bytes
     *salt: String
     picture: String <<URL>>
+}
+
+entity Group {
+    *userId: String <<UUID>>
+    *id: String <<UUID>>
+    ---
+    *name: String
+    *identificator: Number
 }
 
 entity ReservationItem {
@@ -38,12 +45,17 @@ entity Book {
     ---
     *name: String
     *author: String
-    *genre: Enumaration
+    *genreId: String <<Foreign UUID>>
     *stock: Number
-    *capacity: Number
     *price: Number
     photo: String <<URL>>
     description: String
+}
+
+entity Genre {
+    *id: String <<UUID>>
+    ---
+    *name: String
 }
 
 entity Reservation {
@@ -90,13 +102,15 @@ entity Negative {
     *text: String
 }
 
-User ||..o{ Address
+User ||..o| Address
+User ||..|| Group
 User ||..o{ ReservationItem
 User ||..o{ Reservation
 User ||..o{ Rent
 User ||..o{ Review
 Book ||..o{ Review
 Book ||..o{ Rent
+Genre ||..o{ Book
 Book ||..o{ ReservationItem
 Book ||..o{ Reservation
 Review ||..o{ Positive
