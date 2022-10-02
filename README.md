@@ -21,6 +21,4 @@
 
 ## Class diagram
 
-```
 ![library.png](./Diagrams/library.png)
-```
