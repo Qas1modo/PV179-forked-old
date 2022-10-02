@@ -19,10 +19,8 @@ namespace DAL.Models
         [Required]
         public DateTime ReservedAt { get; set; }
 
-        [Required, Nullable]
         public DateTime? RentedAt { get; set; }
 
-        [Required, Nullable]
         public DateTime? ReturnedAt { get; set; }
 
         [Range(1, 365), Required]
