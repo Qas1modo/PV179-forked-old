@@ -1,5 +1,7 @@
 ﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
 namespace DAL.Data
 {
     public class BookReservationDbContext : DbContext
@@ -42,10 +44,18 @@ namespace DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-           /* modelBuilder.Entity<User>()
-                .HasOne(a => a.Address)
-                .WithOne(u => u.User)
-                .HasForeignKey<Address>(c => c.Id); */
+            //modelBuilder.Entity<User>()
+            //     .HasOne(a => a.Address)
+            //     .WithOne(u => u.User)
+            //     .HasForeignKey<Address>(c => c.Id);
+
+            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
+
+
+            modelBuilder.Seed();
 
             base.OnModelCreating(modelBuilder);
         }
