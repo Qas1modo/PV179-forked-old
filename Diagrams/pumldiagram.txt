@@ -11,19 +11,13 @@ entity User {
     *phone: Int <<PhoneNumber>>
     *birthDate: Date
     *password: Bytes
+    *AddressId: String <<Foreign UUID>>
     *salt: String
+    *group: Enumeration
     picture: String <<URL>>
 }
 
-entity Group {
-    *userId: String <<UUID>>
-    *id: String <<UUID>>
-    ---
-    *name: String
-    *identificator: Number
-}
-
-entity ReservationItem {
+entity CartItem {
     *userId String <<UUID>>
     *bookId: String <<Foreign UUID>>
     *id: String <<UUID>>
@@ -31,13 +25,12 @@ entity ReservationItem {
 }
 
 entity Address {
-    *userId String <<UUID>>
     *id: String <<UUID>>
     ---
     *street: String
     *stNumber: Number
     *city: String
-    *zip: Number
+    *zipCode: Number
 }
 
 entity Book {
@@ -45,27 +38,12 @@ entity Book {
     ---
     *name: String
     *author: String
-    *genreId: String <<Foreign UUID>>
+    *genreId: Enumeration
     *stock: Number
+    *total: Number
     *price: Number
     photo: String <<URL>>
     description: String
-}
-
-entity Genre {
-    *id: String <<UUID>>
-    ---
-    *name: String
-}
-
-entity Reservation {
-    *userId: String <<Foreign UUID>>
-    *bookId: String <<Foreign UUID>>
-    *id: String <<UUID>>
-    ---
-    *reservedAt: DateTime
-    *duration: Number
-    *state: Enumertation
 }
 
 entity Rent {
@@ -73,10 +51,12 @@ entity Rent {
     *bookId: String <<Foreign UUID>>
     *id: String <<UUID>>
     ---
-    *rentedAt: Date
-    *leasedFor: Number
-    *price: Float
+    *reservedAt: DateTime
+    *rentedAt: DateTime?
+    *returnedAt: DateTime?
+    *loanPeriod: Number
     *state: Enumertation
+    *price: Float
 }
 
 entity Review {
@@ -84,9 +64,10 @@ entity Review {
     *userId: String <<Foreign UUID>>
     *id: String <<UUID>>
     ---
-    *score: Enumarate
+    *score: Number
     description: String
 }
+
 
 entity Positive {
     *reviewId: String <<Foreign UUID>>
@@ -102,17 +83,16 @@ entity Negative {
     *text: String
 }
 
-User ||..o| Address
-User ||..|| Group
-User ||..o{ ReservationItem
-User ||..o{ Reservation
+User ||..|| Address
+User ||..o{ CartItem
 User ||..o{ Rent
 User ||..o{ Review
 Book ||..o{ Review
 Book ||..o{ Rent
-Genre ||..o{ Book
-Book ||..o{ ReservationItem
-Book ||..o{ Reservation
+Book ||..o{ CartItem
 Review ||..o{ Positive
 Review ||..o{ Negative
 @enduml
+
+
+
