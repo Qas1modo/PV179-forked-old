@@ -1,0 +1,98 @@
+@startuml library
+
+hide circle
+skinparam Linetype ortho
+
+entity User {
+    *id: String <<UUID>>
+    ---
+    *name: String
+    *email: String <<Email>>
+    *phone: Int <<PhoneNumber>>
+    *birthDate: Date
+    *password: Bytes
+    *AddressId: String <<Foreign UUID>>
+    *salt: String
+    *group: Enumeration
+    picture: String <<URL>>
+}
+
+entity CartItem {
+    *userId String <<UUID>>
+    *bookId: String <<Foreign UUID>>
+    *id: String <<UUID>>
+    ---
+}
+
+entity Address {
+    *id: String <<UUID>>
+    ---
+    *street: String
+    *stNumber: Number
+    *city: String
+    *zipCode: Number
+}
+
+entity Book {
+    *id: String <<UUID>>
+    ---
+    *name: String
+    *author: String
+    *genreId: Enumeration
+    *stock: Number
+    *total: Number
+    *price: Number
+    photo: String <<URL>>
+    description: String
+}
+
+entity Rent {
+    *userId: String <<Foreign UUID>>
+    *bookId: String <<Foreign UUID>>
+    *id: String <<UUID>>
+    ---
+    *reservedAt: DateTime
+    *loanPeriod: Number
+    *state: Enumertation
+    *price: Float
+    rentedAt: DateTime?
+    returnedAt: DateTime?
+}
+
+entity Review {
+    *bookId: String <<Foreign UUID>>
+    *userId: String <<Foreign UUID>>
+    *id: String <<UUID>>
+    ---
+    *score: Number
+    description: String
+}
+
+
+entity Positive {
+    *reviewId: String <<Foreign UUID>>
+    *id: String <<UUID>>
+    ---
+    *text: String
+}
+
+entity Negative {
+    *reviewId: String <<Foreign UUID>>
+    *id: String <<UUID>>
+    ---
+    *text: String
+}
+
+User ||..|| Address
+User ||..o{ CartItem
+User ||..o{ Rent
+User ||..o{ Review
+Book ||..o{ Review
+Book ||..o{ Rent
+Book ||..o{ CartItem
+Review ||..o{ Positive
+Review ||..o{ Negative
+@enduml
+
+
+
