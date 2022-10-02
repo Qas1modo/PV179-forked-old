@@ -5,17 +5,24 @@ namespace DAL.Models
 {
     public class Book : BaseEntity
     {
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Author { get; set; }
 
+        [Required]
         public Genre Genre { get; set; }
 
         // ErrorMessage = ""?
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue), Required]
         public int Stock { get; set; }
 
-        public decimal Price { get; set; }
+        [Range(0, int.MaxValue), Required]
+        public int Total { get; set; }
+
+        [Range(0, float.MaxValue), Required]
+        public float Price { get; set; }
 
         public string Description { get; set; }
 
@@ -23,8 +30,8 @@ namespace DAL.Models
 
         public virtual List<Rent> Rents { get; set; }
 
-        public virtual List<Reservation> Reservations { get; set; }
+        public virtual List<Review> Reviews { get; set; }
 
-        public virtual List<ReservationItem> ReservationItems { get; set; }
+        public virtual List<CartItem> CartItems { get; set; }
     }
 }

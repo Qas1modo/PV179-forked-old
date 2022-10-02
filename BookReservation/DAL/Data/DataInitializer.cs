@@ -16,9 +16,10 @@ namespace DAL.Data
             var user = new User
             {
                 Id = 1,
-                Name = "Martin Kukucin",
+                AddressId = 1,
+                Name = "admin",
                 Email = "matkokukucko@mail.com",
-                Password = "jfpsjfapjfapf",
+                Password = "admin",
                 Salt = "jfpajfafjaps",
                 Phone = "+421911999111",
                 BirthDate = new DateTime(1970, 3, 1),
@@ -29,6 +30,7 @@ namespace DAL.Data
             var user2 = new User
             {
                 Id = 2,
+                AddressId = 2,
                 Name = "Peter Marcin",
                 Email = "peter123@mail.com",
                 Password = "jjpjpkf",
@@ -42,6 +44,7 @@ namespace DAL.Data
             var user3 = new User
             {
                 Id = 3,
+                AddressId = 3,
                 Name = "Ferko Turan",
                 Email = "feroslav1@mail.com",
                 Password = "mojeultraheslo",
@@ -55,6 +58,7 @@ namespace DAL.Data
             var user4 = new User
             {
                 Id = 4,
+                AddressId = 4,
                 Name = "Patrik Vrbovsky",
                 Email = "uzanineviem@mail.com",
                 Password = "JaMamLepsieHeslo",
@@ -68,6 +72,7 @@ namespace DAL.Data
             var user5 = new User
             {
                 Id = 5,
+                AddressId = 5,
                 Name = "Maurice Richard",
                 Email = "strelec32@mail.com",
                 Password = "bestPasswordEver123",
@@ -96,6 +101,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Action,
                 Stock = 63,
+                Total = 100,
                 Price = 16,
                 Description = "d",
                 Photo = "www.harrrypotterphotos.com",
@@ -108,6 +114,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Comedy,
                 Stock = 72,
+                Total = 100,
                 Price = 30,
                 Description = "djosfjsdopj",
                 Photo = "www.jupijupijej.com",
@@ -120,6 +127,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Contemporary,
                 Stock = 900,
+                Total = 1000,
                 Price = 17,
                 Description = "djosfjsdopj",
                 Photo = "wwww.someweb.com",
@@ -132,6 +140,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Action,
                 Stock = 150,
+                Total = 200,
                 Price = 27,
                 Description = "djosfjsdopj",
                 Photo = "www.uzneviemuz.com",
@@ -144,6 +153,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Detective,
                 Stock = 7,
+                Total = 50,
                 Price = 50,
                 Description = "djosfjsdopj",
                 Photo = "www.harrymaguire.com",
@@ -156,6 +166,7 @@ namespace DAL.Data
                 Author = "Joanne Rowling",
                 Genre = DAL.Enums.Genre.Detective,
                 Stock = 15,
+                Total = 40,
                 Price = 30,
                 Description = "djosfjsdopj",
                 Photo = "www.slafgoalsky.com",
@@ -166,8 +177,9 @@ namespace DAL.Data
                 Id = 7,
                 Name = "Fire & Blood",
                 Author = "George Martin",
-                Genre = DAL.Enums.Genre.SciFi,
+                Genre = DAL.Enums.Genre.Fantasy,
                 Stock = 90,
+                Total = 100,
                 Price = 23,
                 Description = "djosfjsdopj",
                 Photo = "www.cobra11istheworstseries.com",
@@ -178,8 +190,9 @@ namespace DAL.Data
                 Id = 8,
                 Name = "A Game of Thrones",
                 Author = "George Martin",
-                Genre = DAL.Enums.Genre.SciFi,
+                Genre = DAL.Enums.Genre.Fantasy,
                 Stock = 79,
+                Total = 100,
                 Price = 35,
                 Description = "djosfjsdopj",
                 Photo = "www.gameofthronesphotos.com",
@@ -190,8 +203,9 @@ namespace DAL.Data
                 Id = 9,
                 Name = "A Clash of Kings ",
                 Author = "George Martin",
-                Genre = DAL.Enums.Genre.SciFi,
+                Genre = DAL.Enums.Genre.Fantasy,
                 Stock = 13,
+                Total = 100,
                 Price = 46,
                 Description = "djosfjsdopj",
                 Photo = "www.myphoto.com",
@@ -202,8 +216,9 @@ namespace DAL.Data
                 Id = 10,
                 Name = "A Storm of Swords ",
                 Author = "George Martin",
-                Genre = DAL.Enums.Genre.SciFi,
+                Genre = DAL.Enums.Genre.Fantasy,
                 Stock = 50,
+                Total = 100,
                 Price = 25,
                 Description = "djosfjsdopj",
                 Photo = "www.yourphoto.com",
@@ -214,8 +229,9 @@ namespace DAL.Data
                 Id = 11,
                 Name = "A Feast for Crows",
                 Author = "George Martin",
-                Genre = DAL.Enums.Genre.SciFi,
+                Genre = DAL.Enums.Genre.Fantasy,
                 Stock = 1,
+                Total = 100,
                 Price = 9000,
                 Description = "djosfjsdopj",
                 Photo = "www.amazingphoto.com",
@@ -246,7 +262,6 @@ namespace DAL.Data
                 Street = "Manesova",
                 StNumber = 12,
                 ZipCode = 03601,
-                UserId = 1,
             };
 
             var address2 = new Address
@@ -256,7 +271,6 @@ namespace DAL.Data
                 Street = "Manesova",
                 StNumber = 13,
                 ZipCode = 03601,
-                UserId = 2,
             };
 
             var address3 = new Address
@@ -266,7 +280,6 @@ namespace DAL.Data
                 Street = "Prazska",
                 StNumber = 9,
                 ZipCode = 03602,
-                UserId = 3,
             };
 
             var address4 = new Address
@@ -276,7 +289,6 @@ namespace DAL.Data
                 Street = "Ostravska",
                 StNumber = 1,
                 ZipCode = 03603,
-                UserId = 4,
             };
 
             var address5 = new Address
@@ -286,7 +298,6 @@ namespace DAL.Data
                 Street = "Hlavni",
                 StNumber = 15,
                 ZipCode = 03605,
-                UserId = 5,
             };
 
             modelBuilder.Entity<Address>().HasData(address1);
@@ -587,10 +598,12 @@ namespace DAL.Data
                 Id = 1,
                 UserId = 5,
                 BookId = 4,
-                RentedAt = new DateTime(2022, 10, 1),
+                ReservedAt = new DateTime(2022, 9, 1),
+                RentedAt = null,
+                ReturnedAt = null,
                 LoanPeriod = 20,
                 Price = 200,
-                State = RentState.Active,
+                State = RentState.Reserved,
             };
 
             var rent1 = new Rent
@@ -598,7 +611,9 @@ namespace DAL.Data
                 Id = 2,
                 UserId = 5,
                 BookId = 6,
-                RentedAt = new DateTime(2022, 10, 1),
+                ReservedAt = new DateTime(2022, 9, 1),
+                RentedAt = new DateTime(2022, 9, 5),
+                ReturnedAt = null,
                 LoanPeriod = 20,
                 Price = 20,
                 State = RentState.Active,
@@ -609,10 +624,12 @@ namespace DAL.Data
                 Id = 3,
                 UserId = 5,
                 BookId = 7,
-                RentedAt = new DateTime(2022, 10, 1),
+                ReservedAt = new DateTime(2021, 9, 1),
+                RentedAt = null,
+                ReturnedAt = null,
                 LoanPeriod = 20,
                 Price = 50,
-                State = RentState.Active,
+                State = RentState.Expired,
             };
 
             var rent3 = new Rent
@@ -620,10 +637,12 @@ namespace DAL.Data
                 Id = 4,
                 UserId = 5,
                 BookId = 2,
-                RentedAt = new DateTime(2022, 10, 1),
+                ReservedAt = new DateTime(2021, 10, 1),
+                RentedAt = new DateTime(2021, 10, 3),
+                ReturnedAt = new DateTime(2021, 10, 15),
                 LoanPeriod = 20,
                 Price = 200,
-                State = RentState.Active,
+                State = RentState.Returned,
             };
 
             var rent4 = new Rent
@@ -631,21 +650,25 @@ namespace DAL.Data
                 Id = 5,
                 UserId = 4,
                 BookId = 1,
-                RentedAt = new DateTime(2022, 9, 1),
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
                 LoanPeriod = 120,
                 Price = 150,
-                State = RentState.Active,
+                State = RentState.Canceled,
             };
 
             var rent5 = new Rent
             {
                 Id = 6,
-                UserId = 4,
+                UserId = 2,
                 BookId = 1,
-                RentedAt = new DateTime(2021, 9, 1),
+                ReservedAt = new DateTime(2020, 9, 2),
+                RentedAt = new DateTime(2020, 9, 6),
+                ReturnedAt = null,
                 LoanPeriod = 10,
                 Price = 150,
-                State = RentState.Returned,
+                State = RentState.Overdue,
             };
 
             var rent6 = new Rent
@@ -653,7 +676,9 @@ namespace DAL.Data
                 Id = 7,
                 UserId = 4,
                 BookId = 2,
-                RentedAt = new DateTime(2021, 9, 1),
+                ReservedAt = new DateTime(2021, 9, 2),
+                RentedAt = new DateTime(2021, 9, 5),
+                ReturnedAt = new DateTime(2021, 9, 29),
                 LoanPeriod = 30,
                 Price = 150,
                 State = RentState.Returned,
@@ -664,10 +689,12 @@ namespace DAL.Data
                 Id = 8,
                 UserId = 3,
                 BookId = 3,
-                RentedAt = new DateTime(2022, 9, 1),
+                ReservedAt = new DateTime(2022, 10, 1),
+                RentedAt = null,
+                ReturnedAt = null,
                 LoanPeriod = 3,
                 Price = 150,
-                State = RentState.Late,
+                State = RentState.Reserved,
             };
 
             modelBuilder.Entity<Rent>().HasData(rent);
@@ -681,119 +708,48 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////
-            // ENTITY => Reservation, Data Initializaton
-
-            var res = new Reservation
-            {
-                Id = 1,
-                UserId = 5,
-                BookId = 9,
-                ReservedAt = new DateTime(2021, 9, 1),
-                Duration = 10,
-                State = ReservationState.Expired,
-            };
-
-            var res2 = new Reservation
-            {
-                Id = 2,
-                UserId = 5,
-                BookId = 10,
-                ReservedAt = new DateTime(2021, 9, 1),
-                Duration = 10,
-                State = ReservationState.Canceled,
-            };
-
-            var res3 = new Reservation
-            {
-                Id = 3,
-                UserId = 5,
-                BookId = 11,
-                ReservedAt = new DateTime(2022, 9, 1),
-                Duration = 360,
-                State = ReservationState.Active,
-            };
-
-            var res4 = new Reservation
-            {
-                Id = 4,
-                UserId = 4,
-                BookId = 5,
-                ReservedAt = new DateTime(2021, 3, 1),
-                Duration = 10,
-                State = ReservationState.Expired,
-            };
-
-            var res5 = new Reservation
-            {
-                Id = 5,
-                UserId = 4,
-                BookId = 5,
-                ReservedAt = new DateTime(2021, 2, 1),
-                Duration = 50,
-                State = ReservationState.Canceled,
-            };
-
-            var res6 = new Reservation
-            {
-                Id = 6,
-                UserId = 5,
-                BookId = 10,
-                ReservedAt = new DateTime(2022, 9, 1),
-                Duration = 360,
-                State = ReservationState.Active,
-            };
-
-            modelBuilder.Entity<Reservation>().HasData(res);
-            modelBuilder.Entity<Reservation>().HasData(res2);
-            modelBuilder.Entity<Reservation>().HasData(res3);
-            modelBuilder.Entity<Reservation>().HasData(res4);
-            modelBuilder.Entity<Reservation>().HasData(res5);
-            modelBuilder.Entity<Reservation>().HasData(res6);
-            ///////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////
             // ENTITY => ReservationItem, Data Initializaton
 
-            var resItem = new ReservationItem
+            var resItem = new CartItem
             {
                 Id = 1,
                 UserId = 5,
                 BookId = 6,
             };
 
-            var resItem2 = new ReservationItem
+            var resItem2 = new CartItem
             {
                 Id = 2,
                 UserId = 5,
                 BookId = 7,
             };
 
-            var resItem3 = new ReservationItem
+            var resItem3 = new CartItem
             {
                 Id = 3,
                 UserId = 5,
                 BookId = 8,
             };
 
-            var resItem4 = new ReservationItem
+            var resItem4 = new CartItem
             {
                 Id = 4,
                 UserId = 5,
                 BookId = 9,
             };
 
-            var resItem5 = new ReservationItem
+            var resItem5 = new CartItem
             {
                 Id = 5,
                 UserId = 5,
                 BookId = 10,
             };
 
-            modelBuilder.Entity<ReservationItem>().HasData(resItem);
-            modelBuilder.Entity<ReservationItem>().HasData(resItem2);
-            modelBuilder.Entity<ReservationItem>().HasData(resItem3);
-            modelBuilder.Entity<ReservationItem>().HasData(resItem4);
-            modelBuilder.Entity<ReservationItem>().HasData(resItem5);
+            modelBuilder.Entity<CartItem>().HasData(resItem);
+            modelBuilder.Entity<CartItem>().HasData(resItem2);
+            modelBuilder.Entity<CartItem>().HasData(resItem3);
+            modelBuilder.Entity<CartItem>().HasData(resItem4);
+            modelBuilder.Entity<CartItem>().HasData(resItem5);
             ///////////////////////////////////////////////////
             
         }

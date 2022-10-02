@@ -12,7 +12,7 @@ namespace DAL.Models
 
         public virtual Book Book { get; set; }
 
-        [Range(1, 10)]
+        [Range(1, 10), Required]
         public int Score { get; set; }
 
         public virtual List<PositiveReview> PositiveReviews { get; set; }

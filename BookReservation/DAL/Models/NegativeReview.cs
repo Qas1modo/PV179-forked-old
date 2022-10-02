@@ -9,7 +9,7 @@ namespace DAL.Models
 
         public virtual Review Review { get; set; }
 
-        [MaxLength(150)]
+        [MaxLength(150), Required]
         public string Text { get; set; }
     }
 }

@@ -2,8 +2,11 @@
 {
     public enum RentState
     {
+        Reserved,
+        Canceled,
+        Expired,
         Active,
         Returned,
-        Late
+        Overdue,
     }
 }

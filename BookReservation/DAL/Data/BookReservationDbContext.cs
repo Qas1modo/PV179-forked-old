@@ -13,8 +13,7 @@ namespace DAL.Data
         public DbSet<User> User { get; set; }
 
         public DbSet<Review> Review { get; set; }
-        public DbSet<ReservationItem> ReservationItem { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
+        public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Rent> Rent { get; set; }
         public DbSet<PositiveReview> PositiveReview { get; set; }
 
