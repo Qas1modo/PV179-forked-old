@@ -1,4 +1,12 @@
+using DAL.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+using (var db = new BookReservationDbContext())
+{
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
+}
 
 // Add services to the container.
 builder.Services.AddRazorPages();
