@@ -11,7 +11,7 @@ entity User {
     *phone: Int <<PhoneNumber>>
     *birthDate: Date
     *password: Bytes
-    *AddressId: String <<Foreign UUID>>
+    *addressId: String <<Foreign UUID>>
     *salt: String
     *group: Enumeration
     picture: String <<URL>>
@@ -37,13 +37,25 @@ entity Book {
     *id: String <<UUID>>
     ---
     *name: String
-    *author: String
-    *genreId: Enumeration
+    *genreId: String <<Foreign UUID>>
+    *authorId: String <<Foreign UUID>>
     *stock: Number
     *total: Number
     *price: Number
     photo: String <<URL>>
     description: String
+}
+
+entity Author {
+    *id: String <<UUID>>
+    ---
+    *name: String
+}
+
+entity Genre {
+    *id: String <<UUID>>
+    ---
+    *name: String
 }
 
 entity Rent {
@@ -69,18 +81,12 @@ entity Review {
 }
 
 
-entity Positive {
+entity ReviewPoint {
     *reviewId: String <<Foreign UUID>>
     *id: String <<UUID>>
     ---
     *text: String
-}
-
-entity Negative {
-    *reviewId: String <<Foreign UUID>>
-    *id: String <<UUID>>
-    ---
-    *text: String
+    *positive: Boolean
 }
 
 User ||..|| Address
@@ -90,8 +96,9 @@ User ||..o{ Review
 Book ||..o{ Review
 Book ||..o{ Rent
 Book ||..o{ CartItem
-Review ||..o{ Positive
-Review ||..o{ Negative
+Author ||..o{ Book
+Genre ||..o{ Book
+Review ||..o{ ReviewPoint
 @enduml
 
 

@@ -13,7 +13,7 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => User, Data Initializaton
 
-            var user = new User
+            User user = new()
             {
                 Id = 1,
                 AddressId = 1,
@@ -27,7 +27,7 @@ namespace DAL.Data
                 Picture = "www.nejakycuteobrazok.com",
             };
 
-            var user2 = new User
+            User user2 = new ()
             {
                 Id = 2,
                 AddressId = 2,
@@ -41,7 +41,7 @@ namespace DAL.Data
                 Picture = "www.pictureofemployee.com",
             };
 
-            var user3 = new User
+            User user3 = new ()
             {
                 Id = 3,
                 AddressId = 3,
@@ -55,7 +55,7 @@ namespace DAL.Data
                 Picture = "www.pictureofuser.com",
             };
 
-            var user4 = new User
+            User user4 = new ()
             {
                 Id = 4,
                 AddressId = 4,
@@ -69,7 +69,7 @@ namespace DAL.Data
                 Picture = "www.pictureofdogs.com",
             };
 
-            var user5 = new User
+            User user5 = new ()
             {
                 Id = 5,
                 AddressId = 5,
@@ -92,14 +92,137 @@ namespace DAL.Data
 
 
             ///////////////////////////////////////////////////
+            // ENTITY => Author Initialization
+
+            Author author1 = new()
+            {
+                Id = 1,
+                Name = "Joanne Rowling",
+            };
+
+            Author author2 = new()
+            {
+                Id = 2,
+                Name = "George Martin",
+            };
+
+            Author author3 = new()
+            {
+                Id = 3,
+                Name = "Robert Merle",
+            };
+
+            Author author4 = new()
+            {
+                Id = 4,
+                Name = "Andrzej Sapkowski",
+            };
+
+            Author author5 = new()
+            {
+                Id = 5,
+                Name = "Karel Hynek Mácha",
+            };
+
+            modelBuilder.Entity<Author>().HasData(author1);
+            modelBuilder.Entity<Author>().HasData(author2);
+            modelBuilder.Entity<Author>().HasData(author3);
+            modelBuilder.Entity<Author>().HasData(author4);
+            modelBuilder.Entity<Author>().HasData(author5);
+            ///////////////////////////////////////////////////
+
+
+            ///////////////////////////////////////////////////
+            // ENTITY => Genre Initialization
+
+            Genre genre1 = new()
+            {
+                Id = 1,
+                Name = "Action",
+            };
+
+            Genre genre2 = new()
+            {
+                Id = 2,
+                Name = "Horror",
+            };
+
+            Genre genre3 = new()
+            {
+                Id = 3,
+                Name = "Thriller",
+            };
+
+            Genre genre4 = new()
+            {
+                Id = 4,
+                Name = "Comedy",
+            };
+
+            Genre genre5 = new()
+            {
+                Id = 5,
+                Name = "Detective",
+            };
+
+            Genre genre6 = new()
+            {
+                Id = 6,
+                Name = "Fantasy",
+            };
+
+            Genre genre7 = new()
+            {
+                Id = 7,
+                Name = "SciFi",
+            };
+
+            Genre genre8 = new()
+            {
+                Id = 8,
+                Name = "Romance",
+            };
+
+            Genre genre9 = new()
+            {
+                Id = 9,
+                Name = "Western",
+            };
+
+            Genre genre10 = new()
+            {
+                Id = 10,
+                Name = "Dystopian",
+            };
+
+            Genre genre11 = new()
+            {
+                Id = 11,
+                Name = "Contemporary",
+            };
+            modelBuilder.Entity<Genre>().HasData(genre1);
+            modelBuilder.Entity<Genre>().HasData(genre2);
+            modelBuilder.Entity<Genre>().HasData(genre3);
+            modelBuilder.Entity<Genre>().HasData(genre4);
+            modelBuilder.Entity<Genre>().HasData(genre5);
+            modelBuilder.Entity<Genre>().HasData(genre6);
+            modelBuilder.Entity<Genre>().HasData(genre7);
+            modelBuilder.Entity<Genre>().HasData(genre8);
+            modelBuilder.Entity<Genre>().HasData(genre9);
+            modelBuilder.Entity<Genre>().HasData(genre10);
+            modelBuilder.Entity<Genre>().HasData(genre11);
+            ///////////////////////////////////////////////////
+
+
+            ///////////////////////////////////////////////////
             // ENTITY => Book, Data Initializaton
 
-            var harryPotter1 = new Book
+            Book harryPotter1 = new()
             {
                 Id = 1,
                 Name = "Harry Potter and the Philosopher's Stone",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Action,
+                AuthorId = 1,
+                GenreId = 6,
                 Stock = 63,
                 Total = 100,
                 Price = 16,
@@ -107,25 +230,25 @@ namespace DAL.Data
                 Photo = "www.harrrypotterphotos.com",
             };
 
-            var harryPotter2 = new Book
+            Book harryPotter2 = new()
             {
                 Id = 2,
                 Name = "Harry Potter and the Chamber of Secrets",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Comedy,
+                AuthorId = 1,
                 Stock = 72,
+                GenreId = 7,
                 Total = 100,
                 Price = 30,
                 Description = "djosfjsdopj",
                 Photo = "www.jupijupijej.com",
             };
 
-            var harryPotter3 = new Book
+            Book harryPotter3 = new()
             {
                 Id = 3,
                 Name = "Harry Potter and the Prisoner of Azkaban",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Contemporary,
+                AuthorId = 1,
+                GenreId = 6,
                 Stock = 900,
                 Total = 1000,
                 Price = 17,
@@ -133,12 +256,12 @@ namespace DAL.Data
                 Photo = "wwww.someweb.com",
             };
 
-            var harryPotter4 = new Book
+            Book harryPotter4 = new()
             {
                 Id = 4,
                 Name = "Harry Potter and the Goblet of Fire",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Action,
+                AuthorId = 1,
+                GenreId = 7,
                 Stock = 150,
                 Total = 200,
                 Price = 27,
@@ -146,12 +269,12 @@ namespace DAL.Data
                 Photo = "www.uzneviemuz.com",
             };
 
-            var harryPotter5 = new Book
+            Book harryPotter5 = new()
             {
                 Id = 5,
                 Name = "Harry Potter and the Order of the Phoenix",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Detective,
+                AuthorId = 1,
+                GenreId = 6,
                 Stock = 7,
                 Total = 50,
                 Price = 50,
@@ -159,12 +282,12 @@ namespace DAL.Data
                 Photo = "www.harrymaguire.com",
             };
 
-            var harryPotter6 = new Book
+            Book harryPotter6 = new()
             {
                 Id = 6,
                 Name = "Harry Potter and the Half-Blood Prince",
-                Author = "Joanne Rowling",
-                Genre = DAL.Enums.Genre.Detective,
+                AuthorId = 1,
+                GenreId = 8,
                 Stock = 15,
                 Total = 40,
                 Price = 30,
@@ -172,12 +295,12 @@ namespace DAL.Data
                 Photo = "www.slafgoalsky.com",
             };
 
-            var gameOfThrones1 = new Book
+            Book gameOfThrones1 = new()
             {
                 Id = 7,
                 Name = "Fire & Blood",
-                Author = "George Martin",
-                Genre = DAL.Enums.Genre.Fantasy,
+                AuthorId = 2,
+                GenreId = 6,
                 Stock = 90,
                 Total = 100,
                 Price = 23,
@@ -185,12 +308,12 @@ namespace DAL.Data
                 Photo = "www.cobra11istheworstseries.com",
             };
 
-            var gameOfThrones2 = new Book
+            Book gameOfThrones2 = new()
             {
                 Id = 8,
                 Name = "A Game of Thrones",
-                Author = "George Martin",
-                Genre = DAL.Enums.Genre.Fantasy,
+                AuthorId = 2,
+                GenreId = 6,
                 Stock = 79,
                 Total = 100,
                 Price = 35,
@@ -198,12 +321,12 @@ namespace DAL.Data
                 Photo = "www.gameofthronesphotos.com",
             };
 
-            var gameOfThrones3 = new Book
+            Book gameOfThrones3 = new()
             {
                 Id = 9,
                 Name = "A Clash of Kings ",
-                Author = "George Martin",
-                Genre = DAL.Enums.Genre.Fantasy,
+                AuthorId = 2,
+                GenreId = 6,
                 Stock = 13,
                 Total = 100,
                 Price = 46,
@@ -211,12 +334,12 @@ namespace DAL.Data
                 Photo = "www.myphoto.com",
             };
 
-            var gameOfThrones4 = new Book
+            Book gameOfThrones4 = new()
             {
                 Id = 10,
                 Name = "A Storm of Swords ",
-                Author = "George Martin",
-                Genre = DAL.Enums.Genre.Fantasy,
+                AuthorId = 2,
+                GenreId = 6,
                 Stock = 50,
                 Total = 100,
                 Price = 25,
@@ -224,12 +347,12 @@ namespace DAL.Data
                 Photo = "www.yourphoto.com",
             };
 
-            var gameOfThrones5 = new Book
+            Book gameOfThrones5 = new()
             {
                 Id = 11,
                 Name = "A Feast for Crows",
-                Author = "George Martin",
-                Genre = DAL.Enums.Genre.Fantasy,
+                AuthorId = 2,
+                GenreId = 6,
                 Stock = 1,
                 Total = 100,
                 Price = 9000,
@@ -255,7 +378,7 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => Address, Data Initializaton
 
-            var address1 = new Address
+            Address address1 = new()
             {
                 Id = 1,
                 City = "Brno",
@@ -264,7 +387,7 @@ namespace DAL.Data
                 ZipCode = 03601,
             };
 
-            var address2 = new Address
+            Address address2 = new()
             {
                 Id = 2,
                 City = "Brno",
@@ -273,7 +396,7 @@ namespace DAL.Data
                 ZipCode = 03601,
             };
 
-            var address3 = new Address
+            Address address3 = new()
             {
                 Id = 3,
                 City = "Praha",
@@ -282,7 +405,7 @@ namespace DAL.Data
                 ZipCode = 03602,
             };
 
-            var address4 = new Address
+            Address address4 = new()
             {
                 Id = 4,
                 City = "Ostrava",
@@ -291,7 +414,7 @@ namespace DAL.Data
                 ZipCode = 03603,
             };
 
-            var address5 = new Address
+            Address address5 = new()
             {
                 Id = 5,
                 City = "Breclav",
@@ -310,7 +433,7 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => Review, Data Initializaton
 
-            var review1 = new Review
+            Review review1 = new()
             {
                 Id = 1,
                 Score = 9,
@@ -318,7 +441,7 @@ namespace DAL.Data
                 BookId = 5,
             };
 
-            var review2 = new Review
+            Review review2 = new()
             {
                 Id = 2,
                 Score = 5,
@@ -326,7 +449,7 @@ namespace DAL.Data
                 BookId = 4,
             };
 
-            var review3 = new Review
+            Review review3 = new()
             {
                 Id = 3,
                 Score = 7,
@@ -334,7 +457,7 @@ namespace DAL.Data
                 BookId = 5,
             };
 
-            var review4 = new Review
+            Review review4 = new()
             {
                 Id = 4,
                 Score = 3,
@@ -342,7 +465,7 @@ namespace DAL.Data
                 BookId = 4,
             };
 
-            var review5 = new Review
+            Review review5 = new()
             {
                 Id = 5,
                 Score = 8,
@@ -350,7 +473,7 @@ namespace DAL.Data
                 BookId = 5,
             };
 
-            var review6 = new Review
+            Review review6 = new()
             {
                 Id = 6,
                 Score = 9,
@@ -358,7 +481,7 @@ namespace DAL.Data
                 BookId = 4,
             };
 
-            var review7 = new Review
+            Review review7 = new()
             {
                 Id = 7,
                 Score = 7,
@@ -366,7 +489,7 @@ namespace DAL.Data
                 BookId = 3,
             };
 
-            var review8 = new Review
+            Review review8 = new()
             {
                 Id = 8,
                 Score = 9,
@@ -374,7 +497,7 @@ namespace DAL.Data
                 BookId = 6,
             };
 
-            var review9 = new Review
+            Review review9 = new()
             {
                 Id = 9,
                 Score = 7,
@@ -382,7 +505,7 @@ namespace DAL.Data
                 BookId = 3,
             };
 
-            var review10 = new Review
+            Review review10 = new()
             {
                 Id = 10,
                 Score = 4,
@@ -405,195 +528,217 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => Positive Review, Data Initializaton
 
-            var posReview = new PositiveReview
+            ReviewPoint posReview = new ReviewPoint
             {
                 Id = 1,
                 Text = "to je tak super",
                 ReviewId = 1,
+                Positive = true,
             };
 
-            var posReview1 = new PositiveReview
+            ReviewPoint posReview1 = new ReviewPoint
             {
                 Id = 2,
                 Text = "to je tak super tiez",
                 ReviewId = 1,
+                Positive = true,
             };
 
-            var posReview2 = new PositiveReview
+            ReviewPoint posReview2 = new ReviewPoint
             {
                 Id = 3,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 1,
+                Positive = true,
             };
 
-            var posReview3 = new PositiveReview
+            ReviewPoint posReview3 = new ReviewPoint
             {
                 Id = 4,
                 Text = "to je tak super tak isto ako aj to pred tym",
                 ReviewId = 1,
+                Positive = true,
             };
 
-            var posReview4 = new PositiveReview
+            ReviewPoint posReview4 = new ReviewPoint
             {
                 Id = 5,
                 Text = "to je tak super",
                 ReviewId = 5,
+                Positive = true,
             };
 
-            var posReview5 = new PositiveReview
+            ReviewPoint posReview5 = new ReviewPoint
             {
                 Id = 6,
                 Text = "to je tak super tiez",
                 ReviewId = 5,
+                Positive = true,
             };
 
-            var posReview6 = new PositiveReview
+            ReviewPoint posReview6 = new ReviewPoint
             {
                 Id = 7,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 5,
+                Positive = true,
             };
 
-            var posReview7 = new PositiveReview
+            ReviewPoint posReview7 = new ReviewPoint
             {
                 Id = 8,
                 Text = "to je tak super tak isto ako aj to pred tym",
                 ReviewId = 5,
+                Positive = true,
             };
 
-            var posReview8 = new PositiveReview
+            ReviewPoint posReview8 = new ReviewPoint
             {
                 Id = 9,
                 Text = "to je tak super tiez",
                 ReviewId = 6,
+                Positive = true,
             };
 
-            var posReview9 = new PositiveReview
+            ReviewPoint posReview9 = new ReviewPoint
             {
                 Id = 10,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 6,
+                Positive = true,
             };
 
-            var posReview10 = new PositiveReview
+            ReviewPoint posReview10 = new ReviewPoint
             {
                 Id = 11,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 6,
+                Positive = true,
             };
 
-            modelBuilder.Entity<PositiveReview>().HasData(posReview);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview1);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview2);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview3);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview4);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview5);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview6);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview7);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview8);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview9);
-            modelBuilder.Entity<PositiveReview>().HasData(posReview10);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview1);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview2);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview3);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview4);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview5);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview6);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview7);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview8);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview9);
+            modelBuilder.Entity<ReviewPoint>().HasData(posReview10);
             ///////////////////////////////////////////////////
 
 
             ///////////////////////////////////////////////////
             // ENTITY => Negative Review, Data Initializaton
 
-            var negReview = new NegativeReview
+            ReviewPoint negReview = new()
             {
-                Id = 1,
+                Id = 12,
                 Text = "to je tak zle",
                 ReviewId = 2,
+                Positive = false,
             };
 
-            var negReview1 = new NegativeReview
+            ReviewPoint negReview1 = new()
             {
-                Id = 2,
+                Id = 13,
                 Text = "to je tak zle tiez",
                 ReviewId = 2,
+                Positive = false,
             };
 
-            var negReview2 = new NegativeReview
+            ReviewPoint negReview2 = new()
             {
-                Id = 3,
+                Id = 14,
                 Text = "to je tak zle tiez tiez",
                 ReviewId = 1,
+                Positive = false,
             };
 
-            var negReview3 = new NegativeReview
+            ReviewPoint negReview3 = new()
             {
-                Id = 4,
+                Id = 15,
                 Text = "to je tak zle tak isto ako aj to pred tym",
                 ReviewId = 2,
+                Positive = false,
             };
 
-            var negReview4 = new NegativeReview
+            ReviewPoint negReview4 = new()
             {
-                Id = 5,
+                Id = 16,
                 Text = "to je tak zle",
                 ReviewId = 6,
+                Positive = false,
             };
 
-            var negReview5 = new NegativeReview
+            ReviewPoint negReview5 = new()
             {
-                Id = 6,
+                Id = 17,
                 Text = "to je tak super tiez",
                 ReviewId = 6,
+                Positive = false,
             };
 
-            var negReview6 = new NegativeReview
+            ReviewPoint negReview6 = new()
             {
-                Id = 7,
+                Id = 18,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 6,
+                Positive = false,
             };
 
-            var negReview7 = new NegativeReview
+            ReviewPoint negReview7 = new()
             {
-                Id = 8,
+                Id = 19,
                 Text = "to je tak super tak isto ako aj to pred tym",
                 ReviewId = 6,
+                Positive = false,
             };
 
-            var negReview8 = new NegativeReview
+            ReviewPoint negReview8 = new()
             {
-                Id = 9,
+                Id = 20,
                 Text = "to je tak super tiez",
                 ReviewId = 3,
+                Positive = false,
             };
 
-            var negReview9 = new NegativeReview
+            ReviewPoint negReview9 = new()
             {
-                Id = 10,
+                Id = 21,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 3,
+                Positive = false,
             };
 
-            var negReview10 = new NegativeReview
+            ReviewPoint negReview10 = new()
             {
-                Id = 11,
+                Id = 22,
                 Text = "to je tak super tiez tiez",
                 ReviewId = 3,
+                Positive = false,
             };
 
-            modelBuilder.Entity<NegativeReview>().HasData(negReview);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview1);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview2);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview3);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview4);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview5);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview6);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview7);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview8);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview9);
-            modelBuilder.Entity<NegativeReview>().HasData(negReview10);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview1);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview2);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview3);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview4);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview5);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview6);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview7);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview8);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview9);
+            modelBuilder.Entity<ReviewPoint>().HasData(negReview10);
             ///////////////////////////////////////////////////
 
 
             ///////////////////////////////////////////////////
             // ENTITY => Rent, Data Initializaton
 
-            var rent = new Rent
+            Rent rent = new()
             {
                 Id = 1,
                 UserId = 5,
@@ -606,7 +751,7 @@ namespace DAL.Data
                 State = RentState.Reserved,
             };
 
-            var rent1 = new Rent
+            Rent rent1 = new()
             {
                 Id = 2,
                 UserId = 5,
@@ -619,7 +764,7 @@ namespace DAL.Data
                 State = RentState.Active,
             };
 
-            var rent2 = new Rent
+            Rent rent2 = new()
             {
                 Id = 3,
                 UserId = 5,
@@ -632,7 +777,7 @@ namespace DAL.Data
                 State = RentState.Expired,
             };
 
-            var rent3 = new Rent
+            Rent rent3 = new()
             {
                 Id = 4,
                 UserId = 5,
@@ -645,7 +790,7 @@ namespace DAL.Data
                 State = RentState.Returned,
             };
 
-            var rent4 = new Rent
+            Rent rent4 = new()
             {
                 Id = 5,
                 UserId = 4,
@@ -658,7 +803,7 @@ namespace DAL.Data
                 State = RentState.Canceled,
             };
 
-            var rent5 = new Rent
+            Rent rent5 = new()
             {
                 Id = 6,
                 UserId = 2,
@@ -671,7 +816,7 @@ namespace DAL.Data
                 State = RentState.Overdue,
             };
 
-            var rent6 = new Rent
+            Rent rent6 = new()
             {
                 Id = 7,
                 UserId = 4,
@@ -684,7 +829,7 @@ namespace DAL.Data
                 State = RentState.Returned,
             };
 
-            var rent7 = new Rent
+            Rent rent7 = new()
             {
                 Id = 8,
                 UserId = 3,
@@ -710,35 +855,35 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => ReservationItem, Data Initializaton
 
-            var resItem = new CartItem
+            CartItem resItem = new()
             {
                 Id = 1,
                 UserId = 5,
                 BookId = 6,
             };
 
-            var resItem2 = new CartItem
+            CartItem resItem2 = new()
             {
                 Id = 2,
                 UserId = 5,
                 BookId = 7,
             };
 
-            var resItem3 = new CartItem
+            CartItem resItem3 = new()
             {
                 Id = 3,
                 UserId = 5,
                 BookId = 8,
             };
 
-            var resItem4 = new CartItem
+            CartItem resItem4 = new()
             {
                 Id = 4,
                 UserId = 5,
                 BookId = 9,
             };
 
-            var resItem5 = new CartItem
+            CartItem resItem5 = new()
             {
                 Id = 5,
                 UserId = 5,

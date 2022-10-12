@@ -15,9 +15,8 @@ namespace DAL.Data
         public DbSet<Review> Review { get; set; }
         public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Rent> Rent { get; set; }
-        public DbSet<PositiveReview> PositiveReview { get; set; }
 
-        public DbSet<NegativeReview> NegativeReview { get; set; }
+        public DbSet<ReviewPoint> ReviewPoint { get; set; }
 
 
         public DbSet<Book> Book { get; set; }
@@ -27,7 +26,6 @@ namespace DAL.Data
 
         public BookReservationDbContext()
         {
-            // Retrieve string from a file
             _connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
         }
 

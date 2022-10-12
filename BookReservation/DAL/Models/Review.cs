@@ -1,13 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
     public class Review : BaseEntity
     {
+        [ForeignKey(nameof(UserId))]
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
 
+        [ForeignKey(nameof(BookId))]
         public int BookId { get; set; }
 
         public virtual Book Book { get; set; }
@@ -15,8 +18,6 @@ namespace DAL.Models
         [Range(1, 10), Required]
         public int Score { get; set; }
 
-        public virtual List<PositiveReview> PositiveReviews { get; set; }
-
-        public virtual List<NegativeReview> NegativeReviews { get; set; }
+        public virtual List<ReviewPoint> ReviewPoints { get; set; }
     }
 }

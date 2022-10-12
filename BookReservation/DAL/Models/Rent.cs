@@ -1,19 +1,20 @@
 ﻿using DAL.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
 
 namespace DAL.Models
 {
     public class Rent : BaseEntity
     {
+        [ForeignKey(nameof(UserId))]
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
 
-        [Required]
+        [ForeignKey(nameof(BookId))]
         public int BookId { get; set; }
 
-        [Required]
         public virtual Book Book { get; set; }
 
         [Required]
@@ -26,8 +27,8 @@ namespace DAL.Models
         [Range(1, 365), Required]
         public int LoanPeriod { get; set; }
 
-        [Range(0, float.MaxValue), Required]
-        public float Price { get; set; }
+        [Required]
+        public decimal Price { get; set; }
 
         [Required]
         public RentState State { get; set; }

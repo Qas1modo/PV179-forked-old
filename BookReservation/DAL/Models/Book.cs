@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Enums;
 
 namespace DAL.Models
@@ -8,11 +9,15 @@ namespace DAL.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Author { get; set; }
+        public virtual Author Author { get; set; }
 
-        [Required]
-        public Genre Genre { get; set; }
+        [ForeignKey(nameof(AuthorId))]
+        public int AuthorId { get; set; }
+        
+        public virtual Genre Genre { get; set; }
+
+        [ForeignKey(nameof(GenreId))]
+        public int GenreId { get; set; }
 
         // ErrorMessage = ""?
         [Range(0, int.MaxValue), Required]
@@ -21,8 +26,8 @@ namespace DAL.Models
         [Range(0, int.MaxValue), Required]
         public int Total { get; set; }
 
-        [Range(0, float.MaxValue), Required]
-        public float Price { get; set; }
+        [Required]
+        public decimal Price { get; set; }
 
         public string Description { get; set; }
 
