@@ -27,8 +27,7 @@ namespace DAL
 
         public BookReservationDbContext()
         {
-            _connectionString = $"Server=localhost,1433;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=False;User Id=sa; Password=bigStrongPwd9!";
-            //_connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
+            _connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
