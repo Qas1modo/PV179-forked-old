@@ -1,8 +1,9 @@
 ﻿using DAL.Models;
+using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace DAL.Data
+namespace DAL
 {
     public class BookReservationDbContext : DbContext
     {
@@ -26,7 +27,8 @@ namespace DAL.Data
 
         public BookReservationDbContext()
         {
-            _connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
+            _connectionString = $"Server=localhost,1433;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=False;User Id=sa; Password=bigStrongPwd9!";
+            //_connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
