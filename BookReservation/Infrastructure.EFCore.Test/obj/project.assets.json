@@ -8132,33 +8132,34 @@
     ]
   },
   "packageFolders": {
-    "/Users/richardlacek/.nuget/packages/": {}
+    "C:\\Users\\krist\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/richardlacek/Documents/MUNI/treti_semester/c_sharp/project/projekt-pv179/BookReservation/Infrastructure.EFCore.Test/Infrastructure.EFCore.Test.csproj",
+      "projectUniqueName": "C:\\dev\\asp\\projekt-pv179\\BookReservation\\Infrastructure.EFCore.Test\\Infrastructure.EFCore.Test.csproj",
       "projectName": "Infrastructure.EFCore.Test",
-      "projectPath": "/Users/richardlacek/Documents/MUNI/treti_semester/c_sharp/project/projekt-pv179/BookReservation/Infrastructure.EFCore.Test/Infrastructure.EFCore.Test.csproj",
-      "packagesPath": "/Users/richardlacek/.nuget/packages/",
-      "outputPath": "/Users/richardlacek/Documents/MUNI/treti_semester/c_sharp/project/projekt-pv179/BookReservation/Infrastructure.EFCore.Test/obj/",
+      "projectPath": "C:\\dev\\asp\\projekt-pv179\\BookReservation\\Infrastructure.EFCore.Test\\Infrastructure.EFCore.Test.csproj",
+      "packagesPath": "C:\\Users\\krist\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\asp\\projekt-pv179\\BookReservation\\Infrastructure.EFCore.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/richardlacek/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\krist\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/richardlacek/Documents/MUNI/treti_semester/c_sharp/project/projekt-pv179/BookReservation/Infrastrucuture.EFCore/Infrastructure.EFCore.csproj": {
-              "projectPath": "/Users/richardlacek/Documents/MUNI/treti_semester/c_sharp/project/projekt-pv179/BookReservation/Infrastrucuture.EFCore/Infrastructure.EFCore.csproj"
+            "C:\\dev\\asp\\projekt-pv179\\BookReservation\\Infrastrucuture.EFCore\\Infrastructure.EFCore.csproj": {
+              "projectPath": "C:\\dev\\asp\\projekt-pv179\\BookReservation\\Infrastrucuture.EFCore\\Infrastructure.EFCore.csproj"
             }
           }
         }
@@ -8204,8 +8205,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -8214,7 +8214,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
