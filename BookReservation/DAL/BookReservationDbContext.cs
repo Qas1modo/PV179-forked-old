@@ -10,33 +10,36 @@ namespace DAL
         private readonly string _connectionString = "";
         private const string _dbName = "BookReservationDB";
 
-
         public DbSet<User> User { get; set; }
-
         public DbSet<Review> Review { get; set; }
         public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Rent> Rent { get; set; }
-
         public DbSet<ReviewPoint> ReviewPoint { get; set; }
-
-
         public DbSet<Book> Book { get; set; }
-
         public DbSet<Address> Address { get; set; }
-
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         public BookReservationDbContext()
         {
             _connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
         }
 
+        public BookReservationDbContext(DbContextOptions<BookReservationDbContext> options) : base(options)
+        {
+            _connectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database={_dbName};Trusted_Connection=True;";
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
                 .UseSqlServer(_connectionString)
                 .UseLazyLoadingProxies();
 
-            base.OnConfiguring(optionsBuilder);
+                base.OnConfiguring(optionsBuilder);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +60,5 @@ namespace DAL
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }
