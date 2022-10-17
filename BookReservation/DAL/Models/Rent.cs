@@ -5,16 +5,18 @@ using System.Reflection.Metadata;
 
 namespace DAL.Models
 {
-    public class Rent : BaseEntity
+    public class Rent : IBaseEntity
     {
-        [ForeignKey(nameof(UserId))]
+        [Key]
+        public int Id { get; set; }
         public int UserId { get; set; }
 
+        [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 
-        [ForeignKey(nameof(BookId))]
         public int BookId { get; set; }
 
+        [ForeignKey(nameof(BookId))]
         public virtual Book Book { get; set; }
 
         [Required]
@@ -32,5 +34,6 @@ namespace DAL.Models
 
         [Required]
         public RentState State { get; set; }
+        public string TableName { get; } = nameof(BookReservationDbContext.Rents);
     }
 }

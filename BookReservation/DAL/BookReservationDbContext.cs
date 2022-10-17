@@ -10,13 +10,13 @@ namespace DAL
         private readonly string _connectionString = "";
         private const string _dbName = "BookReservationDB";
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Review> Review { get; set; }
-        public DbSet<CartItem> CartItem { get; set; }
-        public DbSet<Rent> Rent { get; set; }
-        public DbSet<ReviewPoint> ReviewPoint { get; set; }
-        public DbSet<Book> Book { get; set; }
-        public DbSet<Address> Address { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Review> Reviews{ get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Rent> Rents { get; set; }
+        public DbSet<ReviewPoint> ReviewPoints { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
@@ -44,18 +44,6 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.Entity<User>()
-            //     .HasOne(a => a.Address)
-            //     .WithOne(u => u.User)
-            //     .HasForeignKey<Address>(c => c.Id);
-
-            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            //{
-            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-
-
             modelBuilder.Seed();
 
             base.OnModelCreating(modelBuilder);

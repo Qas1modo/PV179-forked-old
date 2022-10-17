@@ -11,8 +11,6 @@ namespace Infrastrucuture.EFCore.UnitOfWork
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-
-        private DbContextOptions<BookReservationDbContext>? options;
         private IRepository<Author> authorRepository;
         private IRepository<User> userRepository;
         private IRepository<Address> addressRepository;
@@ -28,7 +26,6 @@ namespace Infrastrucuture.EFCore.UnitOfWork
 
         public EFUnitOfWork(DbContextOptions<BookReservationDbContext> options)
         {
-            this.options = options;
             Context = new(options);
         }
 
@@ -44,10 +41,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (authorRepository == null)
                 {
-                    this.addressRepository = new EFGenericRepository<Address>(Context);
+                    addressRepository = new EFGenericRepository<Address>(Context);
                 }
 
-                return this.addressRepository;
+                return addressRepository;
             }
         }
 
@@ -57,7 +54,7 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (authorRepository == null)
                 {
-                    this.authorRepository = new EFGenericRepository<Author>(Context);
+                    authorRepository = new EFGenericRepository<Author>(Context);
                 }
 
                 return authorRepository;
@@ -70,10 +67,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (bookRepository == null)
                 {
-                    this.bookRepository = new EFGenericRepository<Book>(Context);
+                    bookRepository = new EFGenericRepository<Book>(Context);
                 }
 
-                return this.bookRepository;
+                return bookRepository;
             }
         }
 
@@ -83,10 +80,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (cartItemRepository == null)
                 {
-                    this.cartItemRepository = new EFGenericRepository<CartItem>(Context);
+                    cartItemRepository = new EFGenericRepository<CartItem>(Context);
                 }
 
-                return this.cartItemRepository;
+                return cartItemRepository;
             }
         }
 
@@ -96,10 +93,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (genreRepository == null)
                 {
-                    this.genreRepository = new EFGenericRepository<Genre>(Context);
+                    genreRepository = new EFGenericRepository<Genre>(Context);
                 }
 
-                return this.genreRepository;
+                return genreRepository;
             }
         }
 
@@ -109,10 +106,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (rentRepository == null)
                 {
-                    this.rentRepository = new EFGenericRepository<Rent>(Context);
+                    rentRepository = new EFGenericRepository<Rent>(Context);
                 }
 
-                return this.rentRepository;
+                return rentRepository;
             }
         }
 
@@ -123,10 +120,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (reviewRepository == null)
                 {
-                    this.reviewRepository = new EFGenericRepository<Review>(Context);
+                    reviewRepository = new EFGenericRepository<Review>(Context);
                 }
 
-                return this.reviewRepository;
+                return reviewRepository;
             }
         }
 
@@ -136,10 +133,10 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (reviewPointRepository == null)
                 {
-                    this.reviewPointRepository = new EFGenericRepository<ReviewPoint>(Context);
+                    reviewPointRepository = new EFGenericRepository<ReviewPoint>(Context);
                 }
 
-                return this.reviewPointRepository;
+                return reviewPointRepository;
             }
         }
 
@@ -149,7 +146,7 @@ namespace Infrastrucuture.EFCore.UnitOfWork
             {
                 if (userRepository == null)
                 {
-                    this.userRepository = new EFGenericRepository<User>(Context);
+                    userRepository = new EFGenericRepository<User>(Context);
                 }
 
                 return userRepository;

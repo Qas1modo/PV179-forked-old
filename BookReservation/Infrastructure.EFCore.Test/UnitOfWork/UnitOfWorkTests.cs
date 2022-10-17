@@ -111,7 +111,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             var dbContext = new BookReservationDbContext(dbContextOptions);
 
             dbContext.Authors.Add(dummyAuthor);
-            dbContext.User.Add(dummyUser);
+            dbContext.Users.Add(dummyUser);
 
             dbContext.SaveChanges();
         }

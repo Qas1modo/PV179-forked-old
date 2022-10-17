@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class ReviewPoint : BaseEntity
+    public class ReviewPoint : IBaseEntity
     {
-        [ForeignKey(nameof(ReviewId))]
+        [Key]
+        public int Id { get; set; }
         public int ReviewId { get; set; }
 
+        [ForeignKey(nameof(ReviewId))]
         public virtual Review Review { get; set; }
 
         [MaxLength(150), Required]
@@ -15,5 +17,6 @@ namespace DAL.Models
 
         [Required]
         public bool Positive {get; set; }
+        public string TableName { get; } = nameof(BookReservationDbContext.ReviewPoints);
     }
 }

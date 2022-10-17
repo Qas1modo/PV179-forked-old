@@ -19,6 +19,5 @@
   <ItemGroup>
     <Folder Include="Repository\" />
     <Folder Include="UnitOfWork\" />
-    <Folder Include="Query\" />
   </ItemGroup>
 </Project>

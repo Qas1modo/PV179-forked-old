@@ -4,15 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class User : BaseEntity
+    public class User : IBaseEntity
     {
+        [Key]
+        public int Id { get; set; }
 
         [MaxLength(64), Required]
         public string Name { get; set; }
 
-        [ForeignKey(nameof(AddressId))]
         public int AddressId { get; set; }
 
+        [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
 
         [Required]
@@ -40,5 +42,6 @@ namespace DAL.Models
         public virtual List<Review> Reviews { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
+        public string TableName { get; } = nameof(BookReservationDbContext.Users);
     }
 }

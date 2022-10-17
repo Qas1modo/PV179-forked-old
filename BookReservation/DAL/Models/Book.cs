@@ -4,19 +4,21 @@ using DAL.Enums;
 
 namespace DAL.Models
 {
-    public class Book : BaseEntity
+    public class Book : IBaseEntity
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
+        [ForeignKey(nameof(AuthorId))]
         public virtual Author Author { get; set; }
 
-        [ForeignKey(nameof(AuthorId))]
         public int AuthorId { get; set; }
-        
-        public virtual Genre Genre { get; set; }
 
         [ForeignKey(nameof(GenreId))]
+        public virtual Genre Genre { get; set; }
+
         public int GenreId { get; set; }
 
         // ErrorMessage = ""?
@@ -38,5 +40,7 @@ namespace DAL.Models
         public virtual List<Review> Reviews { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
+
+        public string TableName { get; } = nameof(BookReservationDbContext.Books);
     }
 }

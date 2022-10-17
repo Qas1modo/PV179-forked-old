@@ -22,7 +22,7 @@ namespace Infrastrucure.EFCore.Repository
             dbSet = context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity? GetByID(object id)
         {
             return dbSet.Find(id);
         }
@@ -34,7 +34,11 @@ namespace Infrastrucure.EFCore.Repository
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            TEntity? entityToDelete = dbSet.Find(id);
+            if (entityToDelete == null)
+            {
+                return;
+            }
             Delete(entityToDelete);
         }
 
