@@ -74,6 +74,38 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
            Assert.True(editedUser.Name.Equals(newName));
         }
 
+        [Fact]
+        public void NonCommitedTransactionTest()
+        {
+            // How to fail commit on prupose ?
+
+            Author dummyAuthorInsert = new Author { Id = 9, Name = "Matko Kubko" };
+            // Used in update
+            string newName = "Chad Chad";
+
+            var efUnitOfWork = new EFUnitOfWork(dbContextOptions);
+            var authorRepo = efUnitOfWork.AuthorRepository;
+            var userRepo = efUnitOfWork.UserRepository;
+
+            // Insert new Author and Update user
+            authorRepo.Insert(dummyAuthorInsert);
+            var user = userRepo.GetByID(dummyUser.Id);
+
+            // asert user not null or exists ?
+            // update user
+            user.Name = newName;
+
+            efUnitOfWork = new EFUnitOfWork(dbContextOptions);
+            authorRepo = efUnitOfWork.AuthorRepository;
+            userRepo = efUnitOfWork.UserRepository;
+
+            Author retrievedDummyAuthor = authorRepo.GetByID(dummyAuthorInsert.Id);
+            User editedUser = userRepo.GetByID(dummyUser.Id);
+
+            Assert.Null(retrievedDummyAuthor);
+            Assert.False(editedUser.Name.Equals(newName));
+        }
+
         private void InitDatabase()
         {
             var dbContext = new BookReservationDbContext(dbContextOptions);
