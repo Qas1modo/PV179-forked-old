@@ -3,6 +3,7 @@ using DAL;
 using Infrastructure.UnitOfWork;
 using Infrastrucure.Repository;
 using Infrastrucure.EFCore.Repository;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -10,8 +11,8 @@ namespace Infrastrucuture.EFCore.UnitOfWork
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        public BookReservationDbContext Context { get; } = new();
 
+        private DbContextOptions<BookReservationDbContext>? options;
         private IRepository<Author> authorRepository;
         private IRepository<User> userRepository;
         private IRepository<Address> addressRepository;
@@ -21,6 +22,20 @@ namespace Infrastrucuture.EFCore.UnitOfWork
         private IRepository<Rent> rentRepository;
         private IRepository<Review> reviewRepository;
         private IRepository<ReviewPoint> reviewPointRepository;
+
+        public BookReservationDbContext Context { get; }
+
+
+        public EFUnitOfWork(DbContextOptions<BookReservationDbContext> options)
+        {
+            this.options = options;
+            Context = new(options);
+        }
+
+        public EFUnitOfWork() 
+        {
+            Context = new();
+        }
 
 
         public IRepository<Address> AddressRepository
