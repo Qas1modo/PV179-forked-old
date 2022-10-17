@@ -47,7 +47,6 @@ namespace Infrastructure.EFCore.Test.Query
         }
 
         [Fact]
-
         public void TestFindAuthorByName()
         {
             var efquery = new EFQuery<Author>(Context);
@@ -55,6 +54,15 @@ namespace Infrastructure.EFCore.Test.Query
             var result = efquery.Execute();
             Assert.True(result.Count() == 1);
             Assert.Equal(author7, result.First());
+        }
+
+        [Fact]
+        public void TestFindAuthorWithInvalidId()
+        {
+            var efquery = new EFQuery<Author>(Context);
+            efquery.Where<int>(a => a == 13, "Id");
+            var result = efquery.Execute();
+            Assert.False(result.Any());
         }
 
         [Fact]
