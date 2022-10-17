@@ -12,76 +12,76 @@ namespace Infrastrucuture.EFCore.UnitOfWork
     {
         public BookReservationDbContext Context { get; } = new();
 
-        private IRepository<Address> addressRepository
+        public IRepository<Address> AddressRepository
         {
             get
             {
-                return addressRepository ?? new EFGenericRepository<Address>(Context);
+                return AddressRepository ?? new EFGenericRepository<Address>(Context);
             }
         }
 
-        private IRepository<Author> authorRepository
+        public IRepository<Author> AuthorRepository
         {
             get
             {
-                return authorRepository ?? new EFGenericRepository<Author>(Context);
+                return AuthorRepository ?? new EFGenericRepository<Author>(Context);
             }
         }
 
-        private IRepository<Book> bookRepository
+        public IRepository<Book> BookRepository
         {
             get
             {
-                return bookRepository ?? new EFGenericRepository<Book>(Context);
+                return BookRepository ?? new EFGenericRepository<Book>(Context);
             }
         }
 
-        private IRepository<CartItem> cartItemRepository
+        public IRepository<CartItem> CartItemRepository
         {
             get
             {
-                return cartItemRepository ?? new EFGenericRepository<CartItem>(Context);
+                return CartItemRepository ?? new EFGenericRepository<CartItem>(Context);
             }
         }
 
-        private IRepository<Genre> genreRepository
+        public IRepository<Genre> GenreRepository
         {
             get
             {
-                return genreRepository ?? new EFGenericRepository<Genre>(Context);
+                return GenreRepository ?? new EFGenericRepository<Genre>(Context);
             }
         }
 
-        private IRepository<Rent> rentRepository
+        public IRepository<Rent> RentRepository
         {
             get
             {
-                return rentRepository ?? new EFGenericRepository<Rent>(Context);
+                return RentRepository ?? new EFGenericRepository<Rent>(Context);
             }
         }
 
 
-        private IRepository<Review> reviewRepository
+        public IRepository<Review> ReviewRepository
         {
             get
             {
-                return reviewRepository ?? new EFGenericRepository<Review>(Context);
+                return ReviewRepository ?? new EFGenericRepository<Review>(Context);
             }
         }
 
-        private IRepository<ReviewPoint> reviewPointRepository
+        public IRepository<ReviewPoint> ReviewPointRepository
         {
             get
             {
-                return reviewPointRepository ?? new EFGenericRepository<ReviewPoint>(Context);
+                return ReviewPointRepository ?? new EFGenericRepository<ReviewPoint>(Context);
             }
         }
 
-        private IRepository<User> userRepository
+        public IRepository<User> UserRepository
         {
             get
             {
-                return userRepository ?? new EFGenericRepository<User>(Context);
+                return UserRepository ?? new EFGenericRepository<User>(Context);
             }
         }
 
