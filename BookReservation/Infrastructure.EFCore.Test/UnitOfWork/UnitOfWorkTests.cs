@@ -99,10 +99,9 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             authorRepo = efUnitOfWork.AuthorRepository;
             userRepo = efUnitOfWork.UserRepository;
 
-            Author retrievedDummyAuthor = authorRepo.GetByID(dummyAuthorInsert.Id);
             User editedUser = userRepo.GetByID(dummyUser.Id);
 
-            Assert.Null(retrievedDummyAuthor);
+            Assert.Throws<Exception>(() => authorRepo.GetByID(dummyAuthorInsert.Id));
             Assert.False(editedUser.Name.Equals(newName));
         }
 
