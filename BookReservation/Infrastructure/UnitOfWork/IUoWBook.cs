@@ -10,6 +10,6 @@ namespace Infrastructure.UnitOfWork
 
         IRepository<Book> BookRepository { get; }
 
-        IRepository<Genre> GetRepository { get; }
+        IRepository<Genre> GenreRepository { get; }
     }
 }
