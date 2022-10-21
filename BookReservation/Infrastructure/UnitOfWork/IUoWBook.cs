@@ -4,7 +4,7 @@ using Infrastrucure.Repository;
 
 namespace Infrastructure.UnitOfWork
 {
-    public interface IUoWAddBook : IUnitOfWork
+    public interface IUoWBook : IUnitOfWork
     {
         IRepository<Author> AuthorRepository { get; }
 

@@ -4,7 +4,7 @@ using Infrastrucure.Repository;
 
 namespace Infrastructure.UnitOfWork
 {
-    public interface IUoWChangeUserInfo : IUnitOfWork
+    public interface IUoWUserInfo : IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
 

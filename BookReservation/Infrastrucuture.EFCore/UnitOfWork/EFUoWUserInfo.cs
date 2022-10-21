@@ -7,18 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
-    public class EFUoWChangeUserInfo : IUoWChangeUserInfo
+    public class EFUoWUserInfo : IUoWUserInfo
     {
         private IRepository<User> userRepository;
 
         public BookReservationDbContext Context { get; }
 
-        public EFUoWChangeUserInfo(DbContextOptions<BookReservationDbContext> options)
+        public EFUoWUserInfo(DbContextOptions<BookReservationDbContext> options)
         {
             Context = new(options);
         }
 
-        public EFUoWChangeUserInfo()
+        public EFUoWUserInfo()
         {
             Context = new();
         }
