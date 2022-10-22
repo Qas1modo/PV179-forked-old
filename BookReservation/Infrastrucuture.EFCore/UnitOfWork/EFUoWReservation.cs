@@ -36,7 +36,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             }
         }
 
-        public Task Commit()
+        public async Task Commit()
         {
             await Context.SaveChangesAsync();
         }

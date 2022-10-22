@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Query
 {
-    public interface IQuery<TEntity> where TEntity : class, IBaseEntity, new() 
+    public interface IQuery<TEntity> where TEntity : BaseEntity, new() 
     {
         IQuery<TEntity> Where<T>(Expression<Func<T, bool>> rootPredicate, string columnName) where T : IComparable<T>;
 

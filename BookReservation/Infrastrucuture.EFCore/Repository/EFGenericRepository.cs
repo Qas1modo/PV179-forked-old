@@ -8,10 +8,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models;
 
 namespace Infrastrucure.EFCore.Repository
 {
-    public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         internal BookReservationDbContext context;
         internal DbSet<TEntity> dbSet;

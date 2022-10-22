@@ -1,4 +1,5 @@
-﻿using Infrastructure.Query;
+﻿using DAL.Models;
+using Infrastructure.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Query
 {
-    public abstract class Query<TEntity> : IQuery<TEntity> where TEntity : class, DAL.Models.IBaseEntity, new()
+    public abstract class Query<TEntity> : IQuery<TEntity> where TEntity : BaseEntity, new()
     {
         public List<(Expression expression, Type argumentType, string columnName)> WherePredicate { get; set; } = new();
         public (string tableName, bool isAscending, Type argumentType)? OrderByContainer { get; set; }

@@ -21,17 +21,17 @@ namespace Infrastructure.EFCore.Test.Query
                             .Options;
 
             Context = new BookReservationDbContext(dbContextOptions);
-            Context.Add(new(){ Id = 1, Name = "Sam Hill" });
-            Context.Add(new(){ Id = 2, Name = "George" });
-            Context.Add(new(){ Id = 3, Name = "Bill" });
-            Context.Add(new(){ Id = 4, Name = "TEST" });
-            Context.Add(new(){ Id = 5, Name = "Pocket"});
-            Context.Add(new(){ Id = 6, Name = "Jimmy"});
-            Context.Add(new(){ Id = 7, Name = "Robert" });
-            Context.Add(new(){ Id = 8, Name = "Herkules" });
-            Context.Add(new(){ Id = 9, Name = "Penny" });
-            Context.Add(new(){ Id = 10, Name = "Vasek" });
-            Context.Add(new(){ Id = 11, Name = "Pes" });
+            Context.Add(new Author { Id = 1, Name = "Sam Hill" });
+            Context.Add(new Author { Id = 2, Name = "George" });
+            Context.Add(new Author { Id = 3, Name = "Bill" });
+            Context.Add(new Author { Id = 4, Name = "TEST" });
+            Context.Add(new Author { Id = 5, Name = "Pocket"});
+            Context.Add(new Author { Id = 6, Name = "Jimmy"});
+            Context.Add(new Author { Id = 7, Name = "Robert" });
+            Context.Add(new Author { Id = 8, Name = "Herkules" });
+            Context.Add(new Author { Id = 9, Name = "Penny" });
+            Context.Add(new Author { Id = 10, Name = "Vasek" });
+            Context.Add(new Author { Id = 11, Name = "Pes" });
             Context.SaveChanges();
         }
 

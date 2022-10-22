@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.EFCore.Query
 {
-    public class EFQuery<TEntity> : Query<TEntity> where TEntity : class, IBaseEntity, new()
+    public class EFQuery<TEntity> : Query<TEntity> where TEntity : BaseEntity, new()
     {
         protected BookReservationDbContext Context { get; set; }
         protected EFUnitOfWork Uow{ get; }
