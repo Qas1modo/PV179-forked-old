@@ -11,24 +11,23 @@ namespace Infrastructure.Query
 {
     public abstract class Query<TEntity> : IQuery<TEntity> where TEntity : BaseEntity, new()
     {
-        public List<(Expression expression, Type argumentType, string columnName)> WherePredicate { get; set; } = new();
-        public (string tableName, bool isAscending, Type argumentType)? OrderByContainer { get; set; }
-        public (int PageToFetch, int PageSize)? PaginationContainer { get; set; }
-        public IQuery<TEntity> Page(int pageToFetch, int pageSize = 20)
+        protected IQueryable<TEntity> query;
+
+        public Query<TEntity> Page(int page, int pageSize = 20)
         {
-            PaginationContainer = (pageToFetch, pageSize);
+            query = query.Skip((page -1) * pageSize).Take(pageSize);
             return this;
         }
 
-        public IQuery<TEntity> OrderBy<T>(string columnName, bool ascendingOrder = true) where T : IComparable<T>
+        public Query<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>
         {
-            OrderByContainer = (columnName, ascendingOrder, typeof(T));
+            query = ascending ? query.OrderBy(selector) : query.OrderByDescending(selector);
             return this;
         }
 
-        public IQuery<TEntity> Where<T>(Expression<Func<T, bool>> predicate, string columnName) where T : IComparable<T>
+        public Query<TEntity> Where<T>(Expression<Func<TEntity, bool>> predicate) where T : IComparable<T>
         {
-            WherePredicate.Add((predicate, typeof(T), columnName));
+            query = query.Where(predicate);
             return this;
         }
 

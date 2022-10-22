@@ -10,12 +10,9 @@ namespace Infrastructure.Query
 {
     public interface IQuery<TEntity> where TEntity : BaseEntity, new() 
     {
-        IQuery<TEntity> Where<T>(Expression<Func<T, bool>> rootPredicate, string columnName) where T : IComparable<T>;
-
-        IQuery<TEntity> OrderBy<T>(string columnName, bool ascendingOrder = true) where T : IComparable<T>;
-
-        IQuery<TEntity> Page(int pageToFetch, int pageSize = 20);
-
+        Query<TEntity> Where<T>(Expression<Func<TEntity, bool>> rootPredicate) where T : IComparable<T>;
+        Query<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>;
+        Query<TEntity> Page(int pageToFetch, int pageSize = 20);
         IEnumerable<TEntity> Execute();
     }
 }
