@@ -12,7 +12,7 @@ namespace Infrastructure.Query
     {
         Query<TEntity> Where<T>(Expression<Func<TEntity, bool>> rootPredicate) where T : IComparable<T>;
         Query<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>;
-        Query<TEntity> Page(int pageToFetch, int pageSize = 20);
+        Query<TEntity> Page(int page, int pageSize = 20);
         IEnumerable<TEntity> Execute();
     }
 }
