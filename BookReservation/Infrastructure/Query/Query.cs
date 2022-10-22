@@ -13,7 +13,7 @@ namespace Infrastructure.Query
         public List<(Expression expression, Type argumentType, string columnName)> WherePredicate { get; set; } = new();
         public (string tableName, bool isAscending, Type argumentType)? OrderByContainer { get; set; }
         public (int PageToFetch, int PageSize)? PaginationContainer { get; set; }
-        public IQuery<TEntity> Page(int pageToFetch, int pageSize = 10)
+        public IQuery<TEntity> Page(int pageToFetch, int pageSize = 20)
         {
             PaginationContainer = (pageToFetch, pageSize);
             return this;

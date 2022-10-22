@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
-    public interface IBaseEntity
+    public abstract class BaseEntity
     {
-        int Id { get; set; }
-
-        string TableName { get; }
+        [Key]
+        public int Id { get; set; }
     }
 }

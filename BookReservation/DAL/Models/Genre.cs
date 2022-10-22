@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Genre : IBaseEntity
+    public class Genre : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-
-        public string TableName { get; } = nameof(BookReservationDbContext.Genres);
     }
 }

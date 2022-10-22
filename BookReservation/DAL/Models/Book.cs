@@ -4,10 +4,8 @@ using DAL.Enums;
 
 namespace DAL.Models
 {
-    public class Book : IBaseEntity
+    public class Book : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -40,7 +38,5 @@ namespace DAL.Models
         public virtual List<Review> Reviews { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
-
-        public string TableName { get; } = nameof(BookReservationDbContext.Books);
     }
 }

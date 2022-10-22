@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class User : IBaseEntity
+    public class User : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [MaxLength(64), Required]
         public string Name { get; set; }
 
@@ -42,6 +39,5 @@ namespace DAL.Models
         public virtual List<Review> Reviews { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
-        public string TableName { get; } = nameof(BookReservationDbContext.Users);
     }
 }

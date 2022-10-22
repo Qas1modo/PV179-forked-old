@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class ReviewPoint : IBaseEntity
+    public class ReviewPoint : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public int ReviewId { get; set; }
 
         [ForeignKey(nameof(ReviewId))]
@@ -17,6 +15,5 @@ namespace DAL.Models
 
         [Required]
         public bool Positive {get; set; }
-        public string TableName { get; } = nameof(BookReservationDbContext.ReviewPoints);
     }
 }

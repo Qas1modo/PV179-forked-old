@@ -5,10 +5,8 @@ using System.Reflection.Metadata;
 
 namespace DAL.Models
 {
-    public class Rent : IBaseEntity
+    public class Rent : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public int UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
@@ -34,6 +32,5 @@ namespace DAL.Models
 
         [Required]
         public RentState State { get; set; }
-        public string TableName { get; } = nameof(BookReservationDbContext.Rents);
     }
 }

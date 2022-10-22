@@ -13,17 +13,6 @@ namespace Infrastructure.EFCore.Test.Query
     public class QueryTests
     {
         private readonly BookReservationDbContext Context;
-        private Author author1 = new(){ Id = 1, Name = "Sam Hill" };
-        private Author author2 = new() { Id = 2, Name = "George" };
-        private Author author3 = new() { Id = 3, Name = "Bill" };
-        private Author author4 = new() { Id = 4, Name = "TEST" };
-        private Author author5 = new() { Id = 5, Name = "Pocket"};
-        private Author author6 = new() { Id = 6, Name = "Jimmy"};
-        private Author author7 = new() { Id = 7, Name = "Robert" };
-        private Author author8 = new() { Id = 8, Name = "Herkules" };
-        private Author author9 = new() { Id = 9, Name = "Penny" };
-        private Author author10 = new() { Id = 10, Name = "Vasek" };
-        private Author author11 = new() { Id = 11, Name = "Pes" };
         public QueryTests()
         {
             var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
@@ -32,17 +21,17 @@ namespace Infrastructure.EFCore.Test.Query
                             .Options;
 
             Context = new BookReservationDbContext(dbContextOptions);
-            Context.Add(author1);
-            Context.Add(author2);
-            Context.Add(author3);
-            Context.Add(author4);
-            Context.Add(author5);
-            Context.Add(author6);
-            Context.Add(author7);
-            Context.Add(author8);
-            Context.Add(author9);
-            Context.Add(author10);
-            Context.Add(author11);
+            Context.Add(new(){ Id = 1, Name = "Sam Hill" });
+            Context.Add(new(){ Id = 2, Name = "George" });
+            Context.Add(new(){ Id = 3, Name = "Bill" });
+            Context.Add(new(){ Id = 4, Name = "TEST" });
+            Context.Add(new(){ Id = 5, Name = "Pocket"});
+            Context.Add(new(){ Id = 6, Name = "Jimmy"});
+            Context.Add(new(){ Id = 7, Name = "Robert" });
+            Context.Add(new(){ Id = 8, Name = "Herkules" });
+            Context.Add(new(){ Id = 9, Name = "Penny" });
+            Context.Add(new(){ Id = 10, Name = "Vasek" });
+            Context.Add(new(){ Id = 11, Name = "Pes" });
             Context.SaveChanges();
         }
 
@@ -52,8 +41,12 @@ namespace Infrastructure.EFCore.Test.Query
             var efquery = new EFQuery<Author>(Context);
             efquery.Where<string>(a => a == "Robert", "Name");
             var result = efquery.Execute();
-            Assert.True(result.Count() == 1);
-            Assert.Equal(author7, result.First());
+
+            var expectedResult = Context.Authors
+                .Where(a => a.Name == "Robert")
+                .ToList();
+
+            Assert.Equal(expectedResult, result);
         }
 
         [Fact]
@@ -62,6 +55,7 @@ namespace Infrastructure.EFCore.Test.Query
             var efquery = new EFQuery<Author>(Context);
             efquery.Where<int>(a => a == 13, "Id");
             var result = efquery.Execute();
+
             Assert.False(result.Any());
         }
 
@@ -75,7 +69,7 @@ namespace Infrastructure.EFCore.Test.Query
             var expectedResult = Context.Authors
                .Where(a => a.Name.StartsWith("P"))
                .ToList();
-            Assert.True(result.Count() == 3);
+
             Assert.Equal(expectedResult, result);
         }
 

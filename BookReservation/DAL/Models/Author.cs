@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Author : IBaseEntity
+    public class Author : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-
-        public string TableName { get; } = nameof(BookReservationDbContext.Authors);
     }
 }

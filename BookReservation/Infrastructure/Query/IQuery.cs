@@ -14,7 +14,7 @@ namespace Infrastructure.Query
 
         IQuery<TEntity> OrderBy<T>(string columnName, bool ascendingOrder = true) where T : IComparable<T>;
 
-        IQuery<TEntity> Page(int pageToFetch, int pageSize = 10);
+        IQuery<TEntity> Page(int pageToFetch, int pageSize = 20);
 
         IEnumerable<TEntity> Execute();
     }

@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class Address : IBaseEntity
+    public class Address : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public virtual User User { get; set; }
 
         [Required]
@@ -20,8 +18,5 @@ namespace DAL.Models
         
         [Required]
         public int ZipCode { get; set; }
-
-        [NotMapped]
-        public string TableName { get; } = nameof(BookReservationDbContext.Addresses);
     }
 }
