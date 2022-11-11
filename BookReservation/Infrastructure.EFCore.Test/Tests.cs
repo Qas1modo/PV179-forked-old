@@ -7,6 +7,7 @@ namespace Infrastructure.EFCore.Test
     public abstract class Tests
     {
         protected readonly DbContextOptions<BookReservationDbContext> dbContextOptions;
+        protected readonly BookReservationDbContext dbContext;
 
         public Tests()
         {
@@ -16,6 +17,7 @@ namespace Infrastructure.EFCore.Test
                 .UseInMemoryDatabase(databaseName: myDatabaseName)
                 .Options;
 
+            dbContext = new BookReservationDbContext(dbContextOptions);
             InitDatabase();
         }
 

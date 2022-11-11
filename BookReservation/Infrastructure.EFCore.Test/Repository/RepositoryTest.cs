@@ -12,9 +12,7 @@ namespace Infrastructure.EFCore.Test.Repository
 {
     public class RepositoryTest : Tests
     {
-        private BookReservationDbContext dbContext;
-
-        private Dictionary<string, Author> map = new Dictionary<string, Author>
+        private readonly Dictionary<string, Author> map = new Dictionary<string, Author>
         {
             ["get"] = new Author { Id = 10, Name = "Richard Dreveny" },
             ["update"] = new Author { Id = 20, Name = "Peter Dreveny" },
@@ -24,8 +22,6 @@ namespace Infrastructure.EFCore.Test.Repository
 
         public override void InitDatabase()
         {
-            dbContext = new BookReservationDbContext(dbContextOptions);
-
             foreach (var item in map.Values)
             {
                 dbContext.Add(item);
@@ -76,7 +72,7 @@ namespace Infrastructure.EFCore.Test.Repository
             efRepository.Delete(map["deleteById"].Id);
             dbContext.SaveChanges();
 
-            Author retrievedDummyAuthor1 = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteById"].Id);
+            Author? retrievedDummyAuthor1 = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteById"].Id);
             Assert.True(retrievedDummyAuthor1 == null);
         }
 
@@ -87,7 +83,7 @@ namespace Infrastructure.EFCore.Test.Repository
             efRepository.Delete(map["deleteByEntity"]);
             dbContext.SaveChanges();
 
-            Author retrievedDummyAuthor = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteByEntity"].Id);
+            Author? retrievedDummyAuthor = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteByEntity"].Id);
             Assert.True(retrievedDummyAuthor == null);
         }
     }
