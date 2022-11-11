@@ -14,19 +14,23 @@ namespace Infrastructure.EFCore.Test.Repository
     {
         private BookReservationDbContext dbContext;
 
-        private readonly Author dummyAuthorGet = new Author { Id = 1, Name = "Richard Dreveny" };
-        private Author dummyAuthorUpdate = new Author { Id = 2, Name = "Peter Dreveny" };
-        private readonly Author dummyAuthorDeleteById = new Author { Id = 3, Name = "Martin Dreveny" };
-        private readonly Author dummyAuthorDeleteByEntity = new Author { Id = 4, Name = "Juraj Dreveny" };
+        private Dictionary<string, Author> map = new Dictionary<string, Author>
+        {
+            ["get"] = new Author { Id = 10, Name = "Richard Dreveny" },
+            ["update"] = new Author { Id = 20, Name = "Peter Dreveny" },
+            ["deleteById"] = new Author { Id = 30, Name = "Martin Dreveny" },
+            ["deleteByEntity"] = new Author { Id = 40, Name = "Juraj Dreveny" },
+        };
 
         public override void InitDatabase()
         {
             dbContext = new BookReservationDbContext(dbContextOptions);
 
-            dbContext.Authors.Add(dummyAuthorGet);
-            dbContext.Authors.Add(dummyAuthorUpdate);
-            dbContext.Authors.Add(dummyAuthorDeleteById);
-            dbContext.Authors.Add(dummyAuthorDeleteByEntity);
+            foreach (var item in map.Values)
+            {
+                dbContext.Add(item);
+            }
+
             dbContext.SaveChanges();
         }
 
@@ -47,45 +51,43 @@ namespace Infrastructure.EFCore.Test.Repository
         public void PassingGetTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            var result = efRepository.GetByID(dummyAuthorGet.Id);
+            var result = efRepository.GetByID(map["get"].Id);
 
-            Assert.True(result.Name.Equals(dummyAuthorGet.Name));
+            Assert.True(result.Name.Equals(map["get"].Name));
         }
 
         [Fact]
         public void PassingUpdateTest()
         {
-            dummyAuthorUpdate.Name = "Nove meno";
+            map["update"].Name = "Nove meno";
 
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            efRepository.Update(dummyAuthorUpdate);
+            efRepository.Update(map["update"]);
             dbContext.SaveChanges();
 
-
-            Author updatedDummyAuthor = dbContext.Authors.Single(author => author.Id == dummyAuthorUpdate.Id);
-            Assert.True(updatedDummyAuthor.Name.Equals(dummyAuthorUpdate.Name));
+            Author updatedDummyAuthor = dbContext.Authors.Single(author => author.Id == map["update"].Id);
+            Assert.True(updatedDummyAuthor.Name.Equals(map["update"].Name));
         }
 
         [Fact]
         public void PassingDeleteByIdTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            efRepository.Delete(dummyAuthorDeleteById.Id);
+            efRepository.Delete(map["deleteById"].Id);
             dbContext.SaveChanges();
 
-            Author retrievedDummyAuthor = dbContext.Authors.SingleOrDefault(author => author.Id == dummyAuthorDeleteById.Id);
-
-            Assert.True(retrievedDummyAuthor == null);
+            Author retrievedDummyAuthor1 = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteById"].Id);
+            Assert.True(retrievedDummyAuthor1 == null);
         }
 
         [Fact]
         public void PassingDeleteByEntityTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            efRepository.Delete(dummyAuthorDeleteByEntity);
+            efRepository.Delete(map["deleteByEntity"]);
             dbContext.SaveChanges();
 
-            Author retrievedDummyAuthor = dbContext.Authors.SingleOrDefault(author => author.Id == dummyAuthorDeleteByEntity.Id);
+            Author retrievedDummyAuthor = dbContext.Authors.SingleOrDefault(author => author.Id == map["deleteByEntity"].Id);
             Assert.True(retrievedDummyAuthor == null);
         }
     }
