@@ -13,19 +13,19 @@ namespace Infrastructure.Query
     {
         protected IQueryable<TEntity> query;
 
-        public Query<TEntity> Page(int page, int pageSize = 20)
+        public IQuery<TEntity> Page(int page, int pageSize = 20)
         {
             query = query.Skip((page -1) * pageSize).Take(pageSize);
             return this;
         }
 
-        public Query<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>
+        public IQuery<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>
         {
             query = ascending ? query.OrderBy(selector) : query.OrderByDescending(selector);
             return this;
         }
 
-        public Query<TEntity> Where<T>(Expression<Func<TEntity, bool>> predicate) where T : IComparable<T>
+        public IQuery<TEntity> Where<T>(Expression<Func<TEntity, bool>> predicate) where T : IComparable<T>
         {
             query = query.Where(predicate);
             return this;
