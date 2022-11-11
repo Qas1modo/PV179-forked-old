@@ -10,39 +10,41 @@ using Infrastructure.EFCore.Query;
 
 namespace Infrastructure.EFCore.Test.Query
 {
-    public class QueryTests
+    public class QueryTests : Tests
     {
-        private readonly BookReservationDbContext Context;
-        public QueryTests()
+        public override void InitDatabase()
         {
-            var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
-            var dbContextOptions = new DbContextOptionsBuilder<BookReservationDbContext>()
-                            .UseInMemoryDatabase(databaseName: myDatabaseName)
-                            .Options;
+            string[] names =
+            {
+                "Sam Hill",
+                "George",
+                "Bill",
+                "TEST",
+                "Pocket",
+                "Jimmy",
+                "Robert",
+                "Herkules",
+                "Penny",
+                "Vasek",
+                "Pes",
+            };
 
-            Context = new BookReservationDbContext(dbContextOptions);
-            Context.Add(new Author { Id = 1, Name = "Sam Hill" });
-            Context.Add(new Author { Id = 2, Name = "George" });
-            Context.Add(new Author { Id = 3, Name = "Bill" });
-            Context.Add(new Author { Id = 4, Name = "TEST" });
-            Context.Add(new Author { Id = 5, Name = "Pocket"});
-            Context.Add(new Author { Id = 6, Name = "Jimmy"});
-            Context.Add(new Author { Id = 7, Name = "Robert" });
-            Context.Add(new Author { Id = 8, Name = "Herkules" });
-            Context.Add(new Author { Id = 9, Name = "Penny" });
-            Context.Add(new Author { Id = 10, Name = "Vasek" });
-            Context.Add(new Author { Id = 11, Name = "Pes" });
-            Context.SaveChanges();
+            for(int i = 1; i < names.Length + 1; i++)
+            {
+                dbContext.Add(new Author { Id = i, Name = names[i - 1] });
+            }
+
+            dbContext.SaveChanges();
         }
 
         [Fact]
         public void TestFindAuthorByName()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<string>(a => a.Name == "Robert");
             var result = efquery.Execute();
 
-            var expectedResult = Context.Authors
+            var expectedResult = dbContext.Authors
                 .Where(a => a.Name == "Robert")
                 .ToList();
 
@@ -52,7 +54,7 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestFindAuthorWithInvalidId()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a.Id == 13);
             var result = efquery.Execute();
 
@@ -62,11 +64,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestFindAuthorsStartingP()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<string>(a => a.Name.StartsWith("P"));
             var result = efquery.Execute();
 
-            var expectedResult = Context.Authors
+            var expectedResult = dbContext.Authors
                .Where(a => a.Name.StartsWith("P"))
                .ToList();
 
@@ -76,11 +78,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorsWithIdGreaterThan5()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a.Id > 5);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                .Where(a => a.Id > 5)
                .ToList();
 
@@ -90,11 +92,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorsSortAscendingByName()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.OrderBy<string>(a => a.Name);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .OrderBy(a => a.Name)
                 .ToList();
 
@@ -104,11 +106,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorsSortDescendingById()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.OrderBy<int>(a => a.Id, false);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .OrderByDescending(a => a.Id)
                 .ToList();
 
@@ -118,11 +120,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuhtorPaginationThirdPage()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(3, 3);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .Skip(6)
                 .Take(3)
                 .ToList();
@@ -133,11 +135,11 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuhtorPaginationNotWholePage()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(3, 4);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .Skip(8)
                 .Take(3)
                 .ToList();
@@ -148,7 +150,7 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuhtorPaginationEmptyPage()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(4, 4);
             var result = efquery.Execute();
 
@@ -160,12 +162,12 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorFilterWithPaggination()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a.Id < 9);
             efquery.Page(2, 4);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id < 9)
                 .Skip(4)
                 .Take(4)
@@ -177,12 +179,12 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorFilterWithOredring()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a.Id < 9);
             efquery.OrderBy<int>(a => a.Id, false);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id < 9)
                 .OrderByDescending(a => a.Id)
                 .ToList();
@@ -193,13 +195,13 @@ namespace Infrastructure.EFCore.Test.Query
         [Fact]
         public void TestAuthorEverything()
         {
-            var efquery = new EFQuery<Author>(Context);
+            var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a.Id > 3);
             efquery.OrderBy<string>(a => a.Name, true);
             efquery.Page(3, 2);
             var result = efquery.Execute();
 
-            var ExpectedResult = Context.Authors
+            var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id > 3)
                 .OrderBy(a => a.Name)
                 .Skip(4)
@@ -210,4 +212,3 @@ namespace Infrastructure.EFCore.Test.Query
         }
     }
 }
-
