@@ -6,33 +6,27 @@ using Microsoft.EntityFrameworkCore;
 using Infrastrucure.EFCore.Repository;
 using Castle.Core.Resource;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Infrastructure.EFCore.Test.Repository
 {
-    public class RepositoryTest
+    public class RepositoryTest : Tests
     {
-        private readonly BookReservationDbContext dbContext;
+        private BookReservationDbContext dbContext;
 
         private readonly Author dummyAuthorGet = new Author { Id = 1, Name = "Richard Dreveny" };
         private Author dummyAuthorUpdate = new Author { Id = 2, Name = "Peter Dreveny" };
         private readonly Author dummyAuthorDeleteById = new Author { Id = 3, Name = "Martin Dreveny" };
         private readonly Author dummyAuthorDeleteByEntity = new Author { Id = 4, Name = "Juraj Dreveny" };
 
-        public RepositoryTest()
+        public override void InitDatabase()
         {
-            var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
-
-            var dbContextOptions = new DbContextOptionsBuilder<BookReservationDbContext>()
-                .UseInMemoryDatabase(databaseName: myDatabaseName)
-                .Options;
-
             dbContext = new BookReservationDbContext(dbContextOptions);
 
             dbContext.Authors.Add(dummyAuthorGet);
             dbContext.Authors.Add(dummyAuthorUpdate);
             dbContext.Authors.Add(dummyAuthorDeleteById);
             dbContext.Authors.Add(dummyAuthorDeleteByEntity);
-
             dbContext.SaveChanges();
         }
 
