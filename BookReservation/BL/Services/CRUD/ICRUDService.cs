@@ -1,19 +1,18 @@
 ﻿using System;
-using BL.DTOs;
 
 namespace BL.Services.CRUD
 {
 	public interface ICRUDService<TEntity> where TEntity : class
     {
-        public void CreateAsync(GenericDto insertItem);
+        public void CreateAsync<TDto>(TDto insertItem);
 
-        public GenericDto GetByIdAsync(object id, GenericDto dto);
+        public TDto GetByIdAsync<TDto>(object id);
 
-        public void UpdateAsync(GenericDto updateItem);
+        public void UpdateAsync<TDto>(TDto updateItem);
 
         public void DeleteByIdAsync(object id);
 
-        public void DeleteByEntityAsync(GenericDto deleteItem);
+        public void DeleteByEntityAsync<TDto>(TDto deleteItem);
     }
 }
 
