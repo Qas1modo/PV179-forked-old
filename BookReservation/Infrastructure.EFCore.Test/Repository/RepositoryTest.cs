@@ -3,7 +3,7 @@ using Infrastructure.EFCore;
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Infrastrucure.EFCore.Repository;
+using Infrastructure.EFCore.Repository;
 using Castle.Core.Resource;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Infrastructure;

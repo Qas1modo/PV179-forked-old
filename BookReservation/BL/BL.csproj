@@ -15,11 +15,19 @@
     <None Remove="QueryObjects\" />
     <None Remove="Facades\" />
     <None Remove="DTOs\" />
+    <None Remove="AutoMapper" />
+    <None Remove="Config\" />
+    <None Remove="Services\CRUD\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="QueryObjects\" />
     <Folder Include="Facades\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Config\" />
+    <Folder Include="Services\CRUD\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
   </ItemGroup>
 </Project>

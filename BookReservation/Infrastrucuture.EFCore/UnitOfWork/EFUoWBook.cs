@@ -1,8 +1,8 @@
 ﻿using DAL.Models;
 using DAL;
 using Infrastructure.UnitOfWork;
-using Infrastrucure.Repository;
-using Infrastrucure.EFCore.Repository;
+using Infrastructure.Repository;
+using Infrastructure.EFCore.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.UnitOfWork

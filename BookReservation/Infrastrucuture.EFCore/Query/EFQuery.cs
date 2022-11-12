@@ -2,7 +2,7 @@
 using DAL.Models;
 using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
-using Infrastrucuture.EFCore.UnitOfWork;
+using Infrastructure.EFCore.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
