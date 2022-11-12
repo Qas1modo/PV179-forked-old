@@ -13,14 +13,9 @@ namespace Infrastructure.EFCore.UnitOfWork
         private IRepository<Book> bookRepository;
         private IRepository<Genre> genreRepository;
 
-        public EFUoWBook(DbContextOptions<BookReservationDbContext> options)
+        public EFUoWBook(BookReservationDbContext context)
         {
-            Context = new(options);
-        }
-
-        public EFUoWBook()
-        {
-            Context = new();
+            Context = context;
         }
 
         public BookReservationDbContext Context { get; }

@@ -13,14 +13,9 @@ namespace Infrastructure.EFCore.UnitOfWork
 
         public BookReservationDbContext Context { get; }
 
-        public EFUoWUserInfo(DbContextOptions<BookReservationDbContext> options)
+        public EFUoWUserInfo(BookReservationDbContext context)
         {
-            Context = new(options);
-        }
-
-        public EFUoWUserInfo()
-        {
-            Context = new();
+            Context = context;
         }
 
         public IRepository<User> UserRepository

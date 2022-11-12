@@ -1,0 +1,89 @@
+﻿using DAL.Models;
+using DAL.Enums;
+using DAL;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.EFCore.UnitOfWork;
+
+namespace Infrastructure.EFCore.Test.UnitOfWork
+{
+    public class EFUoWChangeUserInfoTests
+    {
+        private readonly BookReservationDbContext dbContext;        
+        private static readonly User dummyUser = new()
+        {
+            AddressId = 1,
+            Name = "Peter Marcin",
+            Email = "peter123@mail.com",
+            Password = "jjpjpkf",
+            Salt = "dkpafjapfjpak",
+            Phone = "+421911999222",
+            BirthDate = new DateTime(1980, 3, 1),
+            Group = Group.Employee,
+            Picture = "www.pictureofemployee.com",
+        };
+
+        private static readonly Address dummyAdress = new()
+        {
+            User = dummyUser,
+            City = "Madrid",
+            Street = "C. De Jorge Juan",
+            StNumber = 106,
+            ZipCode = 28009
+        };
+
+        public EFUoWChangeUserInfoTests()
+        {
+            var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
+
+            // Options for in-memory db
+            var options = new DbContextOptionsBuilder<BookReservationDbContext>()
+                .UseInMemoryDatabase(databaseName: myDatabaseName)
+                .Options;
+
+
+            dbContext = new BookReservationDbContext(options);
+
+            dbContext.Addresses.Add(dummyAdress);
+            dbContext.Users.Add(dummyUser);
+
+            dbContext.SaveChanges();
+        }
+
+        [Fact]
+        public void ChangeUserInfoPassingTransactionTest()
+        {
+            string newName = "Chad Chad";
+            string newCity = "Barcelona";
+            string newEmail = "a1abcd23@gmail.com";
+
+            using (var efUnitOfWork = new EFUoWUserInfo(dbContext))
+            {
+                var userRepo = efUnitOfWork.UserRepository;
+
+                var user = userRepo.GetByID(dummyUser.Id);
+                user.Name = newName;
+                user.Email = newEmail;
+
+                var userAddress = user.Address;
+                userAddress.City = newCity;
+
+                efUnitOfWork.Commit().Wait();
+
+                using (var eF = new EFUoWUserInfo(dbContext))
+                {
+                    userRepo = eF.UserRepository;
+
+                    User editedUser = userRepo.GetByID(dummyUser.Id);
+
+                    Assert.True(editedUser.Name.Equals(newName));
+                    Assert.True(editedUser.Email.Equals(newEmail));
+                    Assert.True(editedUser.Address.City.Equals(newCity));
+                }
+
+            }
+
+
+
+        }        
+    }
+}

@@ -11,16 +11,10 @@ namespace Infrastructure.EFCore.UnitOfWork
     {
         private IRepository<Rent> rentRepository;
 
-        public EFUoWReservation(DbContextOptions<BookReservationDbContext> options)
+        public EFUoWReservation(BookReservationDbContext context)
         {
-            Context = new(options);
+            Context = context;
         }
-
-        public EFUoWReservation()
-        {
-            Context = new();
-        }
-
 
         public BookReservationDbContext Context { get; }
 
