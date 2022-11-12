@@ -5,9 +5,9 @@ namespace DAL.Models
 {
     public class ReviewPoint : BaseEntity
     {
-        [ForeignKey(nameof(ReviewId))]
         public int ReviewId { get; set; }
 
+        [ForeignKey(nameof(ReviewId))]
         public virtual Review Review { get; set; }
 
         [MaxLength(150), Required]

@@ -9,14 +9,14 @@ namespace DAL.Models
         [Required]
         public string Name { get; set; }
 
+        [ForeignKey(nameof(AuthorId))]
         public virtual Author Author { get; set; }
 
-        [ForeignKey(nameof(AuthorId))]
         public int AuthorId { get; set; }
-        
-        public virtual Genre Genre { get; set; }
 
         [ForeignKey(nameof(GenreId))]
+        public virtual Genre Genre { get; set; }
+
         public int GenreId { get; set; }
 
         // ErrorMessage = ""?

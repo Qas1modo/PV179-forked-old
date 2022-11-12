@@ -6,13 +6,12 @@ namespace DAL.Models
 {
     public class User : BaseEntity
     {
-
         [MaxLength(64), Required]
         public string Name { get; set; }
 
-        [ForeignKey(nameof(AddressId))]
         public int AddressId { get; set; }
 
+        [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
 
         [Required]

@@ -5,14 +5,14 @@ namespace DAL.Models
 {
     public class Review : BaseEntity
     {
-        [ForeignKey(nameof(UserId))]
         public int UserId { get; set; }
 
+        [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 
-        [ForeignKey(nameof(BookId))]
         public int BookId { get; set; }
 
+        [ForeignKey(nameof(BookId))]
         public virtual Book Book { get; set; }
 
         [Range(1, 10), Required]

@@ -11,6 +11,5 @@ namespace DAL.Models
     {
         [Required]
         public string Name { get; set; }
-
     }
 }
