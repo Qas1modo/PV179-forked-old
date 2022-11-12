@@ -1,7 +1,6 @@
 ﻿using System;
 using AutoMapper;
 using Infrastructure.Repository;
-using BL.DTOs;
 
 namespace BL.Services.CRUD
 {
@@ -16,7 +15,7 @@ namespace BL.Services.CRUD
             _repository = repository;
         }
 
-        public void CreateAsync(GenericDto insertItem)
+        public void CreateAsync<TDto>(TDto insertItem)
         {
             if (insertItem == null)
             {
@@ -27,7 +26,7 @@ namespace BL.Services.CRUD
             _repository.Insert(newEnity);
         }
 
-        public GenericDto GetByIdAsync(object id, GenericDto dto)
+        public TDto GetByIdAsync<TDto>(object id)
         {
             if (id == null)
             {
@@ -35,10 +34,10 @@ namespace BL.Services.CRUD
             }
 
             var result = _repository.GetByID(id);
-            return (GenericDto)_mapper.Map(result, result.GetType(), dto.GetType());
+            return _mapper.Map<TDto>(result);
         }
 
-        public void UpdateAsync(GenericDto updateItem)
+        public void UpdateAsync<TDto>(TDto updateItem)
         {
             if (updateItem == null)
             {
@@ -60,7 +59,7 @@ namespace BL.Services.CRUD
             _repository.Delete(id);
         }
 
-        public void DeleteByEntityAsync(GenericDto deleteItem)
+        public void DeleteByEntityAsync<TDto>(TDto deleteItem)
         {
             if (deleteItem == null)
             {
