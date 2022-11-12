@@ -4,7 +4,7 @@ namespace BL.Services.CRUD
 {
 	public interface ICRUDService<TDto, TEntity> where TDto : class where TEntity : class
     {
-        public void CreateAsync(TDto entity);
+        public void CreateAsync(TDto insertItem);
 
         public TDto GetByIdAsync(object id);
 
