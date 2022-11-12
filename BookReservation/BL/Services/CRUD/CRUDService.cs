@@ -15,31 +15,57 @@ namespace BL.Services.CRUD
             _repository = repository;
         }
 
-        public void CreateAsync(TDto entity)
+        public void CreateAsync(TDto insertItem)
         {
-            var newEnity = _mapper.Map<TEntity>(entity);
+            if (insertItem == null)
+            {
+                throw new Exception("Arugment insertItem is null");
+            }
+
+            var newEnity = _mapper.Map<TEntity>(insertItem);
             _repository.Insert(newEnity);
         }
 
-        public TDto GetByIdAsync(long id)
+        public TDto GetByIdAsync(object id)
         {
-           var result = _repository.GetByID(id);
-           return _mapper.Map<TDto>(result);
+            if (id == null)
+            {
+                throw new Exception("Argument Id is null.");
+            }
+
+            var result = _repository.GetByID(id);
+            return _mapper.Map<TDto>(result);
         }
 
         public void UpdateAsync(TDto updateItem)
         {
+            if (updateItem == null)
+            {
+                throw new Exception("Arugment updateItem is null");
+            }
+
+
             var updatedEntity = _mapper.Map<TEntity>(updateItem);
             _repository.Update(updatedEntity);
         }
 
-        public void DeleteByIdAsync(long id)
+        public void DeleteByIdAsync(object id)
         {
+            if (id == null)
+            {
+                throw new Exception("Argument Id is null.");
+            }
+
             _repository.Delete(id);
         }
 
         public void DeleteByEntityAsync(TDto deleteItem)
         {
+            if (deleteItem == null)
+            {
+                throw new Exception("Argument deleteItem is null.");
+            }
+
             var deletedEntity = _mapper.Map<TEntity>(deleteItem);
             _repository.Delete(deletedEntity);
         }

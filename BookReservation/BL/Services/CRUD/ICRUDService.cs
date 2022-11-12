@@ -1,6 +1,4 @@
 ﻿using System;
-using AutoMapper;
-using Infrastructure.Repository;
 
 namespace BL.Services.CRUD
 {
@@ -8,11 +6,11 @@ namespace BL.Services.CRUD
     {
         public void CreateAsync(TDto entity);
 
-        public TDto GetByIdAsync(long id);
+        public TDto GetByIdAsync(object id);
 
         public void UpdateAsync(TDto updateItem);
 
-        public void DeleteByIdAsync(long id);
+        public void DeleteByIdAsync(object id);
 
         public void DeleteByEntityAsync(TDto deleteItem);
     }
