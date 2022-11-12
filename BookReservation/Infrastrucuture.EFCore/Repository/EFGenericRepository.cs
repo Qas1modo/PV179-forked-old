@@ -1,7 +1,7 @@
 ﻿using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
-using Infrastrucure.Repository;
+using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 
-namespace Infrastrucure.EFCore.Repository
+namespace Infrastructure.EFCore.Repository
 {
     public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
