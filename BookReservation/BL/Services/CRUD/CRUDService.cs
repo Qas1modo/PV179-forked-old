@@ -4,8 +4,8 @@ using Infrastructure.Repository;
 
 namespace BL.Services.CRUD
 {
-	public class CRUDService<TDto, TEntity> where TDto: class where TEntity: class
-	{
+	public class CRUDService<TDto, TEntity> : ICRUDService<TDto, TEntity> where TDto : class where TEntity : class
+    {
         private readonly IMapper _mapper;
         private readonly IRepository<TEntity> _repository;
 
