@@ -12,7 +12,7 @@ namespace Infrastructure.Query
     {
         IQuery<TEntity> Where<T>(Expression<Func<T, bool>> rootPredicate, string columnName) where T : IComparable<T>;
         IQuery<TEntity> OrderBy<T>(string columnName, bool ascending = true) where T : IComparable<T>;
-        IQuery<TEntity> Page(int page, int pageSize = 20);
+        IQuery<TEntity> Page(int page, int pageSize);
         EFQueryResult<TEntity> Execute();
     }
 }

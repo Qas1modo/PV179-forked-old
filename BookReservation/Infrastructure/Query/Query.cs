@@ -17,7 +17,7 @@ namespace Infrastructure.Query
         public int? PageNumber { get; set; }
         public int PageSize = 20;
 
-        public IQuery<TEntity> Page(int page, int pageSize = 20)
+        public IQuery<TEntity> Page(int page, int pageSize)
         {
             PageNumber = page;
             PageSize = pageSize;
