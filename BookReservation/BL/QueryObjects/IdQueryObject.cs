@@ -6,7 +6,7 @@ using Infrastructure.Query;
 
 namespace BL.QueryObjects
 {
-    public class IdQueryObject<TEntity> where TEntity : BaseEntity, new()
+    public class IdQueryObject<TEntity, TDto> where TEntity : BaseEntity, new()
     {
         private readonly IMapper mapper;
 
@@ -17,7 +17,7 @@ namespace BL.QueryObjects
             this.mapper = mapper;
             _query = query;
         }
-        public QueryResultDto<TEntity> ExecuteQuery(FilterDto filter)
+        public QueryResultDto<TDto> ExecuteQuery(FilterDto filter)
         {
             var query = _query.Where<string>(a => a == filter.Predicate, "Id");
             if (filter.SortCriteria is not null)
@@ -29,7 +29,7 @@ namespace BL.QueryObjects
                 query = query.Page(filter.PageNumber.Value, filter.PageSize ?? 20);
             }
 
-            return mapper.Map<EFQueryResult<TEntity>, QueryResultDto<TEntity>>(query.Execute());
+            return mapper.Map<EFQueryResult<TEntity>, QueryResultDto<TDto>>(query.Execute());
         }
     }
 }
