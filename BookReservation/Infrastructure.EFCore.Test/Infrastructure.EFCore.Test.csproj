@@ -28,7 +28,4 @@
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.InMemory" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MockTests\" />
-  </ItemGroup>
 </Project>

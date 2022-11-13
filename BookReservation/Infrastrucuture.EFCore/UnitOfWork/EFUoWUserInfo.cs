@@ -10,6 +10,7 @@ namespace Infrastructure.EFCore.UnitOfWork
     public class EFUoWUserInfo : IUoWUserInfo
     {
         private IRepository<User> userRepository;
+        private IRepository<Address> addressRepository;
 
         public BookReservationDbContext Context { get; }
 
@@ -27,6 +28,18 @@ namespace Infrastructure.EFCore.UnitOfWork
                     userRepository = new EFGenericRepository<User>(Context);
                 }
                 return userRepository;
+            }
+        }
+
+        public IRepository<Address> AddressRepository
+        {
+            get
+            {
+                if (addressRepository == null)
+                {
+                    addressRepository = new EFGenericRepository<Address>(Context);
+                }
+                return addressRepository;
             }
         }
 

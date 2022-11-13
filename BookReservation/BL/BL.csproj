@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastrucuture.EFCore\Infrastructure.EFCore.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Services\" />
@@ -20,7 +21,6 @@
     <None Remove="Services\CRUD\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Facades\" />
     <Folder Include="Config\" />
     <Folder Include="Services\CRUD\" />

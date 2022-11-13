@@ -4,7 +4,9 @@ using BL.Services.CRUD;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
+using Infrastructure.EFCore.Repository;
 using Infrastructure.Query;
+using Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,9 +21,17 @@ using (var db = new BookReservationDbContext())
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<ICRUDService<BaseEntity>, CRUDService<BaseEntity>>();
 builder.Services.AddSingleton<IMapper>(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping)));
-builder.Services.AddTransient<IQuery<BaseEntity>>(new EFQuery);
+builder.Services.AddTransient<IQuery<Address>, EFQuery<Address>>();
+builder.Services.AddTransient<IQuery<Author>, EFQuery<Author>>();
+builder.Services.AddTransient<IQuery<Book>, EFQuery<Book>>();
+builder.Services.AddTransient<IQuery<CartItem>, EFQuery<CartItem>>();
+builder.Services.AddTransient<IQuery<Genre>, EFQuery<Genre>>();
+builder.Services.AddTransient<IQuery<Rent>, EFQuery<Rent>>();
+builder.Services.AddTransient<IQuery<Review>, EFQuery<Review>>();
+builder.Services.AddTransient<IQuery<ReviewPoint>, EFQuery<ReviewPoint>>();
+builder.Services.AddTransient<IQuery<User>, EFQuery<User>>();
 builder.Services.AddSingleton<BookReservationDbContext, BookReservationDbContext>();
-
+builder.Services.AddSingleton<IRepository<BaseEntity>, EFGenericRepository<BaseEntity>>();
 
 var app = builder.Build();
 

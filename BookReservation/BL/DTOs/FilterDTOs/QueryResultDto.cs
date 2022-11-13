@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs.QueryObjects
 {
-    public class QueryResultDto<TDto>
+    public class QueryResultDto<IEntity>
     {
         public long ItemsCount { get; }
         public int? PageNumber { get; }
         public int PageSize { get; }
-        public IEnumerable<TDto> Items { get; set; }
+        public IEnumerable<IEntity> Items { get; set; }
     }
 }
