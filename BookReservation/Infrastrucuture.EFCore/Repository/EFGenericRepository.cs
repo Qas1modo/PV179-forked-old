@@ -60,7 +60,7 @@ namespace Infrastructure.EFCore.Repository
             {
                 throw new Exception("Entity with given Id does not exist.");
             }
-            Delete(entityToDelete);
+            dbSet.Remove(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
