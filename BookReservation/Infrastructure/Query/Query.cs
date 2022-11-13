@@ -15,7 +15,7 @@ namespace Infrastructure.Query
 
         public (string column, bool ascending, Type type)? OrderByData;
         public int? PageNumber { get; set; }
-        public int? PageSize { get; set; }
+        public int PageSize = 20;
 
         public IQuery<TEntity> Page(int page, int pageSize = 20)
         {
@@ -36,6 +36,6 @@ namespace Infrastructure.Query
             return this;
         }
 
-        public abstract IEnumerable<TEntity> Execute();
+        public abstract EFQueryResult<TEntity> Execute();
     }
 }

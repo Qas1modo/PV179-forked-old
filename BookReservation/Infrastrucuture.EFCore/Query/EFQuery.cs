@@ -23,7 +23,7 @@ namespace Infrastructure.EFCore.Query
             EntityType = typeof(TEntity);
         }
 
-        public override IEnumerable<TEntity> Execute()
+        public override EFQueryResult<TEntity> Execute()
         {
             IQueryable<TEntity> query = Context.Set<TEntity>();
 
@@ -37,9 +37,10 @@ namespace Infrastructure.EFCore.Query
             }
             if (PageNumber is not null)
             {
-                query = query.Skip((PageNumber - 1) * PageSize ?? 20).Take(PageSize ?? 20);
+                query = query.Skip(((int)PageNumber - 1) * PageSize).Take(PageSize);
             }
-            return query.ToList();
+            IEnumerable<TEntity> items = query.ToList();
+            return new EFQueryResult<TEntity>(items, items.Count(), PageSize, PageNumber);
         }
 
         private IQueryable<TEntity> OrderBy(IQueryable<TEntity> query, string orderByColumn, bool ascending, Type orderType)

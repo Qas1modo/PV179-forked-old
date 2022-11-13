@@ -48,7 +48,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Where(a => a.Name == "Robert")
                 .ToList();
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expectedResult, result.Items);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Infrastructure.EFCore.Test.Query
             efquery.Where<int>(a => a == 13, "Id");
             var result = efquery.Execute();
 
-            Assert.False(result.Any());
+            Assert.False(result.Items.Any());
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Infrastructure.EFCore.Test.Query
                .Where(a => a.Name.StartsWith("P"))
                .ToList();
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expectedResult, result.Items);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace Infrastructure.EFCore.Test.Query
                .Where(a => a.Id > 5)
                .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .OrderBy(a => a.Name)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .OrderByDescending(a => a.Id)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(3)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(3)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace Infrastructure.EFCore.Test.Query
 
             var ExpectedResult = new List<Author>();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -173,7 +173,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(4)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .OrderByDescending(a => a.Id)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(2)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
     }
 }
