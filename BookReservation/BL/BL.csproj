@@ -21,9 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="QueryObjects\" />
     <Folder Include="Facades\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Config\" />
     <Folder Include="Services\CRUD\" />
   </ItemGroup>
