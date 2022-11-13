@@ -15,7 +15,7 @@ namespace BL.Services.CRUD
             _repository = repository;
         }
 
-        public void CreateAsync<TDto>(TDto insertItem)
+        public void Create<TDto>(TDto insertItem)
         {
             if (insertItem == null)
             {
@@ -26,7 +26,7 @@ namespace BL.Services.CRUD
             _repository.Insert(newEnity);
         }
 
-        public TDto GetByIdAsync<TDto>(object id)
+        public TDto GetById<TDto>(object id)
         {
             if (id == null)
             {
@@ -37,7 +37,7 @@ namespace BL.Services.CRUD
             return _mapper.Map<TDto>(result);
         }
 
-        public void UpdateAsync<TDto>(TDto updateItem)
+        public void Update<TDto>(TDto updateItem)
         {
             if (updateItem == null)
             {
@@ -49,7 +49,7 @@ namespace BL.Services.CRUD
             _repository.Update(updatedEntity);
         }
 
-        public void DeleteByIdAsync(object id)
+        public void DeleteById(object id)
         {
             if (id == null)
             {
@@ -59,7 +59,7 @@ namespace BL.Services.CRUD
             _repository.Delete(id);
         }
 
-        public void DeleteByEntityAsync<TDto>(TDto deleteItem)
+        public void DeleteByEntity<TDto>(TDto deleteItem)
         {
             if (deleteItem == null)
             {
