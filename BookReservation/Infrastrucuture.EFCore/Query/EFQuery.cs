@@ -7,21 +7,78 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection;
 
 namespace Infrastructure.EFCore.Query
 {
     public class EFQuery<TEntity> : Query<TEntity> where TEntity : BaseEntity, new()
     {
-        private DbContext _context;
+        private readonly BookReservationDbContext Context;
 
-        public EFQuery(DbContext context)
+        private readonly Type EntityType;
+        public EFQuery(BookReservationDbContext context)
         {
-            _context = context;
-            query = _context.Set<TEntity>().AsQueryable();
+            Context = context;
+            EntityType = typeof(TEntity);
         }
+
         public override IEnumerable<TEntity> Execute()
         {
+            IQueryable<TEntity> query = Context.Set<TEntity>();
+
+            foreach (var expression in WherePredicates)
+            {
+                query = ApplyWhere(query, expression.expression, expression.columnName);
+            }
+            if (OrderByData is not null)
+            {
+                query = OrderBy(query, OrderByData.Value.column, OrderByData.Value.ascending, OrderByData.Value.type);
+            }
+            if (PageNumber is not null)
+            {
+                query = query.Skip((PageNumber - 1) * PageSize ?? 20).Take(PageSize ?? 20);
+            }
             return query.ToList();
+        }
+
+        private IQueryable<TEntity> OrderBy(IQueryable<TEntity> query, string orderByColumn, bool ascending, Type orderType)
+        {
+            ParameterExpression parameter = Expression.Parameter(EntityType, "parameter");
+            string? objectName = EntityType.GetProperty(orderByColumn)?.Name;
+            if (objectName == null)
+            {
+                throw new ArgumentException($"Invalid column name: {orderByColumn}");
+            }
+            MemberExpression property = Expression.Property(parameter, objectName);
+            var lambda = Expression.Lambda(property, parameter);
+            var orderByMethod = typeof(Queryable).GetMethods()
+                .First(a => a.Name == (ascending ? "OrderBy" : "OrderByDescending") && a.GetParameters().Length == 2);
+            orderByMethod = orderByMethod.MakeGenericMethod(EntityType, orderType);
+            return (IQueryable<TEntity>)orderByMethod.Invoke(null, new object[] { query, lambda })!;
+        }
+
+
+        private IQueryable<TEntity> ApplyWhere(IQueryable<TEntity> query, Expression expression, string columnName)
+        {
+            ParameterExpression parameter = Expression.Parameter(EntityType, "parameter");
+            string? objectName = EntityType.GetProperty(columnName)?.Name;
+            if (objectName is null)
+            {
+                throw new ArgumentException($"Invalid column name: {columnName}");
+            }
+            MemberExpression property = Expression.Property(parameter, objectName);
+            var getParameters = expression.GetType().GetProperty("Parameters")?.GetValue(expression);
+            var getBody = expression.GetType().GetProperty("Body")?.GetValue(expression);
+            if (getParameters is null || getBody is null)
+            {
+                throw new ArgumentException($"Expression is not supported: {expression}");
+            }
+            IReadOnlyCollection<ParameterExpression> parameters = (IReadOnlyCollection<ParameterExpression>)getParameters;
+            ReplaceParamVisitor visitor = new(parameters.First(), property);
+            Expression newBody = visitor.Visit((Expression) getBody);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(newBody, parameter);
+            return query.Where(lambda);
         }
     }
 }

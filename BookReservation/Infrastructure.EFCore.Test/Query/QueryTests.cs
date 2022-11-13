@@ -41,7 +41,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestFindAuthorByName()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<string>(a => a.Name == "Robert");
+            efquery.Where<string>(a => a == "Robert", "Name");
             var result = efquery.Execute();
 
             var expectedResult = dbContext.Authors
@@ -55,7 +55,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestFindAuthorWithInvalidId()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id == 13);
+            efquery.Where<int>(a => a == 13, "Id");
             var result = efquery.Execute();
 
             Assert.False(result.Any());
@@ -65,7 +65,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestFindAuthorsStartingP()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<string>(a => a.Name.StartsWith("P"));
+            efquery.Where<string>(a => a.StartsWith("P"), "Name");
             var result = efquery.Execute();
 
             var expectedResult = dbContext.Authors
@@ -79,7 +79,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorsWithIdGreaterThan5()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id > 5);
+            efquery.Where<int>(a => a > 5, "Id");
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
@@ -93,7 +93,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorsSortAscendingByName()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.OrderBy<string>(a => a.Name);
+            efquery.OrderBy<string>("Name", true);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
@@ -107,7 +107,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorsSortDescendingById()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.OrderBy<int>(a => a.Id, false);
+            efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
@@ -163,7 +163,7 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorFilterWithPaggination()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id < 9);
+            efquery.Where<int>(a => a < 9, "Id");
             efquery.Page(2, 4);
             var result = efquery.Execute();
 
@@ -180,8 +180,8 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorFilterWithOredring()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id < 9);
-            efquery.OrderBy<int>(a => a.Id, false);
+            efquery.Where<int>(a => a < 9, "Id");
+            efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
@@ -196,8 +196,8 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestAuthorEverything()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id > 3);
-            efquery.OrderBy<string>(a => a.Name, true);
+            efquery.Where<int>(a => a > 3, "Id");
+            efquery.OrderBy<string>("Name", true);
             efquery.Page(3, 2);
             var result = efquery.Execute();
 

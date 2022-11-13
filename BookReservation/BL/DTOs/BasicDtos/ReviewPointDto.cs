@@ -6,7 +6,6 @@
 
         public string Text { get; set; }
 
-        [Required]
         public bool Positive { get; set; }
     }
 }

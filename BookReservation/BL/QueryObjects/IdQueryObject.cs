@@ -18,17 +18,5 @@ namespace BL.QueryObjects
             this.mapper = mapper;
             this.query = query;
         }
-
-        public QueryResultDto<TDto> ExecuteQuery(IdFilterDto filter)
-        {
-
-            var q = query.Where<string>(a => a.Id == filter.Id);
-
-            q = ApplyOrderBy(q);
-            q = ApplyPagination(q);
-
-            return mapper.Map<QueryResultDto<TDto>>(q.Execute());
-        }
-
     }
 }

@@ -4,8 +4,6 @@ namespace BL.DTOs.QueryObject.Filters
 {
     public abstract class AbstractFilterDto<TEntity> where TEntity : class
     {
-        public Expression<Func<TEntity, T>>? OrderByCriteria { get; set; }
-
         // Default values ?? but have them defined in one place --> magical constants
         public int? RequestedPageNumber { get; set; }
 
