@@ -15,7 +15,7 @@ namespace BL.Services.CRUD
             _repository = repository;
         }
 
-        public void Create<TDto>(TDto insertItem)
+        public object Create<TDto>(TDto insertItem)
         {
             if (insertItem == null)
             {
@@ -23,7 +23,7 @@ namespace BL.Services.CRUD
             }
 
             var newEnity = _mapper.Map<TEntity>(insertItem);
-            _repository.Insert(newEnity);
+            return _repository.Insert(newEnity);
         }
 
         public TDto GetById<TDto>(object id)

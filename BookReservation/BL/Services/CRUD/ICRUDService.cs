@@ -4,7 +4,7 @@ namespace BL.Services.CRUD
 {
 	public interface ICRUDService<TEntity> where TEntity : class
     {
-        public void Create<TDto>(TDto insertItem);
+        public object Create<TDto>(TDto insertItem);
 
         public TDto GetById<TDto>(object id);
 

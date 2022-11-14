@@ -38,14 +38,13 @@ namespace Infrastructure.EFCore.Repository
             return entity;
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual object Insert(TEntity entity)
         {
             if (entity == null)
             {
                 throw new Exception("Arugment entity is null");
             }
-
-            dbSet.Add(entity);
+            return dbSet.Add(entity).Entity.Id;
         }
 
         public virtual void Delete(object id)

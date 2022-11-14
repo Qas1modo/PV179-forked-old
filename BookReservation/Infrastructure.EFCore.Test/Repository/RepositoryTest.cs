@@ -36,11 +36,12 @@ namespace Infrastructure.EFCore.Test.Repository
             Author dummyAuthorInsert = new Author { Id = 9, Name = "Matko Kubko" };
 
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            efRepository.Insert(dummyAuthorInsert);
+            var actualId = efRepository.Insert(dummyAuthorInsert);
             dbContext.SaveChanges();
 
             Author retrievedDummyAuthor = dbContext.Authors.Single(author => author.Id == dummyAuthorInsert.Id);
             Assert.True(retrievedDummyAuthor.Name.Equals(dummyAuthorInsert.Name));
+            Assert.Equal(actualId, dummyAuthorInsert.Id);
         }
 
         [Fact]

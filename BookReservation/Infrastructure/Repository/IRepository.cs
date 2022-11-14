@@ -10,7 +10,7 @@ namespace Infrastructure.Repository
     {
         TEntity GetByID(object id);
 
-        void Insert(TEntity entity);
+        object Insert(TEntity entity);
 
         void Delete(object id);
 
