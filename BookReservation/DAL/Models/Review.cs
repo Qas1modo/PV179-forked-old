@@ -18,6 +18,6 @@ namespace DAL.Models
         [Range(1, 10), Required]
         public int Score { get; set; }
 
-        public virtual List<ReviewPoint> ReviewPoints { get; set; }
+        public string? Description { get; set; }
     }
 }

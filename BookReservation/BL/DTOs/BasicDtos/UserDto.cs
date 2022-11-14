@@ -5,18 +5,22 @@ namespace BL.DTOs.BasicDtos
     public class UserDto
     {
         public string Name { get; set; }
-        
-        public AddressDto Address { get; set; }
-        
+
+        public string City { get; set; }
+
+        public string Street { get; set; }
+
+        public int StNumber { get; set; }
+
+        public int ZipCode { get; set; }
+
         public string Email { get; set; }
 
         public string Phone { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateOnly BirthDate { get; set; }
 
         public Group Group { get; set; }
-
-        public string Picture { get; set; }
 
         public List<RentDto> Rents { get; set; }
 

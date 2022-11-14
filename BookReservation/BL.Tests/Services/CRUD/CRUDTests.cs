@@ -24,8 +24,10 @@ namespace BL.Tests.Services.CRUD
         {
             var service = new CRUDService<Author>(_authorRepositoryMock.Object, _mapperMock.Object);
 
-            AuthorDto author = new AuthorDto();
-            author.Name = "meno";
+            AuthorDto author = new()
+            {
+                Name = "meno"
+            };
 
 
             service.Create<AuthorDto>(author);
@@ -49,12 +51,14 @@ namespace BL.Tests.Services.CRUD
         public void PassingAuthorCRUDGetTest()
         {
             var service = new CRUDService<Author>(_authorRepositoryMock.Object, _mapperMock.Object);
-            
-            AuthorDto expected = new AuthorDto();
-            expected.Name = "meno";
-            expected.Id = 1;
 
-            Author mockedAuthor = new Author();
+            AuthorDto expected = new()
+            {
+                Name = "meno",
+                Id = 1
+            };
+
+            Author mockedAuthor = new();
 
             _authorRepositoryMock
                 .Setup(x => x.GetByID(expected.Id))
@@ -76,8 +80,10 @@ namespace BL.Tests.Services.CRUD
         {
             var service = new CRUDService<Author>(_authorRepositoryMock.Object, _mapperMock.Object);
 
-            AuthorDto author = new AuthorDto();
-            author.Name = "meno";
+            AuthorDto author = new()
+            {
+                Name = "meno"
+            };
 
             service.Update<AuthorDto>(author);
 
@@ -99,8 +105,10 @@ namespace BL.Tests.Services.CRUD
         {
             var service = new CRUDService<Author>(_authorRepositoryMock.Object, _mapperMock.Object);
 
-            AuthorDto author = new AuthorDto();
-            author.Name = "meno";
+            AuthorDto author = new()
+            {
+                Name = "meno"
+            };
 
             service.DeleteByEntity<AuthorDto>(author);
 

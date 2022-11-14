@@ -26,10 +26,9 @@ namespace BL.Services
 
         public bool RegisterUser(RegistrationDto input)
         {
-            using (IUoWUserInfo uow = new EFUoWUserInfo(context))
+            using (IUoWUserInfo uow = new EFUoWUserInfo(context)) // Jak použít Interface, složitější operace (Joiny)
             {
-                uow.AddressRepository.Insert(new Address { Id = 1, City = input.City, StNumber = input.StNumber, Street = input.Street, ZipCode = input.ZipCode });
-                uow.UserRepository.Insert(new User { Id = 2, AddressId = 1, BirthDate = input.BirthDate, Email = input.Email });
+                uow.UserRepository.Insert(new User { Id = 2, BirthDate = input.BirthDate, Email = input.Email }); // Autentizace
             }
             return false;
         }

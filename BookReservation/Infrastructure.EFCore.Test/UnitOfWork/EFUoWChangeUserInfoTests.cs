@@ -11,24 +11,17 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
         private readonly BookReservationDbContext dbContext;        
         private static readonly User dummyUser = new()
         {
-            AddressId = 1,
+            City = "Madrid",
+            Street = "C. De Jorge Juan",
+            StNumber = 106,
+            ZipCode = 28009,
             Name = "Peter Marcin",
             Email = "peter123@mail.com",
             Password = "jjpjpkf",
             Salt = "dkpafjapfjpak",
             Phone = "+421911999222",
-            BirthDate = new DateTime(1980, 3, 1),
+            BirthDate = new DateOnly(1980, 3, 1),
             Group = Group.Employee,
-            Picture = "www.pictureofemployee.com",
-        };
-
-        private static readonly Address dummyAdress = new()
-        {
-            User = dummyUser,
-            City = "Madrid",
-            Street = "C. De Jorge Juan",
-            StNumber = 106,
-            ZipCode = 28009
         };
 
         public EFUoWChangeUserInfoTests()
@@ -40,10 +33,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                 .UseInMemoryDatabase(databaseName: myDatabaseName)
                 .Options;
 
-
             dbContext = new BookReservationDbContext(options);
-
-            dbContext.Addresses.Add(dummyAdress);
             dbContext.Users.Add(dummyUser);
 
             dbContext.SaveChanges();
@@ -63,9 +53,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                 var user = userRepo.GetByID(dummyUser.Id);
                 user.Name = newName;
                 user.Email = newEmail;
-
-                var userAddress = user.Address;
-                userAddress.City = newCity;
+                user.City = newCity;
 
                 efUnitOfWork.Commit().Wait();
 
@@ -77,7 +65,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
 
                     Assert.True(editedUser.Name.Equals(newName));
                     Assert.True(editedUser.Email.Equals(newEmail));
-                    Assert.True(editedUser.Address.City.Equals(newCity));
+                    Assert.True(editedUser.City.Equals(newCity));
                 }
 
             }

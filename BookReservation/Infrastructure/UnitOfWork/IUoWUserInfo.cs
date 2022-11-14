@@ -7,6 +7,5 @@ namespace Infrastructure.UnitOfWork
     public interface IUoWUserInfo : IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
-        IRepository<Address> AddressRepository { get; }
     }
 }

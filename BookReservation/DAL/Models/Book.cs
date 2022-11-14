@@ -29,9 +29,9 @@ namespace DAL.Models
         [Required]
         public decimal Price { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
 
         public virtual List<Rent> Rents { get; set; }
 

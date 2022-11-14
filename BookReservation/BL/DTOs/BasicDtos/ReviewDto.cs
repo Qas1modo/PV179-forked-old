@@ -10,6 +10,6 @@
 
         public int Score { get; set; }
 
-        public List<ReviewPointDto> ReviewPoints { get; set; }
+        public string? Description { get; set; }
     }
 }
