@@ -2,11 +2,9 @@
 {
     public class ReviewDto
     {
-        public UserDto User { get; set; }
+        public int UserId { get; set; }
 
         public int BookId { get; set; }
-
-        public BookDto Book { get; set; }
 
         public int Score { get; set; }
 
