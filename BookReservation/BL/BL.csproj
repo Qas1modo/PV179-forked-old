@@ -19,11 +19,13 @@
     <None Remove="AutoMapper" />
     <None Remove="Config\" />
     <None Remove="Services\CRUD\" />
+    <None Remove="Services\Review\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Facades\" />
     <Folder Include="Config\" />
     <Folder Include="Services\CRUD\" />
+    <Folder Include="Services\Review\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
