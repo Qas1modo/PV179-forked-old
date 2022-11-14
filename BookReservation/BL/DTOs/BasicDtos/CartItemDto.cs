@@ -8,8 +8,8 @@ namespace BL.DTOs.BasicDtos
 {
     public class CartItemDto
     {
-        public UserDto User { get; set; }
+        public int UserId { get; set; }
 
-        public BookDto Book { get; set; }
+        public int BookId { get; set; }
     }
 }
