@@ -9,6 +9,7 @@ namespace BL.DTOs.BasicDtos
     public class BookDto
     {
         public string Name { get; set; }
+
         public AuthorDto Author { get; set; }
 
         public int AuthorId { get; set; }

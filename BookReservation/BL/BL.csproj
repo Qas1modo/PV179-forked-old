@@ -21,12 +21,14 @@
     <None Remove="Services\CRUD\" />
     <None Remove="Services\Review\" />
     <None Remove="Services\CartItem\" />
+    <None Remove="Services\Genre\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="Services\CRUD\" />
     <Folder Include="Services\Review\" />
     <Folder Include="Services\CartItem\" />
+    <Folder Include="Services\Genre\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />

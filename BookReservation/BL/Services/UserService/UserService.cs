@@ -34,8 +34,7 @@ namespace BL.Services.UserService
             {
                 throw new Exception("Invaid id");
             }
-            User newUser = mapper.Map(input, user);
-            uow.UserRepository.Update(newUser);
+            uow.UserRepository.Update(mapper.Map(input, user));
             uow.Commit();
         }
 

@@ -10,10 +10,15 @@ namespace BL.DTOs
     public class CartItemDetailDto
     {
         public AuthorDto Author { get; set; }
+
         public GenreDto Genre { get; set; }
+
         public string Photo { get; set; }
+
         public decimal Price { get; set; }
+
         public int LoanPeriod { get; set; }
+
         public decimal TotalPrice { get; set; }
     }
 }

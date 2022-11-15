@@ -26,16 +26,14 @@ namespace BL.Services.CartItem
         public void AddItem(CartItemDto itemDto)
         {
             using IUoWCartItem uow = new EFUoWCartItem(context);
-            var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, mapper);
-            cartItemRepo.Create<CartItemDto>(itemDto);
+            uow.CartItemRepository.Insert(mapper.Map<DAL.Models.CartItem>(itemDto));
             uow.Commit();
         }
 
         public void RemoveItem(object id)
         {
             using IUoWCartItem uow = new EFUoWCartItem(context);
-            var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, mapper);
-            cartItemRepo.DeleteById(id);
+            uow.CartItemRepository.Delete(id);
             uow.Commit();
         }
 

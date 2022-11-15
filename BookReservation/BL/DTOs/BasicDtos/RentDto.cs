@@ -9,9 +9,9 @@ namespace BL.DTOs.BasicDtos
 {
     public class RentDto
     {
-        public UserDto User { get; set; }
+        public int UserId { get; set; }
 
-        public BookDto Book { get; set; }
+        public int BookId { get; set; }
 
         public DateTime ReservedAt { get; set; }
 

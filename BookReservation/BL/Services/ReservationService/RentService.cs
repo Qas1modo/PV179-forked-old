@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.DTOs.BasicDtos;
 using BL.QueryObjects;
 using DAL;
 using DAL.Enums;
@@ -26,11 +27,10 @@ namespace BL.Services.ReservationService
             this.mapper = mapper;
         }
 
-        public void CreateReservation(int bookId, int userId, int loanPeriod, decimal price)
+        public void CreateReservation(RentDto rentDto)
         {
             using IUoWReservation uow = new EFUoWReservation(context);
-            Rent rent = new(){ BookId = bookId, LoanPeriod = loanPeriod, Price = price, ReservedAt = new DateTime(), State = RentState.Reserved, UserId = userId };
-            uow.RentRepository.Insert(rent);
+            uow.RentRepository.Insert(mapper.Map<Rent>(rentDto));
             uow.Commit();
         }
 
@@ -41,7 +41,6 @@ namespace BL.Services.ReservationService
             rent.State = RentState.Canceled;
             uow.RentRepository.Update(rent);
             uow.Commit();
-
         }
 
         public void ReservationTaken(object reservationId)
