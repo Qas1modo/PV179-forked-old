@@ -12,6 +12,10 @@ namespace Infrastructure.EFCore.UnitOfWork
 	{
         private IRepository<Review> reviewRepository;
 
+        private IRepository<Book> bookRepository;
+
+        private IRepository<User> userRepository;
+
         public BookReservationDbContext Context { get; }
 
         public EFUoWReview(BookReservationDbContext context)
@@ -28,6 +32,30 @@ namespace Infrastructure.EFCore.UnitOfWork
                     reviewRepository = new EFGenericRepository<Review>(Context);
                 }
                 return reviewRepository;
+            }
+        }
+
+        public IRepository<Book> BookRepository
+        {
+            get
+            {
+                if (bookRepository == null)
+                {
+                    bookRepository = new EFGenericRepository<Book>(Context);
+                }
+                return bookRepository;
+            }
+        }
+
+        public IRepository<User> UserRepository
+        {
+            get
+            {
+                if (userRepository == null)
+                {
+                    userRepository = new EFGenericRepository<User>(Context);
+                }
+                return userRepository;
             }
         }
 

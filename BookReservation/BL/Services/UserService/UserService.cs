@@ -17,18 +17,17 @@ namespace BL.Services.UserService
     public class UserService : IUserService
     {
 
-        private BookReservationDbContext context;
-        private IMapper mapper;
+        private readonly IMapper mapper;
+        private readonly IUoWUserInfo uow;
 
-        public UserService(BookReservationDbContext context, IMapper mapper)
+        public UserService(IUoWUserInfo uow, IMapper mapper)
         {
-            this.context = context;
             this.mapper = mapper;
+            this.uow = uow;
         }
 
         public void UpdateUserData(PersonalInfoDto input, int userId)
         {
-            using IUoWUserInfo uow = new EFUoWUserInfo(context);
             User user = uow.UserRepository.GetByID(userId);
             if (user == null)
             {
@@ -40,14 +39,12 @@ namespace BL.Services.UserService
 
         public PersonalInfoDto ShowUserData(int userId)
         {
-            using var uow = new EFUoWUserInfo(context);
             User user = uow.UserRepository.GetByID(userId);
             return mapper.Map<PersonalInfoDto>(user);       
         }
 
         public UserDto GetUser(int userId)
         {
-            using var uow = new EFUoWUserInfo(context);
             User user = uow.UserRepository.GetByID(userId);
             return mapper.Map<UserDto>(user);
         }

@@ -22,6 +22,7 @@
     <None Remove="Services\Review\" />
     <None Remove="Services\CartItem\" />
     <None Remove="Services\Genre\" />
+    <None Remove="Services\CartItems\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
@@ -29,6 +30,7 @@
     <Folder Include="Services\Review\" />
     <Folder Include="Services\CartItem\" />
     <Folder Include="Services\Genre\" />
+    <Folder Include="Services\CartItems\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
