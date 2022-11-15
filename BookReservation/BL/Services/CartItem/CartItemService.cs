@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using BL.DTOs;
 using BL.DTOs.BasicDtos;
 using BL.Services.CRUD;
+using BL.Services.StockService;
 using DAL;
+using DAL.Models;
 using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 
@@ -10,33 +14,55 @@ namespace BL.Services.CartItem
 {
 	public class CartItemService : ICartItemService
 	{
-        private readonly IMapper _mapper;
-        private readonly BookReservationDbContext _context;
+        private readonly IMapper mapper;
+        private readonly BookReservationDbContext context;
 
         public CartItemService(BookReservationDbContext context, IMapper mapper)
 		{
-            _mapper = mapper;
-            _context = context;
+            this.mapper = mapper;
+            this.context = context;
         }
 
         public void AddItem(CartItemDto itemDto)
         {
-            using (IUoWCartItem uow = new EFUoWCartItem(_context))
-            {
-                var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, _mapper);
-                cartItemRepo.Create<CartItemDto>(itemDto);
-                uow.Commit();
-            }
+            using IUoWCartItem uow = new EFUoWCartItem(context);
+            var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, mapper);
+            cartItemRepo.Create<CartItemDto>(itemDto);
+            uow.Commit();
         }
 
         public void RemoveItem(object id)
         {
-            using (IUoWCartItem uow = new EFUoWCartItem(_context))
+            using IUoWCartItem uow = new EFUoWCartItem(context);
+            var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, mapper);
+            cartItemRepo.DeleteById(id);
+            uow.Commit();
+        }
+
+        public void EmptyCart(object userId)
+        {
+            using IUoWCartItems uow = new EFUoWCartItems(context);
+            User user = uow.UserRepository.GetByID(userId);
+            foreach (var cartItem in user.CartItems)
             {
-                var cartItemRepo = new CRUDService<DAL.Models.CartItem>(uow.CartItemRepository, _mapper);
-                cartItemRepo.DeleteById(id);
-                uow.Commit();
+                uow.CartItemRepository.Delete(cartItem.Id);
             }
+            uow.Commit();
+        }
+
+        public IEnumerable<CartItemDetailDto> GetCartItems(int userId)
+        {
+            using IUoWCartItems uow = new EFUoWCartItems(context);
+            User user = uow.UserRepository.GetByID(userId);
+            IEnumerable<CartItemDetailDto> result = new List<CartItemDetailDto>();
+            foreach (var cartItem in user.CartItems)
+            {
+                Book book = uow.BookRepository.GetByID(cartItem.BookId);
+                CartItemDetailDto item = mapper.Map<CartItemDetailDto>(book); 
+                item = mapper.Map(cartItem, item);
+                result = result.Append(item);
+            }
+            return result;
         }
     }
 }

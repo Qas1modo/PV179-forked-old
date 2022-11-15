@@ -23,7 +23,6 @@
     <None Remove="Services\CartItem\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Facades\" />
     <Folder Include="Config\" />
     <Folder Include="Services\CRUD\" />
     <Folder Include="Services\Review\" />

@@ -21,14 +21,10 @@ namespace BL.DTOs.BasicDtos
 
         public decimal Price { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string Photo { get; set; }
-
-        public List<RentDto> Rents { get; set; }
+        public string? Photo { get; set; }
 
         public List<ReviewDto> Reviews { get; set; }
-
-        public List<CartItemDto> CartItems { get; set; }
     }
 }

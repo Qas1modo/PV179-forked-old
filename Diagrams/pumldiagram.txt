@@ -24,6 +24,8 @@ entity CartItem {
     *bookId: Int <<Foreign key>>
     *id: Int <<Foreign key>>
     ---
+    *loanPeriod: Int
+    *totalPrice: Decimal
 }
 
 entity Book {

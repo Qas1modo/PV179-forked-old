@@ -67,11 +67,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                     Assert.True(editedUser.Email.Equals(newEmail));
                     Assert.True(editedUser.City.Equals(newCity));
                 }
-
             }
-
-
-
         }        
     }
 }

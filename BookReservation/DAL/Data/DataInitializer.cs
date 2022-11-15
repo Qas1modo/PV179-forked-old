@@ -605,6 +605,8 @@ namespace DAL.Data
                 Id = 1,
                 UserId = 5,
                 BookId = 6,
+                LoanPeriod = 7,
+                TotalPrice = 210,
             };
 
             CartItem resItem2 = new()
@@ -612,6 +614,8 @@ namespace DAL.Data
                 Id = 2,
                 UserId = 5,
                 BookId = 7,
+                LoanPeriod = 10,
+                TotalPrice = 230,
             };
 
             CartItem resItem3 = new()
@@ -619,6 +623,8 @@ namespace DAL.Data
                 Id = 3,
                 UserId = 5,
                 BookId = 8,
+                LoanPeriod = 5,
+                TotalPrice = 175,
             };
 
             CartItem resItem4 = new()
@@ -626,6 +632,8 @@ namespace DAL.Data
                 Id = 4,
                 UserId = 5,
                 BookId = 9,
+                LoanPeriod = 3,
+                TotalPrice = 138,
             };
 
             CartItem resItem5 = new()
@@ -633,6 +641,8 @@ namespace DAL.Data
                 Id = 5,
                 UserId = 5,
                 BookId = 10,
+                LoanPeriod = 1,
+                TotalPrice = 25,
             };
 
             modelBuilder.Entity<CartItem>().HasData(resItem);
@@ -645,4 +655,3 @@ namespace DAL.Data
         }
     }
 }
-

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.QueryObjects
+namespace BL.Services.AdminService
 {
-    public class UserQueryObject
+    public class AdminService
     {
     }
 }

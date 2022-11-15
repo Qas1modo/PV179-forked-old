@@ -30,7 +30,7 @@ namespace Infrastructure.Query
             return this;
         }
 
-        public IQuery<TEntity> Where<T>(Expression<Func<T, bool>> predicate, string columnName) where T : IComparable<T>
+        public IQuery<TEntity> Where<T>(Expression<Func<T, bool>> predicate, string columnName)
         {
             WherePredicates.Add((predicate, columnName));
             return this;
