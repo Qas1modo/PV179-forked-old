@@ -9,7 +9,9 @@ namespace BL.DTOs
     public class ReviewDetailDto
     {
         public string Name { get; set; }
+
         public int Score { get; set; }
+
         public string? Description { get; set; }
     }
 }

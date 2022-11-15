@@ -24,8 +24,7 @@ namespace BL.Services.Review
 		public void AddReview(ReviewDto reviewDto)
 		{
             using IUoWReview uow = new EFUoWReview(_context);
-            var reviewRepo = new CRUDService<DAL.Models.Review>(uow.ReviewRepository, _mapper);
-            reviewRepo.Create<ReviewDto>(reviewDto);
+            uow.ReviewRepository.Insert(_mapper.Map<DAL.Models.Review>(reviewDto));
             uow.Commit();
         }
 
@@ -43,8 +42,8 @@ namespace BL.Services.Review
             IEnumerable<ReviewDetailDto> result = new List<ReviewDetailDto>();
             foreach (var bookReview in book.Reviews)
             {
-                User user = uow.UserRepository.GetByID(bookReview.UserId);
                 ReviewDetailDto item = _mapper.Map<ReviewDetailDto>(bookReview);
+                User user = uow.UserRepository.GetByID(bookReview.UserId);
                 item.Name = user.Name;
                 result = result.Append(item);
             }

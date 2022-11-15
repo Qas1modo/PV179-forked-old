@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using BL.DTOs.BasicDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,12 @@ namespace BL.Services.ReservationService
 {
     public interface IRentService
     {
-        public void CreateReservation(int bookId, int userId, int loanPeriod, decimal price);
+        public void CreateReservation(RentDto rentDto);
 
         public void CancelReservation(object reservationId);
 
         public void ReservationTaken(object reservationId);
 
         public void BookReturned(object reservationId);
-    
     }
 }
