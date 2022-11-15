@@ -18,25 +18,23 @@ namespace BL.Services.ReservationService
 {
     public class RentService : IRentService
     {
-        private readonly BookReservationDbContext context;
         private readonly IMapper mapper;
+        private readonly IUoWReservation uow;
 
-        public RentService(BookReservationDbContext context, IMapper mapper)
+        public RentService(IUoWReservation uow, IMapper mapper)
         {
-            this.context = context;
             this.mapper = mapper;
+            this.uow = uow;
         }
 
         public void CreateReservation(RentDto rentDto)
         {
-            using IUoWReservation uow = new EFUoWReservation(context);
             uow.RentRepository.Insert(mapper.Map<Rent>(rentDto));
             uow.Commit();
         }
 
         public void CancelReservation(object reservationId)
         {
-            using IUoWReservation uow = new EFUoWReservation(context);
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Canceled;
             uow.RentRepository.Update(rent);
@@ -45,7 +43,6 @@ namespace BL.Services.ReservationService
 
         public void ReservationTaken(object reservationId)
         {
-            using IUoWReservation uow = new EFUoWReservation(context);
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Active;
             rent.RentedAt = new DateTime();
@@ -55,7 +52,6 @@ namespace BL.Services.ReservationService
 
         public void BookReturned(object reservationId)
         {
-            using IUoWReservation uow = new EFUoWReservation(context);
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Returned;
             rent.ReturnedAt = new DateTime();
@@ -65,7 +61,6 @@ namespace BL.Services.ReservationService
 
         public IEnumerable<RentDetailDto> ShowRents(object userId)
         {
-            using IUoWReservation uow = new EFUoWReservation(context);
             User user = uow.UserRepository.GetByID(userId);
             IEnumerable<RentDetailDto> result = new List<RentDetailDto>();
             foreach (var rent in user.Rents)

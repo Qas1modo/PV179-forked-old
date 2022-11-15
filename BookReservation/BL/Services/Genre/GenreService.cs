@@ -12,24 +12,22 @@ namespace BL.Services.Genre
     public class GenreService : IGenreService
     {
         private readonly IMapper mapper;
-        private readonly BookReservationDbContext context;
+        private readonly IUoWGenre uow;
 
-        public GenreService(BookReservationDbContext context, IMapper mapper)
+        public GenreService(IUoWGenre uow, IMapper mapper)
         {
             this.mapper = mapper;
-            this.context = context;
+            this.uow = uow;
         }
 
         public void AddGenre(GenreDto genreDto)
         {
-            using IUoWGenre uow = new EFUoWGenre(context);
             uow.GenreRepository.Insert(mapper.Map<DAL.Models.Genre>(genreDto));
             uow.Commit();
         }
 
         public void RemoveGenre(object id)
         {
-            using IUoWGenre uow = new EFUoWGenre(context);
             uow.GenreRepository.Delete(id);
             uow.Commit();
         }
