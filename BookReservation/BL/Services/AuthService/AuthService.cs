@@ -18,12 +18,12 @@ namespace BL.Services.AuthService
 {
     public class AuthService: IAuthService
     {
-        private BookReservationDbContext context;
+        private IUoWUserInfo uoWUserInfo;
         private IMapper mapper;
 
-        public AuthService(BookReservationDbContext context, IMapper mapper)
+        public AuthService(IUoWUserInfo userInfo, IMapper mapper)
         {
-            this.context = context;
+            this.uoWUserInfo = userInfo;
             this.mapper = mapper;
         }
 
@@ -31,15 +31,13 @@ namespace BL.Services.AuthService
         public int RegisterUser(RegistrationDto input)
         {
             int result = -1;
-            using (IUoWUserInfo uow = new EFUoWUserInfo(context))
-            {
-                User user = mapper.Map<User>(input);
-                user.Salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
-                user.Group = DAL.Enums.Group.User;
-                var hashService = SHA256.Create();
-                user.Password = Convert.ToBase64String(hashService.ComputeHash(Convert.FromBase64String(input.OpenPassword + user.Salt)));
-                result = (int) uow.UserRepository.Insert(user);
-            }
+            User user = mapper.Map<User>(input);
+            user.Salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
+            user.Group = DAL.Enums.Group.User;
+            var hashService = SHA256.Create();
+            user.Password = Convert.ToBase64String(hashService.ComputeHash(Convert.FromBase64String(input.OpenPassword + user.Salt)));
+            result = (int) uoWUserInfo.UserRepository.Insert(user);
+           
             return result;
         }
 
