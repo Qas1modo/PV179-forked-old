@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -26,11 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
-    <Folder Include="Services\CRUD\" />
-    <Folder Include="Services\Review\" />
-    <Folder Include="Services\CartItem\" />
-    <Folder Include="Services\Genre\" />
-    <Folder Include="Services\CartItems\" />
+    <Folder Include="Services\CRUDService\" />
+    <Folder Include="Services\ReviewService\" />
+    <Folder Include="Services\CartItemService\" />
+    <Folder Include="Services\GenreService\" />
+    <Folder Include="Services\CartItemsService\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />

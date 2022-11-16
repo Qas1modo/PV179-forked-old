@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BL.DTOs.BasicDtos;
-using BL.Services.CartItem;
-using BL.Services.CRUD;
+using BL.Services.CartItemService;
+using BL.Services.CRUDService;
 using BL.Services.ReservationService;
 using BL.Services.StockService;
 using BL.Services.UserService;
@@ -29,20 +29,21 @@ namespace BL.Facades
 
         public bool MakeOrder(int userId)
 		{
-			cartService = new CartItemService(context, mapper);
-			stockService = new StockService(context, mapper);
-			rentService = new RentService(context, mapper);
-			userService = new UserService(context, mapper);
-			UserDto user = userService.GetUser(userId);
-			foreach (var cartItem in user.CartItems)
-			{
-				if (stockService.ReserveBookStock(cartItem.BookId))
-				{
-					return false;
-				}
-				rentService.CreateReservation(cartItem.BookId, user.Id, cartItem.LoanPeriod, cartItem.TotalPrice);
-			}
-			cartService.EmptyCart(userId);
+			//cartService = new CartItemService(context, mapper);
+			//stockService = new StockService(context, mapper);
+			//rentService = new RentService(context, mapper);
+			//userService = new UserService(context, mapper);
+			//UserDto user = userService.GetUser(userId);
+			//foreach (var cartItem in user.CartItems)
+			//{
+			//	if (stockService.ReserveBookStock(cartItem.BookId))
+			//	{
+			//		return false;
+			//	}
+			//	rentService.CreateReservation(cartItem.BookId, user.Id, cartItem.LoanPeriod, cartItem.TotalPrice);
+			//}
+			//cartService.EmptyCart(userId);
+
 			return true;
 		}
 	}

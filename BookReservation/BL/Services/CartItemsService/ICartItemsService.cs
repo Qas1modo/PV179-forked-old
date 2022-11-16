@@ -1,7 +1,7 @@
 ﻿using System;
 using BL.DTOs;
 
-namespace BL.Services.CartItems
+namespace BL.Services.CartItemsService
 {
 	public interface ICartItemsService
 	{
