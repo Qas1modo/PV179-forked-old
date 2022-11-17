@@ -25,6 +25,8 @@ namespace BL.Config
             config.CreateMap<CartItemDto, CartItem>().ReverseMap();
             config.CreateMap<GenreDto, Genre>().ReverseMap();
             config.CreateMap<RentDto, Rent>().ReverseMap();
+            config.CreateMap<Rent, RentDetailDto>()
+                .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name));
             config.CreateMap<ReviewDto, Review>().ReverseMap();
             config.CreateMap<UserDto, User>().ReverseMap();
         }
