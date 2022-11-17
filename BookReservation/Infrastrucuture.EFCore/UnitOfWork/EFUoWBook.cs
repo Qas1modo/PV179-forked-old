@@ -2,68 +2,35 @@
 using DAL;
 using Infrastructure.UnitOfWork;
 using Infrastructure.Repository;
-using Infrastructure.EFCore.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWBook : IUoWBook
     {
-        private IRepository<Author> authorRepository;
-        private IRepository<Book> bookRepository;
-        private IRepository<Genre> genreRepository;
+        public IRepository<Author> AuthorRepository { get; }
+        public IRepository<Book> BookRepository { get; }
+        public IRepository<Genre> GenreRepository { get; }
 
-        public EFUoWBook(BookReservationDbContext context)
+        private BookReservationDbContext context;
+
+        public EFUoWBook(BookReservationDbContext context, IRepository<Author> authorRepository,
+            IRepository<Book> bookRepository, IRepository<Genre> genreRepository)
         {
-            Context = context;
+            this.context = context;
+            AuthorRepository= authorRepository;
+            BookRepository= bookRepository;
+            GenreRepository =  genreRepository;
         }
 
-        public BookReservationDbContext Context { get; }
-
-        public IRepository<Author> AuthorRepository 
-        { 
-            get
-            {
-                if (authorRepository == null)
-                {
-                    authorRepository = new EFGenericRepository<Author>(Context);
-                }
-                return authorRepository;
-            }
-        }
-
-        public IRepository<Book> BookRepository
-        {
-            get
-            {
-                if (bookRepository == null)
-                {
-                    bookRepository = new EFGenericRepository<Book>(Context);
-                }
-                return bookRepository;
-            }
-        }
-
-        public IRepository<Genre> GenreRepository
-        {
-            get
-            {
-                if (genreRepository == null)
-                {
-                    genreRepository = new EFGenericRepository<Genre>(Context);
-                }
-                return genreRepository;
-            }
-        }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }

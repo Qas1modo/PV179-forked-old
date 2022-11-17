@@ -4,8 +4,10 @@ using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
 using Infrastructure.EFCore.Repository;
+using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.Query;
 using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,12 @@ builder.Services.AddTransient<IQuery<Review>, EFQuery<Review>>();
 builder.Services.AddTransient<IQuery<User>, EFQuery<User>>();
 builder.Services.AddTransient<BookReservationDbContext, BookReservationDbContext>();
 builder.Services.AddSingleton<IRepository<BaseEntity>, EFGenericRepository<BaseEntity>>();
+
+// UnitOfWork DI Setup
+builder.Services.AddScoped<IRepository<Book>, EFGenericRepository<Book>>();
+builder.Services.AddScoped<IRepository<Author>, EFGenericRepository<Author>>();
+builder.Services.AddScoped<IRepository<Genre>, EFGenericRepository<Genre>>();
+builder.Services.AddScoped<IUoWBook, EFUoWBook>();
 
 var app = builder.Build();
 

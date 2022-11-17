@@ -20,11 +20,13 @@ namespace BL.Services.Stock
     {
         private BookReservationDbContext context;
         private IMapper mapper;
+        private IUoWBook uow;
 
-        public StockService(BookReservationDbContext context, IMapper mapper)
+        public StockService(BookReservationDbContext context, IMapper mapper, IUoWBook uow)
         {
             this.context = context;
             this.mapper = mapper;
+            this.uow = uow;
         }
 
         public QueryResultDto<Book> ShowBooks(BookFilterDto filter)
@@ -66,14 +68,14 @@ namespace BL.Services.Stock
 
         public BookAvailabilityDto GetBookStock(int bookId)
         {
-            using IUoWBook uow = new EFUoWBook(context);
+            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             return mapper.Map<BookAvailabilityDto>(book);
         }
 
         public bool ReserveBookStock(int bookId)
         {
-            using IUoWBook uow = new EFUoWBook(context);
+            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             if (book.Stock < 1) return false;
             book.Stock = book.Stock -= 1;
@@ -84,7 +86,7 @@ namespace BL.Services.Stock
 
         public bool BookReturned(int bookId)
         {
-            using IUoWBook uow = new EFUoWBook(context);
+            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             if (book.Stock > book.Total) return false;
             book.Stock = book.Stock += 1;
