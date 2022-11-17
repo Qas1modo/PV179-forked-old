@@ -9,35 +9,25 @@ namespace Infrastructure.EFCore.UnitOfWork
 {
 	public class EFUoWCartItem : IUoWCartItem
 	{
-        private IRepository<CartItem> cartItemRepository;
+        public IRepository<CartItem> CartItemRepository { get; }
 
-        public BookReservationDbContext Context { get; }
+        private BookReservationDbContext context;
 
-        public EFUoWCartItem(BookReservationDbContext context)
+        public EFUoWCartItem(BookReservationDbContext context, IRepository<CartItem> cartItemRepository)
 		{
-            Context = context;
+            this.context = context;
+            CartItemRepository= cartItemRepository;
         }
 
-        public IRepository<CartItem> CartItemRepository
-        {
-            get
-            {
-                if (cartItemRepository == null)
-                {
-                    cartItemRepository = new EFGenericRepository<CartItem>(Context);
-                }
-                return cartItemRepository;
-            }
-        }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }
