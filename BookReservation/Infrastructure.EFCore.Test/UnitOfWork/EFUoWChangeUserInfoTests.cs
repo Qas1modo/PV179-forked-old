@@ -3,12 +3,18 @@ using DAL.Enums;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.EFCore.UnitOfWork;
+using Infrastructure.UnitOfWork;
+using Infrastructure.Repository;
+using Infrastructure.EFCore.Repository;
 
 namespace Infrastructure.EFCore.Test.UnitOfWork
 {
     public class EFUoWChangeUserInfoTests
     {
-        private readonly BookReservationDbContext dbContext;        
+        private readonly BookReservationDbContext dbContext;
+        
+        private IRepository<User> userRepository;
+
         private static readonly User dummyUser = new()
         {
             City = "Madrid",
@@ -37,6 +43,8 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             dbContext.Users.Add(dummyUser);
 
             dbContext.SaveChanges();
+
+            this.userRepository = new EFGenericRepository<User>(dbContext);
         }
 
         [Fact]
@@ -46,7 +54,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             string newCity = "Barcelona";
             string newEmail = "a1abcd23@gmail.com";
 
-            using (var efUnitOfWork = new EFUoWUserInfo(dbContext))
+            using (var efUnitOfWork = new EFUoWUserInfo(dbContext, userRepository))
             {
                 var userRepo = efUnitOfWork.UserRepository;
 
@@ -57,7 +65,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
 
                 efUnitOfWork.Commit().Wait();
 
-                using (var eF = new EFUoWUserInfo(dbContext))
+                using (var eF = new EFUoWUserInfo(dbContext, userRepository))
                 {
                     userRepo = eF.UserRepository;
 

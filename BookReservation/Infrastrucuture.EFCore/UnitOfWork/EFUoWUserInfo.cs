@@ -2,42 +2,29 @@
 using DAL;
 using Infrastructure.UnitOfWork;
 using Infrastructure.Repository;
-using Infrastructure.EFCore.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWUserInfo : IUoWUserInfo
     {
-        private IRepository<User> userRepository;
+        public IRepository<User> UserRepository { get; }
 
-        public BookReservationDbContext Context { get; }
+        private BookReservationDbContext context;
 
-        public EFUoWUserInfo(BookReservationDbContext context)
+        public EFUoWUserInfo(BookReservationDbContext context, IRepository<User> userRepository)
         {
-            Context = context;
-        }
-
-        public IRepository<User> UserRepository
-        {
-            get
-            {
-                if (userRepository == null)
-                {
-                    userRepository = new EFGenericRepository<User>(Context);
-                }
-                return userRepository;
-            }
+            this.context = context;
+            UserRepository = userRepository;
         }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }
