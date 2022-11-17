@@ -47,6 +47,7 @@ builder.Services.AddScoped<IUoWCartItem, EFUoWCartItem>();
 builder.Services.AddScoped<IUoWCartItems, EFUoWCartItems>();
 builder.Services.AddScoped<IUoWGenre, EFUoWGenre>();
 builder.Services.AddScoped<IUoWReservation, EFUoWReservation>();
+builder.Services.AddScoped<IUoWReview, EFUoWReview>();
 
 
 
