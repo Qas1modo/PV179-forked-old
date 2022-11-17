@@ -45,12 +45,21 @@ namespace Infrastructure.EFCore.Test.Repository
         }
 
         [Fact]
-        public void PassingGetTest()
+        public void PassingGetByIdTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
             var result = efRepository.GetByID(map["get"].Id);
 
             Assert.True(result.Name.Equals(map["get"].Name));
+        }
+
+        [Fact]
+        public void PassingGetAllTest()
+        {
+            var efRepository = new EFGenericRepository<Author>(dbContext);
+            IEnumerable<Author> result = efRepository.GetAll();
+
+            Assert.Equal(result.Count(), map.Count());
         }
 
         [Fact]

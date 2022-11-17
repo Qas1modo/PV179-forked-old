@@ -38,6 +38,11 @@ namespace Infrastructure.EFCore.Repository
             return entity;
         }
 
+        public IEnumerable<TEntity> GetAll()
+        {
+            return dbSet.AsEnumerable();
+        }
+
         public virtual int Insert(TEntity entity)
         {
             if (entity == null)

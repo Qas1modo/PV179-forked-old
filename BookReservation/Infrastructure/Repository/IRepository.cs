@@ -10,6 +10,8 @@ namespace Infrastructure.Repository
     {
         TEntity GetByID(int id);
 
+        IEnumerable<TEntity> GetAll();
+
         int Insert(TEntity entity);
 
         void Delete(int id);
