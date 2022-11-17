@@ -44,6 +44,7 @@ builder.Services.AddScoped<IRepository<CartItem>, EFGenericRepository<CartItem>>
 // UnitOfWork DI Setup
 builder.Services.AddScoped<IUoWBook, EFUoWBook>();
 builder.Services.AddScoped<IUoWCartItem, EFUoWCartItem>();
+builder.Services.AddScoped<IUoWCartItems, EFUoWCartItems>();
 
 
 var app = builder.Build();

@@ -13,59 +13,30 @@ namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWCartItems : IUoWCartItems
     {
-        private IRepository<CartItem> cartItemRepository;
-        private IRepository<Book> bookRepository;
-        private IRepository<User> userRepository;
+        public IRepository<CartItem> CartItemRepository { get; }
+        public IRepository<Book> BookRepository { get; }
+        public IRepository<User> UserRepository { get; }
 
-        public BookReservationDbContext Context { get; }
+        private BookReservationDbContext context;
 
-        public EFUoWCartItems(BookReservationDbContext context)
+        public EFUoWCartItems(BookReservationDbContext context, IRepository<CartItem> cartItemRepository,
+            IRepository<Book> bookRepository, IRepository<User> userRepository)
         {
-            Context = context;
+            this.context = context;
+            CartItemRepository = cartItemRepository;
+            BookRepository = bookRepository;
+            UserRepository = userRepository;
         }
 
-        public IRepository<CartItem> CartItemRepository
-        {
-            get
-            {
-                if (cartItemRepository == null)
-                {
-                    cartItemRepository = new EFGenericRepository<CartItem>(Context);
-                }
-                return cartItemRepository;
-            }
-        }
-        public IRepository<Book> BookRepository
-        {
-            get
-            {
-                if (bookRepository == null)
-                {
-                    bookRepository = new EFGenericRepository<Book>(Context);
-                }
-                return bookRepository;
-            }
-        }
-        public IRepository<User> UserRepository
-        {
-            get
-            {
-                if (userRepository == null)
-                {
-                    userRepository = new EFGenericRepository<User>(Context);
-                }
-                return userRepository;
-            }
-        }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }
