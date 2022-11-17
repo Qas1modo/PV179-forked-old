@@ -45,6 +45,7 @@ builder.Services.AddScoped<IRepository<CartItem>, EFGenericRepository<CartItem>>
 builder.Services.AddScoped<IUoWBook, EFUoWBook>();
 builder.Services.AddScoped<IUoWCartItem, EFUoWCartItem>();
 builder.Services.AddScoped<IUoWCartItems, EFUoWCartItems>();
+builder.Services.AddScoped<IUoWGenre, EFUoWGenre>();
 
 
 var app = builder.Build();

@@ -1,43 +1,31 @@
-﻿using System;
-using DAL;
+﻿using DAL;
 using DAL.Models;
-using Infrastructure.EFCore.Repository;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
-	public class EFUoWGenre : IUoWGenre
+    public class EFUoWGenre : IUoWGenre
+
     {
-        private IRepository<Genre> genreRepository;
+        public IRepository<Genre> GenreRepository { get; }
 
-        public BookReservationDbContext Context { get; }
+        private BookReservationDbContext context;
 
-        public EFUoWGenre(BookReservationDbContext context)
-		{
-            Context = context;
-        }
-
-        public IRepository<Genre> GenreRepository
+        public EFUoWGenre(BookReservationDbContext context, IRepository<Genre> genreRepository)
         {
-            get
-            {
-                if (genreRepository == null)
-                {
-                    genreRepository = new EFGenericRepository<Genre>(Context);
-                }
-                return genreRepository;
-            }
+            this.context = context;
+            GenreRepository = genreRepository;
         }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }
