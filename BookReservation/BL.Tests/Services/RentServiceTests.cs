@@ -26,7 +26,7 @@ namespace BL.Tests.Services
         public void BookReturnedTest()
         {
             uow.Setup(x => x.RentRepository.GetByID(rent.Id)).Returns(rent).Verifiable();
-            uow.Setup(x => x.RentRepository.Update(It.IsAny<Rent>())).Verifiable();
+            uow.Setup(x => x.RentRepository.Update(rent)).Verifiable();
             uow.Setup(x => x.Commit()).Verifiable();
 
             // Preconditions
