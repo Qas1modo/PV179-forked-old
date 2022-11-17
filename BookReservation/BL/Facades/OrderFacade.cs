@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BL.DTOs.BasicDtos;
-using BL.Services.CartItemService;
-using BL.Services.CRUDService;
-using BL.Services.ReservationService;
-using BL.Services.StockService;
+using BL.Services.CartItem;
+using BL.Services.CRUD;
+using BL.Services.Reservation;
+using BL.Services.Stock;
 using BL.Services.UserService;
 using DAL;
 using DAL.Models;

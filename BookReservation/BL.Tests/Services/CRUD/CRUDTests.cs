@@ -2,7 +2,7 @@
 using Infrastructure.Repository;
 using DAL.Models;
 using AutoMapper;
-using BL.Services.CRUDService;
+using BL.Services.CRUD;
 using BL.DTOs.BasicDtos;
 using FluentAssertions;
 

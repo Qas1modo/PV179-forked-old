@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
-using BL.Services.CRUDService;
-using BL.Services.StockService;
+using BL.Services.CRUD;
+using BL.Services.Stock;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 
-namespace BL.Services.CartItemService
+namespace BL.Services.CartItem
 {
 	public class CartItemService : ICartItemService
 	{

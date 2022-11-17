@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BL.Services.CRUDService
+namespace BL.Services.CRUD
 {
 	public interface ICRUDService<TEntity> where TEntity : class
     {

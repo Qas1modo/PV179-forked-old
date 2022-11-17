@@ -33,7 +33,6 @@
     <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Services\CRUD\" />
   </ItemGroup>
 </Project>
