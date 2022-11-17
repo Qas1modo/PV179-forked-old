@@ -62,6 +62,9 @@ namespace BL.Services.Reservation
         public IEnumerable<RentDetailDto> ShowRents(object userId)
         {
             User user = uow.UserRepository.GetByID(userId);
+            // WHY NOT ? --> return mapper.Map<RentDetailDto>(user.Rents);
+            // if it does not work with already configured mapping... maybe
+            // CreateMap<List<Rent>, List<RentDetailDto>>().ReverseMap() ?
             IEnumerable<RentDetailDto> result = new List<RentDetailDto>();
             foreach (var rent in user.Rents)
             {
