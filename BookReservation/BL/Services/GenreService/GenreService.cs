@@ -26,7 +26,7 @@ namespace BL.Services.GenreService
             uow.Commit();
         }
 
-        public void RemoveGenre(object id)
+        public void RemoveGenre(int id)
         {
             uow.GenreRepository.Delete(id);
             uow.Commit();

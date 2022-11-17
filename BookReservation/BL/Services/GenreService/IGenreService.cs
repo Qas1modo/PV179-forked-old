@@ -7,7 +7,7 @@ namespace BL.Services.GenreService
 	{
         public void AddGenre(GenreDto genreDto);
 
-        public void RemoveGenre(object id);
+        public void RemoveGenre(int id);
     }
 }
 

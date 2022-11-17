@@ -8,11 +8,11 @@ namespace Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity GetByID(object id);
+        TEntity GetByID(int id);
 
-        object Insert(TEntity entity);
+        int Insert(TEntity entity);
 
-        void Delete(object id);
+        void Delete(int id);
 
         void Delete(TEntity entityToDelete);
 

@@ -19,7 +19,7 @@ namespace BL.Services.CartItems
             this.uow = uow;
 		}
 
-        public void EmptyCart(object userId)
+        public void EmptyCart(int userId)
         {
             User user = uow.UserRepository.GetByID(userId);
             foreach (var cartItem in user.CartItems)

@@ -33,7 +33,7 @@ namespace BL.Services.Reservation
             uow.Commit();
         }
 
-        public void CancelReservation(object reservationId)
+        public void CancelReservation(int reservationId)
         {
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Canceled;
@@ -41,7 +41,7 @@ namespace BL.Services.Reservation
             uow.Commit();
         }
 
-        public void ReservationTaken(object reservationId)
+        public void ReservationTaken(int reservationId)
         {
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Active;
@@ -50,7 +50,7 @@ namespace BL.Services.Reservation
             uow.Commit();
         }
 
-        public void BookReturned(object reservationId)
+        public void BookReturned(int reservationId)
         {
             Rent rent = uow.RentRepository.GetByID(reservationId);
             rent.State = RentState.Returned;
@@ -59,7 +59,7 @@ namespace BL.Services.Reservation
             uow.Commit();
         }
 
-        public IEnumerable<RentDetailDto> ShowRents(object userId)
+        public IEnumerable<RentDetailDto> ShowRents(int userId)
         {
             User user = uow.UserRepository.GetByID(userId);
             // WHY NOT ? --> return mapper.Map<RentDetailDto>(user.Rents);

@@ -12,10 +12,10 @@ namespace BL.Services.Reservation
     {
         public void CreateReservation(RentDto rentDto);
 
-        public void CancelReservation(object reservationId);
+        public void CancelReservation(int reservationId);
 
-        public void ReservationTaken(object reservationId);
+        public void ReservationTaken(int reservationId);
 
-        public void BookReturned(object reservationId);
+        public void BookReturned(int reservationId);
     }
 }

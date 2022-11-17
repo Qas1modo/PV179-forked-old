@@ -23,7 +23,7 @@ namespace Infrastructure.EFCore.Repository
             dbSet = context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetByID(int id)
         {
             if (id == null)
             {
@@ -38,7 +38,7 @@ namespace Infrastructure.EFCore.Repository
             return entity;
         }
 
-        public virtual object Insert(TEntity entity)
+        public virtual int Insert(TEntity entity)
         {
             if (entity == null)
             {
@@ -47,7 +47,7 @@ namespace Infrastructure.EFCore.Repository
             return dbSet.Add(entity).Entity.Id;
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(int id)
         {
             if (id == null)
             {

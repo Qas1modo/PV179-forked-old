@@ -1,6 +1,5 @@
 using AutoMapper;
 using BL.Config;
-using BL.Services.CRUD;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
@@ -19,7 +18,6 @@ using (var db = new BookReservationDbContext())
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<ICRUDService<BaseEntity>, CRUDService<BaseEntity>>();
 builder.Services.AddSingleton<IMapper>(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping)));
 builder.Services.AddTransient<IQuery<Author>, EFQuery<Author>>();
 builder.Services.AddTransient<IQuery<Book>, EFQuery<Book>>();

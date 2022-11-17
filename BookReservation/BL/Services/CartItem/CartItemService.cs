@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
-using BL.Services.CRUD;
 using BL.Services.Stock;
 using DAL;
 using DAL.Models;
@@ -29,7 +28,7 @@ namespace BL.Services.CartItem
             uow.Commit();
         }
 
-        public void RemoveItem(object id)
+        public void RemoveItem(int id)
         {
             uow.CartItemRepository.Delete(id);
             uow.Commit();
