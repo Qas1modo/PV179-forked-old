@@ -23,8 +23,9 @@ namespace BL.Tests.Services
 
         // this would be the same for others if good
         [Fact]
-        public void BookReturnedTest()
+        public void BookReturnTestPass()
         {
+            // test null or non-existing input ? --> not really a test .. just checking mocked vals
             uow.Setup(x => x.RentRepository.GetByID(rent.Id)).Returns(rent).Verifiable();
             uow.Setup(x => x.RentRepository.Update(rent)).Verifiable();
             uow.Setup(x => x.Commit()).Verifiable();
