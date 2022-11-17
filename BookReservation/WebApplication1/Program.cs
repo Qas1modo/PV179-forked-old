@@ -1,6 +1,6 @@
 using AutoMapper;
 using BL.Config;
-using BL.Services.CRUDService;
+using BL.Services.CRUD;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;

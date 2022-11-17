@@ -2,7 +2,7 @@
 using AutoMapper;
 using Infrastructure.Repository;
 
-namespace BL.Services.CRUDService
+namespace BL.Services.CRUD
 {
 	public class CRUDService<TEntity> : ICRUDService<TEntity> where TEntity : class
     {
