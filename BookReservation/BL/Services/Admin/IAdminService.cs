@@ -10,10 +10,14 @@ namespace BL.Services.Admin
 {
     public interface IAdminService
     {
-        void UpdateTotalStock(object bookId, int newTotal);
+        void UpdateTotalStock(int bookId, int newTotal);
+
         void AddBook(BookDto newBook);
-        void DeleteBook(object bookId); // Should add parameter to not show in listing, need to update DAL with EFQUERY
+
+        void DeleteBook(int bookId); // Should add parameter to not show in listing, need to update DAL with EFQUERY
+
         IEnumerable<UserDto> ShowUsers();
-        IEnumerable<UserDto> DeleteUser(object userId);
+
+        IEnumerable<UserDto> DeleteUser(int userId);
     }
 }
