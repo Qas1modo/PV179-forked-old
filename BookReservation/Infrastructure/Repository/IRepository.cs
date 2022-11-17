@@ -10,7 +10,7 @@ namespace Infrastructure.Repository
     {
         TEntity GetByID(int id);
 
-        IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
 
         int Insert(TEntity entity);
 

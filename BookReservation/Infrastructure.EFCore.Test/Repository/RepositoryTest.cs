@@ -57,7 +57,7 @@ namespace Infrastructure.EFCore.Test.Repository
         public void PassingGetAllTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            IEnumerable<Author> result = efRepository.GetAll();
+            IQueryable<Author> result = efRepository.GetAll();
 
             Assert.Equal(result.Count(), map.Count());
         }

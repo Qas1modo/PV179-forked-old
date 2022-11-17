@@ -38,9 +38,9 @@ namespace Infrastructure.EFCore.Repository
             return entity;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return dbSet.AsEnumerable();
+            return dbSet.AsQueryable();
         }
 
         public virtual int Insert(TEntity entity)
