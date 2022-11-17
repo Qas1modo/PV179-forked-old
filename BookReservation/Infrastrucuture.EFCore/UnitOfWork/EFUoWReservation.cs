@@ -2,67 +2,34 @@
 using DAL;
 using Infrastructure.UnitOfWork;
 using Infrastructure.Repository;
-using Infrastructure.EFCore.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWReservation : IUoWReservation
     {
-        private IRepository<Rent> rentRepository;
-        private IRepository<Book> bookRepository;
-        private IRepository<User> userRepository;
+        public IRepository<Rent> RentRepository { get; }
+        public IRepository<Book> BookRepository { get; }
+        public IRepository<User> UserRepository { get; }
 
-        public EFUoWReservation(BookReservationDbContext context)
-        {
-            Context = context;
-        }
+        private BookReservationDbContext context;
 
-        public BookReservationDbContext Context { get; }
-
-        public IRepository<Rent> RentRepository
+        public EFUoWReservation(BookReservationDbContext context, IRepository<Rent> rentRepository,
+            IRepository<Book> bookRepository, IRepository<User> userRepository)
         {
-            get
-            {
-                if (rentRepository == null)
-                {
-                    rentRepository = new EFGenericRepository<Rent>(Context);
-                }
-                return rentRepository;
-            }
-        }
-
-        public IRepository<Book> BookRepository
-        {
-            get
-            {
-                if (bookRepository == null)
-                {
-                    bookRepository = new EFGenericRepository<Book>(Context);
-                }
-                return bookRepository;
-            }
-        }
-        public IRepository<User> UserRepository
-        {
-            get
-            {
-                if (userRepository == null)
-                {
-                    userRepository = new EFGenericRepository<User>(Context);
-                }
-                return userRepository;
-            }
+            this.context = context;
+            RentRepository = rentRepository;
+            BookRepository = bookRepository;
+            UserRepository = userRepository;
         }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }
