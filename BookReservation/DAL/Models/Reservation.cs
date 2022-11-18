@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 
 namespace DAL.Models
 {
-    public class Rent : BaseEntity
+    public class Reservation : BaseEntity
     {
         public int UserId { get; set; }
 
@@ -28,7 +28,7 @@ namespace DAL.Models
         public int LoanPeriod { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
 
         [Required]
         public RentState State { get; set; }

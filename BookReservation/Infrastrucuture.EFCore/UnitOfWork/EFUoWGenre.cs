@@ -10,9 +10,10 @@ namespace Infrastructure.EFCore.UnitOfWork
     {
         public IRepository<Genre> GenreRepository { get; }
 
-        private BookReservationDbContext context;
+        private readonly BookReservationDbContext context;
 
-        public EFUoWGenre(BookReservationDbContext context, IRepository<Genre> genreRepository)
+        public EFUoWGenre(BookReservationDbContext context,
+            IRepository<Genre> genreRepository)
         {
             this.context = context;
             GenreRepository = genreRepository;

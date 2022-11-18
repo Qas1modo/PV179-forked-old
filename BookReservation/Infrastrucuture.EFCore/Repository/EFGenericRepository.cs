@@ -25,22 +25,12 @@ namespace Infrastructure.EFCore.Repository
 
         public virtual TEntity GetByID(int id)
         {
-            if (id == null)
-            {
-                throw new Exception("Argument Id is null.");
-            }
-
             TEntity? entity = dbSet.Find(id);
             if (entity == null)
             {
                 throw new Exception("Entity with given Id does not exist.");
             }
             return entity;
-        }
-
-        public IQueryable<TEntity> GetAll()
-        {
-            return dbSet.AsQueryable();
         }
 
         public virtual int Insert(TEntity entity)
@@ -54,11 +44,6 @@ namespace Infrastructure.EFCore.Repository
 
         public virtual void Delete(int id)
         {
-            if (id == null)
-            {
-                throw new Exception("Argument Id is null.");
-            }
-
             TEntity? entityToDelete = dbSet.Find(id);
             if (entityToDelete == null)
             {
@@ -69,11 +54,6 @@ namespace Infrastructure.EFCore.Repository
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (entityToDelete == null)
-            {
-                throw new Exception("Argument entityToDelete is null.");
-            }
-
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
@@ -90,6 +70,16 @@ namespace Infrastructure.EFCore.Repository
 
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            return dbSet.AsQueryable();
+        }
+
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            return dbSet.ToList();
         }
     }
 }

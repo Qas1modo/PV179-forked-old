@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.Services.Auth;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using DAL;
 using DAL.Models;
@@ -14,12 +13,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Services.Auth
+namespace BL.Services.AuthService
 {
     public class AuthService: IAuthService
     {
-        private IUoWUserInfo uoWUserInfo;
-        private IMapper mapper;
+        private readonly IUoWUserInfo uoWUserInfo;
+        private readonly IMapper mapper;
 
         public AuthService(IUoWUserInfo userInfo, IMapper mapper)
         {
@@ -30,15 +29,13 @@ namespace BL.Services.Auth
         // will be updated after implemented autnhetification (Type change, middleware implementation)
         public int RegisterUser(RegistrationDto input)
         {
-            int result = -1;
             User user = mapper.Map<User>(input);
-            user.Salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(16));
+            user.Salt = Encoding.UTF8.GetString(RandomNumberGenerator.GetBytes(32));
             user.Group = DAL.Enums.Group.User;
             var hashService = SHA256.Create();
-            user.Password = Convert.ToBase64String(hashService.ComputeHash(Convert.FromBase64String(input.OpenPassword + user.Salt)));
-            result = (int) uoWUserInfo.UserRepository.Insert(user);
-           
-            return result;
+            byte[] combinedPassword = Encoding.UTF8.GetBytes(input.OpenPassword + user.Salt);
+            user.Password = Convert.ToBase64String(hashService.ComputeHash(combinedPassword));
+            return uoWUserInfo.UserRepository.Insert(user);
         }
 
         public object ChangePassword()

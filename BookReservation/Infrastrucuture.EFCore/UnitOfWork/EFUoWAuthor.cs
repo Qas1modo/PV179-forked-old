@@ -1,6 +1,5 @@
 ﻿using DAL.Models;
 using DAL;
-using Infrastructure.EFCore.Repository;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using System;
@@ -11,22 +10,17 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
-    public class EFUoWCartItem : IUoWCartItem
+    public class EFUoWAuthor : IUoWAuthor
     {
-        public IRepository<CartItem> CartItemRepository { get; }
-        public IRepository<User> UserRepository { get; }
+        public IRepository<Author> AuthorRepository { get; }
 
         private readonly BookReservationDbContext context;
 
-        public EFUoWCartItem(BookReservationDbContext context,
-            IRepository<CartItem> cartItemRepository,
-            IRepository<User> userRepository)
+        public EFUoWAuthor(BookReservationDbContext context, IRepository<Author> authorRepository)
         {
             this.context = context;
-            CartItemRepository = cartItemRepository;
-            UserRepository = userRepository;
+            AuthorRepository = authorRepository;
         }
-
 
         public async Task Commit()
         {

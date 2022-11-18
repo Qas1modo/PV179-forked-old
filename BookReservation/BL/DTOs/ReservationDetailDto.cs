@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs
 {
-    public class RentDetailDto
+    public class ReservationDetailDto
     {
-        public int BookId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public string Author { get; set; }
+
+        public string Genre { get; set; }
 
         public DateTime ReservedAt { get; set; }
 

@@ -7,18 +7,18 @@ namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWReservation : IUoWReservation
     {
-        public IRepository<Rent> RentRepository { get; }
-        public IRepository<Book> BookRepository { get; }
+        public IRepository<Reservation> ReservationRepository { get; }
         public IRepository<User> UserRepository { get; }
 
-        private BookReservationDbContext context;
+        private readonly BookReservationDbContext context;
 
-        public EFUoWReservation(BookReservationDbContext context, IRepository<Rent> rentRepository,
-            IRepository<Book> bookRepository, IRepository<User> userRepository)
+        public EFUoWReservation(BookReservationDbContext context,
+            IRepository<Reservation> reservationRepository,
+            IRepository<Book> bookRepository,
+            IRepository<User> userRepository)
         {
             this.context = context;
-            RentRepository = rentRepository;
-            BookRepository = bookRepository;
+            ReservationRepository = reservationRepository;
             UserRepository = userRepository;
         }
 

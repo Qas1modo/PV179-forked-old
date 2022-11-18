@@ -5,8 +5,7 @@ namespace Infrastructure.UnitOfWork
 {
     public interface IUoWReservation : IUnitOfWork
     {
-        IRepository<Rent> RentRepository { get; }
+        IRepository<Reservation> ReservationRepository { get; }
         IRepository<User> UserRepository { get; }
-        IRepository<Book> BookRepository { get; }
     }
 }

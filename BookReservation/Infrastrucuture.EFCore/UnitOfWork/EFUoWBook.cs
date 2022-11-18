@@ -7,21 +7,16 @@ namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWBook : IUoWBook
     {
-        public IRepository<Author> AuthorRepository { get; }
         public IRepository<Book> BookRepository { get; }
-        public IRepository<Genre> GenreRepository { get; }
 
-        private BookReservationDbContext context;
+        private readonly BookReservationDbContext context;
 
-        public EFUoWBook(BookReservationDbContext context, IRepository<Author> authorRepository,
-            IRepository<Book> bookRepository, IRepository<Genre> genreRepository)
+        public EFUoWBook(BookReservationDbContext context,
+            IRepository<Book> bookRepository)
         {
             this.context = context;
-            AuthorRepository= authorRepository;
             BookRepository= bookRepository;
-            GenreRepository =  genreRepository;
         }
-
 
         public async Task Commit()
         {

@@ -14,19 +14,18 @@ namespace Infrastructure.EFCore.Query
 {
     public class EFQuery<TEntity> : Query<TEntity> where TEntity : BaseEntity, new()
     {
-        private readonly BookReservationDbContext Context;
+        private readonly BookReservationDbContext context;
 
-        private readonly Type EntityType;
-        public EFQuery(BookReservationDbContext context)
+        private readonly Type entityType;
+        public EFQuery(BookReservationDbContext dbContext)
         {
-            Context = context;
-            EntityType = typeof(TEntity);
+            context = dbContext;
+            entityType = typeof(TEntity);
         }
 
         public override EFQueryResult<TEntity> Execute()
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>();
-
+            IQueryable<TEntity> query = context.Set<TEntity>();
             foreach (var expression in WherePredicates)
             {
                 query = ApplyWhere(query, expression.expression, expression.columnName);
@@ -45,8 +44,8 @@ namespace Infrastructure.EFCore.Query
 
         private IQueryable<TEntity> OrderBy(IQueryable<TEntity> query, string orderByColumn, bool ascending, Type orderType)
         {
-            ParameterExpression parameter = Expression.Parameter(EntityType, "parameter");
-            string? objectName = EntityType.GetProperty(orderByColumn)?.Name;
+            ParameterExpression parameter = Expression.Parameter(entityType, "parameter");
+            string? objectName = entityType.GetProperty(orderByColumn)?.Name;
             if (objectName == null)
             {
                 throw new ArgumentException($"Invalid column name: {orderByColumn}");
@@ -55,15 +54,15 @@ namespace Infrastructure.EFCore.Query
             var lambda = Expression.Lambda(property, parameter);
             var orderByMethod = typeof(Queryable).GetMethods()
                 .First(a => a.Name == (ascending ? "OrderBy" : "OrderByDescending") && a.GetParameters().Length == 2);
-            orderByMethod = orderByMethod.MakeGenericMethod(EntityType, orderType);
+            orderByMethod = orderByMethod.MakeGenericMethod(entityType, orderType);
             return (IQueryable<TEntity>)orderByMethod.Invoke(null, new object[] { query, lambda })!;
         }
 
 
         private IQueryable<TEntity> ApplyWhere(IQueryable<TEntity> query, Expression expression, string columnName)
         {
-            ParameterExpression parameter = Expression.Parameter(EntityType, "parameter");
-            string? objectName = EntityType.GetProperty(columnName)?.Name;
+            ParameterExpression parameter = Expression.Parameter(entityType, "parameter");
+            string? objectName = entityType.GetProperty(columnName)?.Name;
             if (objectName is null)
             {
                 throw new ArgumentException($"Invalid column name: {columnName}");

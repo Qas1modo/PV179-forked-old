@@ -13,7 +13,7 @@ namespace BL.Tests.Services
         protected Author author;
         protected Genre genre;
         protected Book book;
-        protected Rent rent;
+        protected Reservation rent;
        
         public AbstractTest()
         {
@@ -56,14 +56,14 @@ namespace BL.Tests.Services
                 Photo = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEAwUE"
             };
 
-            this.rent = new Rent
+            this.rent = new Reservation
             {
                 User = user,
                 Book = book,
                 ReservedAt = DateTime.Now.AddMinutes(-600),
                 RentedAt = DateTime.Now,
                 LoanPeriod = 20,
-                Price = decimal.MaxValue,
+                TotalPrice = decimal.MaxValue,
                 State = DAL.Enums.RentState.Active // change within test if needed
             };
         }

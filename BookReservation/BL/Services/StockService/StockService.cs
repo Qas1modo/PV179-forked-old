@@ -14,24 +14,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Services.Stock
+namespace BL.Services.StockService
 {
     public class StockService: IStockService
     {
-        private BookReservationDbContext context;
-        private IMapper mapper;
-        private IUoWBook uow;
+        private readonly IMapper mapper;
+        private readonly IUoWBook uow;
+        private readonly IQuery<Book> query;
 
-        public StockService(BookReservationDbContext context, IMapper mapper, IUoWBook uow)
+        public StockService(IMapper mapper, IUoWBook uow, IQuery<Book> query)
         {
-            this.context = context;
             this.mapper = mapper;
             this.uow = uow;
+            this.query = query;
         }
 
         public QueryResultDto<Book> ShowBooks(BookFilterDto filter)
         {
-            IQuery<Book> query = new EFQuery<Book>(context);
+            query.Where<bool>(a => a == false, "Deleted");
             if (filter?.OnStock == true)
             {
                 query.Where<int>(a => a > 0, "Stock");
@@ -68,14 +68,12 @@ namespace BL.Services.Stock
 
         public BookAvailabilityDto GetBookStock(int bookId)
         {
-            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             return mapper.Map<BookAvailabilityDto>(book);
         }
 
         public bool ReserveBookStock(int bookId)
         {
-            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             if (book.Stock < 1) return false;
             book.Stock = book.Stock -= 1;
@@ -84,9 +82,8 @@ namespace BL.Services.Stock
             return true;
         }
 
-        public bool BookReturned(int bookId)
+        public bool BookReturnedStock(int bookId)
         {
-            // using IUoWBook uow = new EFUoWBook(context);
             Book book = uow.BookRepository.GetByID(bookId);
             if (book.Stock > book.Total) return false;
             book.Stock = book.Stock += 1;

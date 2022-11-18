@@ -7,7 +7,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using DAL.Models;
 using BL.DTOs;
 
-namespace BL.Services.Review
+namespace BL.Services.ReviewService
 {
     public class ReviewService : IReviewService
 	{
@@ -22,7 +22,7 @@ namespace BL.Services.Review
 
 		public void AddReview(ReviewDto reviewDto)
 		{
-            uow.ReviewRepository.Insert(mapper.Map<DAL.Models.Review>(reviewDto));
+            uow.ReviewRepository.Insert(mapper.Map<Review>(reviewDto));
             uow.Commit();
         }
 
@@ -35,15 +35,7 @@ namespace BL.Services.Review
         public IEnumerable<ReviewDetailDto> ShowReviews(int bookId)
 		{
             Book book = uow.BookRepository.GetByID(bookId);
-            IEnumerable<ReviewDetailDto> result = new List<ReviewDetailDto>();
-            foreach (var bookReview in book.Reviews)
-            {
-                ReviewDetailDto item = mapper.Map<ReviewDetailDto>(bookReview);
-                User user = uow.UserRepository.GetByID(bookReview.UserId);
-                item.Name = user.Name;
-                result = result.Append(item);
-            }
-            return result;
+            return mapper.Map<IEnumerable<ReviewDetailDto>>(book.Reviews);
         }
     }
 }

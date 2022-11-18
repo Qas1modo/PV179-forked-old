@@ -27,24 +27,27 @@ builder.Services.AddTransient<IQuery<Author>, EFQuery<Author>>();
 builder.Services.AddTransient<IQuery<Book>, EFQuery<Book>>();
 builder.Services.AddTransient<IQuery<CartItem>, EFQuery<CartItem>>();
 builder.Services.AddTransient<IQuery<Genre>, EFQuery<Genre>>();
-builder.Services.AddTransient<IQuery<Rent>, EFQuery<Rent>>();
+builder.Services.AddTransient<IQuery<Reservation>, EFQuery<Reservation>>();
 builder.Services.AddTransient<IQuery<Review>, EFQuery<Review>>();
 builder.Services.AddTransient<IQuery<User>, EFQuery<User>>();
 
 // Context
-builder.Services.AddTransient<BookReservationDbContext, BookReservationDbContext>();
+builder.Services.AddScoped<BookReservationDbContext, BookReservationDbContext>();
 
 // Repositories DI Setup
-builder.Services.AddSingleton<IRepository<BaseEntity>, EFGenericRepository<BaseEntity>>();
 builder.Services.AddScoped<IRepository<Book>, EFGenericRepository<Book>>();
 builder.Services.AddScoped<IRepository<Author>, EFGenericRepository<Author>>();
 builder.Services.AddScoped<IRepository<Genre>, EFGenericRepository<Genre>>();
 builder.Services.AddScoped<IRepository<CartItem>, EFGenericRepository<CartItem>>();
+builder.Services.AddScoped<IRepository<Reservation>, EFGenericRepository<Reservation>>();
+builder.Services.AddScoped<IRepository<Review>, EFGenericRepository<Review>>();
+builder.Services.AddScoped<IRepository<User>, EFGenericRepository<User>>();
 
 // UnitOfWork DI Setup
 builder.Services.AddScoped<IUoWBook, EFUoWBook>();
+builder.Services.AddScoped<IUoWAuthor, EFUoWAuthor>();
 builder.Services.AddScoped<IUoWCartItem, EFUoWCartItem>();
-builder.Services.AddScoped<IUoWCartItems, EFUoWCartItems>();
+builder.Services.AddScoped<IUoWCartItem, EFUoWCartItem>();
 builder.Services.AddScoped<IUoWGenre, EFUoWGenre>();
 builder.Services.AddScoped<IUoWReservation, EFUoWReservation>();
 builder.Services.AddScoped<IUoWReview, EFUoWReview>();

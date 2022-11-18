@@ -9,11 +9,13 @@ namespace BL.DTOs
 {
     public class CartItemDetailDto
     {
-        public AuthorDto Author { get; set; }
+        public int Id { get; set; }
 
-        public GenreDto Genre { get; set; }
+        public string Genre { get; set; }
 
-        public string Photo { get; set; }
+        public string Author { get; set; }
+
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 

@@ -1,33 +1,30 @@
 ﻿using DAL.Models;
 using DAL;
-using Infrastructure.EFCore.Repository;
 using Infrastructure.Repository;
-using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.UnitOfWork;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
-    public class EFUoWCartItems : IUoWCartItems
+    public class EFUoWAdmin: IUoWAdmin
     {
-        public IRepository<CartItem> CartItemRepository { get; }
-        public IRepository<Book> BookRepository { get; }
         public IRepository<User> UserRepository { get; }
+        public IRepository<Book> BookRepository { get; }
 
-        private BookReservationDbContext context;
+        private readonly BookReservationDbContext context;
 
-        public EFUoWCartItems(BookReservationDbContext context, IRepository<CartItem> cartItemRepository,
-            IRepository<Book> bookRepository, IRepository<User> userRepository)
+        public EFUoWAdmin(BookReservationDbContext context,
+            IRepository<Book> bookRepository,
+            IRepository<User> userRepository)
         {
             this.context = context;
-            CartItemRepository = cartItemRepository;
             BookRepository = bookRepository;
             UserRepository = userRepository;
         }
-
 
         public async Task Commit()
         {
@@ -38,5 +35,7 @@ namespace Infrastructure.EFCore.UnitOfWork
         {
             context.Dispose();
         }
+
+
     }
 }

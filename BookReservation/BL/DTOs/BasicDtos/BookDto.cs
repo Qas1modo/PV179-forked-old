@@ -10,11 +10,9 @@ namespace BL.DTOs.BasicDtos
     {
         public string Name { get; set; }
 
-        public AuthorDto Author { get; set; }
-
         public int AuthorId { get; set; }
 
-        public virtual GenreDto Genre { get; set; }
+        public int GenreId { get; set; }
 
         public int Stock { get; set; }
 
@@ -25,7 +23,5 @@ namespace BL.DTOs.BasicDtos
         public string? Description { get; set; }
 
         public string? Photo { get; set; }
-
-        public List<ReviewDto> Reviews { get; set; }
     }
 }

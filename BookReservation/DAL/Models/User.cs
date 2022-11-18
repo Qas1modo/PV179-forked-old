@@ -39,7 +39,7 @@ namespace DAL.Models
         [Required]
         public Group Group { get; set; }
 
-        public virtual List<Rent> Rents { get; set; }
+        public virtual List<Reservation> Rents { get; set; }
 
         public virtual List<Review> Reviews { get; set; }
 

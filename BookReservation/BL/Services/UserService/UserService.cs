@@ -40,13 +40,11 @@ namespace BL.Services.UserService
         public PersonalInfoDto ShowUserData(int userId)
         {
             User user = uow.UserRepository.GetByID(userId);
+            if (user == null)
+            {
+                throw new Exception("Invaid id");
+            }
             return mapper.Map<PersonalInfoDto>(user);       
-        }
-
-        public UserDto GetUser(int userId)
-        {
-            User user = uow.UserRepository.GetByID(userId);
-            return mapper.Map<UserDto>(user);
         }
     }
 }

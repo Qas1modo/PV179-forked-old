@@ -7,28 +7,28 @@ using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
 
-namespace BL.Services.GenreService
+namespace BL.Services.AuthorService
 {
-    public class GenreService : IGenreService
+    public class AuthorService : IAuthorService
     {
         private readonly IMapper mapper;
-        private readonly IUoWGenre uow;
+        private readonly IUoWAuthor uow;
 
-        public GenreService(IUoWGenre uow, IMapper mapper)
+        public AuthorService(IUoWAuthor uow, IMapper mapper)
         {
             this.mapper = mapper;
             this.uow = uow;
         }
 
-        public void AddGenre(GenreDto genreDto)
+        public void AddAuthor(AuthorDto authorDto)
         {
-            uow.GenreRepository.Insert(mapper.Map<Genre>(genreDto));
+            uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
             uow.Commit();
         }
 
-        public void RemoveGenre(int id)
+        public void RemoveAuthor(int id)
         {
-            uow.GenreRepository.Delete(id);
+            uow.AuthorRepository.Delete(id);
             uow.Commit();
         }
     }

@@ -25,10 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
-    <Folder Include="Services\Review\" />
-    <Folder Include="Services\CartItem\" />
+    <Folder Include="QueryObjects\" />
+    <Folder Include="Services\ReviewService\" />
     <Folder Include="Services\GenreService\" />
-    <Folder Include="Services\CartItems\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />

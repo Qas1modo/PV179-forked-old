@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs.BasicDtos
 {
-    public class RentDto
+    public class ReservationDto
     {
         public int UserId { get; set; }
 
@@ -21,7 +21,7 @@ namespace BL.DTOs.BasicDtos
 
         public int LoanPeriod { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
 
         public RentState State { get; set; }
     }

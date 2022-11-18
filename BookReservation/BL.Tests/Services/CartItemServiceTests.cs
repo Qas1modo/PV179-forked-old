@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs.BasicDtos;
-using BL.Services.CartItem;
+using BL.Services.CartItemService;
 using DAL.Models;
 using Infrastructure.UnitOfWork;
 
@@ -9,14 +9,13 @@ namespace BL.Tests.Services
     public class CartItemServiceTests : AbstractTest
     {
 
-        private Mock<IMapper> mapper;
-        private Mock<IUoWCartItem> uow;
+        private readonly Mock<IMapper> mapper;
+        private readonly Mock<IUoWCartItem> uow;
 
         public CartItemServiceTests()
         {
             mapper = new Mock<IMapper>();
             uow = new Mock<IUoWCartItem>();
-
         }
 
         [Fact]

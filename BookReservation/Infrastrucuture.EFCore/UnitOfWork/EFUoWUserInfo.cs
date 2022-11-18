@@ -9,9 +9,10 @@ namespace Infrastructure.EFCore.UnitOfWork
     {
         public IRepository<User> UserRepository { get; }
 
-        private BookReservationDbContext context;
+        private readonly BookReservationDbContext context;
 
-        public EFUoWUserInfo(BookReservationDbContext context, IRepository<User> userRepository)
+        public EFUoWUserInfo(BookReservationDbContext context,
+            IRepository<User> userRepository)
         {
             this.context = context;
             UserRepository = userRepository;

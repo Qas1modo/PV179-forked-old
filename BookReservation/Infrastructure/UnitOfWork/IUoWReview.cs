@@ -9,7 +9,5 @@ namespace Infrastructure.UnitOfWork
         IRepository<Review> ReviewRepository { get; }
 
         IRepository<Book> BookRepository { get; }
-
-        IRepository<User> UserRepository { get; }
     }
 }

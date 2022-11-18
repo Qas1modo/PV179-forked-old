@@ -483,7 +483,7 @@ namespace DAL.Data
             ///////////////////////////////////////////////////
             // ENTITY => Rent, Data Initializaton
 
-            Rent rent = new()
+            Reservation rent = new()
             {
                 Id = 1,
                 UserId = 5,
@@ -492,11 +492,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 200,
+                TotalPrice = 200,
                 State = RentState.Reserved,
             };
 
-            Rent rent1 = new()
+            Reservation rent1 = new()
             {
                 Id = 2,
                 UserId = 5,
@@ -505,11 +505,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2022, 9, 5),
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 20,
+                TotalPrice = 20,
                 State = RentState.Active,
             };
 
-            Rent rent2 = new()
+            Reservation rent2 = new()
             {
                 Id = 3,
                 UserId = 5,
@@ -518,11 +518,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 50,
+                TotalPrice = 50,
                 State = RentState.Expired,
             };
 
-            Rent rent3 = new()
+            Reservation rent3 = new()
             {
                 Id = 4,
                 UserId = 5,
@@ -531,11 +531,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 10, 3),
                 ReturnedAt = new DateTime(2021, 10, 15),
                 LoanPeriod = 20,
-                Price = 200,
+                TotalPrice = 200,
                 State = RentState.Returned,
             };
 
-            Rent rent4 = new()
+            Reservation rent4 = new()
             {
                 Id = 5,
                 UserId = 4,
@@ -544,11 +544,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 120,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Canceled,
             };
 
-            Rent rent5 = new()
+            Reservation rent5 = new()
             {
                 Id = 6,
                 UserId = 2,
@@ -557,11 +557,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2020, 9, 6),
                 ReturnedAt = null,
                 LoanPeriod = 10,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Overdue,
             };
 
-            Rent rent6 = new()
+            Reservation rent6 = new()
             {
                 Id = 7,
                 UserId = 4,
@@ -570,11 +570,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 9, 5),
                 ReturnedAt = new DateTime(2021, 9, 29),
                 LoanPeriod = 30,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Returned,
             };
 
-            Rent rent7 = new()
+            Reservation rent7 = new()
             {
                 Id = 8,
                 UserId = 3,
@@ -583,18 +583,18 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 3,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Reserved,
             };
 
-            modelBuilder.Entity<Rent>().HasData(rent);
-            modelBuilder.Entity<Rent>().HasData(rent1);
-            modelBuilder.Entity<Rent>().HasData(rent2);
-            modelBuilder.Entity<Rent>().HasData(rent3);
-            modelBuilder.Entity<Rent>().HasData(rent4);
-            modelBuilder.Entity<Rent>().HasData(rent5);
-            modelBuilder.Entity<Rent>().HasData(rent6);
-            modelBuilder.Entity<Rent>().HasData(rent7);
+            modelBuilder.Entity<Reservation>().HasData(rent);
+            modelBuilder.Entity<Reservation>().HasData(rent1);
+            modelBuilder.Entity<Reservation>().HasData(rent2);
+            modelBuilder.Entity<Reservation>().HasData(rent3);
+            modelBuilder.Entity<Reservation>().HasData(rent4);
+            modelBuilder.Entity<Reservation>().HasData(rent5);
+            modelBuilder.Entity<Reservation>().HasData(rent6);
+            modelBuilder.Entity<Reservation>().HasData(rent7);
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////

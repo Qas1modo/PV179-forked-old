@@ -23,11 +23,5 @@ namespace BL.DTOs.BasicDtos
         public DateOnly BirthDate { get; set; }
 
         public Group Group { get; set; }
-
-        public List<RentDto> Rents { get; set; }
-
-        public List<ReviewDto> Reviews { get; set; }
-
-        public List<CartItemDto> CartItems { get; set; }
     }
 }

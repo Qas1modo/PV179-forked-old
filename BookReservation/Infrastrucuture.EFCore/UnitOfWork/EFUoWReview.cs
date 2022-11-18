@@ -14,17 +14,15 @@ namespace Infrastructure.EFCore.UnitOfWork
 
         public IRepository<Book> BookRepository { get; }
 
-        public IRepository<User> UserRepository { get; }
+        private readonly BookReservationDbContext context;
 
-        private BookReservationDbContext context;
-
-        public EFUoWReview(BookReservationDbContext context, IRepository<Review> reviewRepository,
-            IRepository<Book> bookRepository, IRepository<User> userRepository)
+        public EFUoWReview(BookReservationDbContext context,
+            IRepository<Review> reviewRepository,
+            IRepository<Book> bookRepository)
         {
             this.context = context;
             ReviewRepository = reviewRepository;
             BookRepository = bookRepository;
-            UserRepository = userRepository;
         }
 
 

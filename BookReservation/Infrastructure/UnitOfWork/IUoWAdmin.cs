@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.UnitOfWork
 {
-    public interface IUoWCartItem: IUnitOfWork
+    public interface IUoWAdmin: IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
-        IRepository<CartItem> CartItemRepository { get; }
+        IRepository<Book> BookRepository { get; }
     }
 }
