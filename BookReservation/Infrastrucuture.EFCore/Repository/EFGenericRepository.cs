@@ -15,12 +15,13 @@ namespace Infrastructure.EFCore.Repository
     public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         internal BookReservationDbContext context;
+
         internal DbSet<TEntity> dbSet;
 
         public EFGenericRepository(BookReservationDbContext dbcontext)
         {
-            context = dbcontext;
-            dbSet = context.Set<TEntity>();
+            this.context = dbcontext;
+            this.dbSet = context.Set<TEntity>();
         }
 
         public virtual TEntity GetByID(int id)

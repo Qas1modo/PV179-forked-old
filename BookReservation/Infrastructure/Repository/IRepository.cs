@@ -8,19 +8,18 @@ namespace Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        public TEntity GetByID(int id);
+        TEntity GetByID(int id);
 
-        public IQueryable<TEntity> GetQueryable();
+        IQueryable<TEntity> GetQueryable();
 
-        public IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
 
-        public int Insert(TEntity entity);
+        int Insert(TEntity entity);
 
-        public void Delete(int id);
+        void Delete(int id);
 
-        public void Delete(TEntity entityToDelete);
+        void Delete(TEntity entityToDelete);
 
-        public void Update(TEntity entityToUpdate);
+        void Update(TEntity entityToUpdate);
     }
 }
-

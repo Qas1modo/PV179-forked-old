@@ -75,7 +75,11 @@ namespace BL.Services.StockService
         public bool ReserveBookStock(int bookId)
         {
             Book book = uow.BookRepository.GetByID(bookId);
-            if (book.Stock < 1) return false;
+            if (book.Stock < 1)
+            {
+                return false;
+            }
+
             book.Stock = book.Stock -= 1;
             uow.BookRepository.Update(book);
             uow.Commit();
@@ -85,7 +89,11 @@ namespace BL.Services.StockService
         public bool BookReturnedStock(int bookId)
         {
             Book book = uow.BookRepository.GetByID(bookId);
-            if (book.Stock > book.Total) return false;
+            if (book.Stock > book.Total)
+            {
+                return false;
+            }
+
             book.Stock = book.Stock += 1;
             uow.BookRepository.Update(book);
             uow.Commit();

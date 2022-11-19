@@ -16,7 +16,8 @@ namespace Infrastructure.EFCore.UnitOfWork
 
         private readonly BookReservationDbContext context;
 
-        public EFUoWAuthor(BookReservationDbContext context, IRepository<Author> authorRepository)
+        public EFUoWAuthor(BookReservationDbContext context,
+            IRepository<Author> authorRepository)
         {
             this.context = context;
             AuthorRepository = authorRepository;

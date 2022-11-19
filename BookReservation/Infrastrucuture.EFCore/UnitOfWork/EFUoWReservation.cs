@@ -8,6 +8,7 @@ namespace Infrastructure.EFCore.UnitOfWork
     public class EFUoWReservation : IUoWReservation
     {
         public IRepository<Reservation> ReservationRepository { get; }
+
         public IRepository<User> UserRepository { get; }
 
         private readonly BookReservationDbContext context;
@@ -18,8 +19,8 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<User> userRepository)
         {
             this.context = context;
-            ReservationRepository = reservationRepository;
-            UserRepository = userRepository;
+            this.ReservationRepository = reservationRepository;
+            this.UserRepository = userRepository;
         }
 
         public async Task Commit()

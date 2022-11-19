@@ -8,8 +8,8 @@ namespace BL.Facades
 {
     public interface IOrderFacade
     {
-        public bool MakeOrder(int userId);
+        bool MakeOrder(int userId);
 
-        public bool ReturnBook(int reservationId, bool cancel);
+        bool ReturnBook(int reservationId, bool cancel);
     }
 }

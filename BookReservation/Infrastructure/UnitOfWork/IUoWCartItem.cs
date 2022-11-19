@@ -11,6 +11,7 @@ namespace Infrastructure.UnitOfWork
     public interface IUoWCartItem: IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
+
         IRepository<CartItem> CartItemRepository { get; }
     }
 }

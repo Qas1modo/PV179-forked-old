@@ -15,7 +15,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<User> userRepository)
         {
             this.context = context;
-            UserRepository = userRepository;
+            this.UserRepository = userRepository;
         }
 
         public async Task Commit()

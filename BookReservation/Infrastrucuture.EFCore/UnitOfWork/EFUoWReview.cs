@@ -21,8 +21,8 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<Book> bookRepository)
         {
             this.context = context;
-            ReviewRepository = reviewRepository;
-            BookRepository = bookRepository;
+            this.ReviewRepository = reviewRepository;
+            this.BookRepository = bookRepository;
         }
 
 

@@ -10,6 +10,7 @@ namespace Infrastructure.EFCore.Query
     public class ReplaceParamVisitor : ExpressionVisitor
     {
         private readonly ParameterExpression param;
+
         private readonly Expression replacement;
 
         public ReplaceParamVisitor(ParameterExpression param, Expression replacement)

@@ -9,8 +9,11 @@ namespace BL.DTOs.QueryObjects
     public class QueryResultDto<IEntity>
     {
         public long ItemsCount { get; }
+
         public int? PageNumber { get; }
+
         public int PageSize { get; }
+
         public IEnumerable<IEntity> Items { get; set; }
     }
 }

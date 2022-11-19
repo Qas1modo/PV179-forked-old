@@ -15,7 +15,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<Book> bookRepository)
         {
             this.context = context;
-            BookRepository= bookRepository;
+            this.BookRepository= bookRepository;
         }
 
         public async Task Commit()

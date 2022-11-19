@@ -13,6 +13,7 @@ namespace Infrastructure.EFCore.UnitOfWork
     public class EFUoWAdmin: IUoWAdmin
     {
         public IRepository<User> UserRepository { get; }
+
         public IRepository<Book> BookRepository { get; }
 
         private readonly BookReservationDbContext context;
@@ -22,8 +23,8 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<User> userRepository)
         {
             this.context = context;
-            BookRepository = bookRepository;
-            UserRepository = userRepository;
+            this.BookRepository = bookRepository;
+            this.UserRepository = userRepository;
         }
 
         public async Task Commit()

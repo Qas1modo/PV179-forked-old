@@ -12,10 +12,10 @@ namespace BL.Services.ReservationService
 {
     public interface IReservationService
     {
-        public void CreateReservation(ReservationDto rentDto);
+        void CreateReservation(ReservationDto rentDto);
 
-        public void ChangeState(int reservationId, RentState newState);
+        void ChangeState(int reservationId, RentState newState);
 
-        public IEnumerable<ReservationDetailDto> ShowReservations(int userId);
+        IEnumerable<ReservationDetailDto> ShowReservations(int userId);
     }
 }

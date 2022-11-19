@@ -9,9 +9,12 @@ namespace BL.Services.AuthService
 {
     public interface IAuthService
     {
-        public int RegisterUser(RegistrationDto input);
-        public object ChangePassword();
-        public object LoginUser();
-        public object LogoutUser();
+        int RegisterUser(RegistrationDto input);
+
+        object ChangePassword();
+
+        object LoginUser();
+
+        object LogoutUser();
     }
 }

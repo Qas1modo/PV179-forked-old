@@ -14,6 +14,7 @@ namespace Infrastructure.EFCore.UnitOfWork
     public class EFUoWCartItem : IUoWCartItem
     {
         public IRepository<CartItem> CartItemRepository { get; }
+
         public IRepository<User> UserRepository { get; }
 
         private readonly BookReservationDbContext context;
@@ -23,8 +24,8 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<User> userRepository)
         {
             this.context = context;
-            CartItemRepository = cartItemRepository;
-            UserRepository = userRepository;
+            this.CartItemRepository = cartItemRepository;
+            this.UserRepository = userRepository;
         }
 
 

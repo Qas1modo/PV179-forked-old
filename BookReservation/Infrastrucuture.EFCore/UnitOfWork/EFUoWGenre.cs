@@ -16,7 +16,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             IRepository<Genre> genreRepository)
         {
             this.context = context;
-            GenreRepository = genreRepository;
+            this.GenreRepository = genreRepository;
         }
 
         public async Task Commit()

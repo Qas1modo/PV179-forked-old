@@ -17,10 +17,11 @@ namespace Infrastructure.EFCore.Query
         private readonly BookReservationDbContext context;
 
         private readonly Type entityType;
+
         public EFQuery(BookReservationDbContext dbContext)
         {
-            context = dbContext;
-            entityType = typeof(TEntity);
+            this.context = dbContext;
+            this.entityType = typeof(TEntity);
         }
 
         public override EFQueryResult<TEntity> Execute()

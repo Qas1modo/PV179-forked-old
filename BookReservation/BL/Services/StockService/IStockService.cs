@@ -12,9 +12,12 @@ namespace BL.Services.StockService
 {
     public interface IStockService
     {
-        public QueryResultDto<Book> ShowBooks(BookFilterDto filter);
-        public BookAvailabilityDto GetBookStock(int bookId);
-        public bool ReserveBookStock(int bookId);
-        public bool BookReturnedStock(int bookId);
+        QueryResultDto<Book> ShowBooks(BookFilterDto filter);
+
+        BookAvailabilityDto GetBookStock(int bookId);
+
+        bool ReserveBookStock(int bookId);
+
+        bool BookReturnedStock(int bookId);
     }
 }

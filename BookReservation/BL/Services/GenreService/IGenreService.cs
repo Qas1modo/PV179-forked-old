@@ -5,9 +5,9 @@ namespace BL.Services.GenreService
 {
 	public interface IGenreService
 	{
-        public void AddGenre(GenreDto genreDto);
+        void AddGenre(GenreDto genreDto);
 
-        public void RemoveGenre(int id);
+        void RemoveGenre(int id);
     }
 }
 

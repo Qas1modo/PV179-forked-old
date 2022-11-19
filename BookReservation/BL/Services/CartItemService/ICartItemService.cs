@@ -6,13 +6,13 @@ namespace BL.Services.CartItemService
 {
 	public interface ICartItemService
 	{
-        public void AddItem(CartItemDto itemDto);
+        void AddItem(CartItemDto itemDto);
 
-        public void RemoveItem(int id);
+        void RemoveItem(int id);
 
-        public void EmptyCart(int userId);
+        void EmptyCart(int userId);
 
-        public IEnumerable<CartItemDetailDto> GetCartItems(int userId);
+        IEnumerable<CartItemDetailDto> GetCartItems(int userId);
     }
 }
 

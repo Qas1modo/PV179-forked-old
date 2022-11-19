@@ -11,16 +11,16 @@ namespace BL.Services.Admin
 {
     public interface IAdminService
     {
-        public void UpdateBook(int bookId, BookDto updatedBook);
+        void UpdateBook(int bookId, BookDto updatedBook);
 
-        public int AddBook(BookDto newBook);
+        int AddBook(BookDto newBook);
 
-        public void DeleteBook(int bookId);
+        void DeleteBook(int bookId);
 
-        public IEnumerable<UserDto> ShowUsers();
+        IEnumerable<UserDto> ShowUsers();
 
-        public void UpdateUserPermission(int userId, Group newGroup);
+        void UpdateUserPermission(int userId, Group newGroup);
 
-        public void DeleteUser(int userId);
+        void DeleteUser(int userId);
     }
 }
