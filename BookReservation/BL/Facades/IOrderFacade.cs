@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Enums;
 
 namespace BL.Facades
 {
@@ -10,6 +11,6 @@ namespace BL.Facades
     {
         bool MakeOrder(int userId);
 
-        bool ReturnBook(int reservationId, bool cancel);
+        bool ReturnBook(int reservationId, RentState rentSate);
     }
 }

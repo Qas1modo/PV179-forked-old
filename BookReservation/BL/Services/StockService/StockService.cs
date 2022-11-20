@@ -80,21 +80,23 @@ namespace BL.Services.StockServ
                 return false;
             }
 
-            book.Stock = book.Stock -= 1;
-            uow.BookRepository.Update(book);
-            uow.Commit();
-            return true;
+            return HelperUpdateStock(book, -1);
         }
 
         public bool BookReturnedStock(int bookId)
         {
             Book book = uow.BookRepository.GetByID(bookId);
-            if (book.Stock > book.Total)
+            if (book.Stock >= book.Total)
             {
                 return false;
             }
 
-            book.Stock = book.Stock += 1;
+            return HelperUpdateStock(book, +1);
+        }
+
+        private bool HelperUpdateStock(Book book, int updateStock)
+        {
+            book.Stock += updateStock;
             uow.BookRepository.Update(book);
             uow.Commit();
             return true;
