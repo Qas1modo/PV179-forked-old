@@ -14,7 +14,9 @@ namespace Infrastructure.Query
         public List<(Expression expression, string columnName)> WherePredicates { get; set; } = new();
 
         public (string column, bool ascending, Type type)? OrderByData;
+
         public int? PageNumber { get; set; }
+
         public int PageSize = 20;
 
         public IQuery<TEntity> Page(int page, int pageSize)
