@@ -23,7 +23,17 @@ namespace BL.Tests.Services
 
         private void SetupUoWForChangeStateTest()
         {
-            uow.Setup(x => x.ReservationRepository.GetByID(rent.Id)).Returns(rent).Verifiable();
+            uow.Setup(x => x.ReservationRepository.GetByID(It.IsAny<int>()))
+                .Returns((int id) =>
+                {
+                    if (id != rent.Id)
+                    {
+                        throw new Exception();
+                    }
+
+                    return rent;
+                })
+                .Verifiable();
             uow.Setup(x => x.ReservationRepository.Update(rent)).Verifiable();
             uow.Setup(x => x.Commit()).Verifiable();
 
@@ -46,6 +56,17 @@ namespace BL.Tests.Services
 
             Assert.True(rent.State == DAL.Enums.RentState.Returned);
             Assert.NotNull(rent.ReturnedAt);
+        }
+
+        
+        [Fact(DisplayName = "NonExisting ID, Valid State input")]
+        public void ChangeStateTestNonExistingID()
+        {
+            SetupUoWForChangeStateTest();
+
+            var service = new ReservationService(uow.Object, mapper.Object);
+
+            Assert.Throws<Exception>(() => service.ChangeState(42, DAL.Enums.RentState.Returned));
         }
 
 
