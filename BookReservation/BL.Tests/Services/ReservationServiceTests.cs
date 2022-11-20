@@ -21,11 +21,8 @@ namespace BL.Tests.Services
             uow = new Mock<IUoWReservation>();
         }
 
-        // this would be the same for others if good
-        [Fact]
-        public void BookReturnTestPass()
+        private void SetupUoWForChangeStateTest()
         {
-            // test null or non-existing input ? --> not really a test .. just checking mocked vals
             uow.Setup(x => x.ReservationRepository.GetByID(rent.Id)).Returns(rent).Verifiable();
             uow.Setup(x => x.ReservationRepository.Update(rent)).Verifiable();
             uow.Setup(x => x.Commit()).Verifiable();
@@ -33,6 +30,12 @@ namespace BL.Tests.Services
             // Preconditions
             rent.ReturnedAt = null;
             rent.State = DAL.Enums.RentState.Active;
+        }
+
+        [Fact(DisplayName = "Valid ID input, Valid State input")]
+        public void ChangeStateTestPassing()
+        {
+            SetupUoWForChangeStateTest();
 
             var service = new ReservationService(uow.Object, mapper.Object);
 
@@ -44,6 +47,7 @@ namespace BL.Tests.Services
             Assert.True(rent.State == DAL.Enums.RentState.Returned);
             Assert.NotNull(rent.ReturnedAt);
         }
+
 
     }
 }
