@@ -1,5 +1,8 @@
 using AutoMapper;
 using BL.Config;
+using BL.Services.CartItemService;
+using BL.Services.ReservationService;
+using BL.Services.StockService;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
@@ -52,6 +55,11 @@ builder.Services.AddScoped<IUoWGenre, EFUoWGenre>();
 builder.Services.AddScoped<IUoWReservation, EFUoWReservation>();
 builder.Services.AddScoped<IUoWReview, EFUoWReview>();
 builder.Services.AddScoped<IUoWUserInfo, EFUoWUserInfo>();
+
+// Services DI Setup
+builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 
 
 

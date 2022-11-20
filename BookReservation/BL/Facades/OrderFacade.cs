@@ -40,7 +40,7 @@ namespace BL.Facades
 			User user = uow.UserRepository.GetByID(userId);
 			foreach (var cartItem in user.CartItems)
 			{
-				if (stockService.ReserveBookStock(cartItem.BookId))
+				if (!stockService.ReserveBookStock(cartItem.BookId))
 				{
 					return false;
 				}
@@ -50,14 +50,13 @@ namespace BL.Facades
 			return true;
 		}
 
-		public bool ReturnBook(int reservationId, bool cancel)
+		public bool ReturnBook(int reservationId, RentState newState = RentState.Returned)
 		{
 			Reservation reservation = uow.ReservationRepository.GetByID(reservationId);
 			if (!stockService.BookReturnedStock(reservation.BookId))
 			{
 				return false;
 			}
-			RentState newState = cancel ? RentState.Canceled : RentState.Returned;
 			rentService.ChangeState(reservationId, newState);
 			return true;
 		}
