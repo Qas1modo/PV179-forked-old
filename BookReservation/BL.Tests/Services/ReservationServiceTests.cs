@@ -62,7 +62,7 @@ namespace BL.Tests.Services
         }
 
         
-        [Fact(DisplayName = "NonExisting ID, Valid State input")]
+        [Fact(DisplayName = "NonExisting ID")]
         public void ChangeStateTestNonExistingID()
         {
             SetupUoWForChangeStateTest();
