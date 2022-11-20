@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.Services.ReservationService;
+using DAL.Enums;
 using DAL.Models;
 using Infrastructure.UnitOfWork;
 using System;
@@ -34,16 +35,18 @@ namespace BL.Tests.Services
                     return rent;
                 })
                 .Verifiable();
+
             uow.Setup(x => x.ReservationRepository.Update(rent)).Verifiable();
             uow.Setup(x => x.Commit()).Verifiable();
 
             // Preconditions
             rent.ReturnedAt = null;
+            rent.RentedAt = null;
             rent.State = DAL.Enums.RentState.Active;
         }
 
-        [Fact(DisplayName = "Valid ID input, Valid State input")]
-        public void ChangeStateTestPassing()
+        [Fact(DisplayName = "Return book test")]
+        public void ChangeStateTestPassingReturnBook()
         {
             SetupUoWForChangeStateTest();
 
@@ -54,7 +57,7 @@ namespace BL.Tests.Services
             // Verify that setups have been called within service
             uow.Verify();
 
-            Assert.True(rent.State == DAL.Enums.RentState.Returned);
+            Assert.True(rent.State == RentState.Returned);
             Assert.NotNull(rent.ReturnedAt);
         }
 
@@ -66,7 +69,23 @@ namespace BL.Tests.Services
 
             var service = new ReservationService(uow.Object, mapper.Object);
 
-            Assert.Throws<Exception>(() => service.ChangeState(42, DAL.Enums.RentState.Returned));
+            Assert.Throws<Exception>(() => service.ChangeState(42, RentState.Returned));
+        }
+
+
+        [Fact(DisplayName = "Rent book test")]
+        public void ChangeStateTestRentBook()
+        {
+            SetupUoWForChangeStateTest();
+
+
+            var service = new ReservationService(uow.Object, mapper.Object);
+
+            service.ChangeState(rent.Id, RentState.Active);
+
+            Assert.True(rent.State == RentState.Active);
+            Assert.NotNull(rent.RentedAt);
+            Assert.Null(rent.ReturnedAt); // unchanged!
         }
 
 
