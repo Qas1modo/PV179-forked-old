@@ -7,7 +7,7 @@ using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
 
-namespace BL.Services.AuthorService
+namespace BL.Services.AuthorServ
 {
     public class AuthorService : IAuthorService
     {

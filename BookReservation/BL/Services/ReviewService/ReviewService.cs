@@ -7,7 +7,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using DAL.Models;
 using BL.DTOs;
 
-namespace BL.Services.ReviewService
+namespace BL.Services.ReviewServ
 {
     public class ReviewService : IReviewService
 	{

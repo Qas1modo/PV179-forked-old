@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Services.StockService
+namespace BL.Services.StockServ
 {
     public class StockService: IStockService
     {

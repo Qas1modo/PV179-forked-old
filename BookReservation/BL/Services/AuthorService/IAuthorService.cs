@@ -1,7 +1,7 @@
 ﻿using System;
 using BL.DTOs.BasicDtos;
 
-namespace BL.Services.AuthorService
+namespace BL.Services.AuthorServ
 {
 	public interface IAuthorService
 	{

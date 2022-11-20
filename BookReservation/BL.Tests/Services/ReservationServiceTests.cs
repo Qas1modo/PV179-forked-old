@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL.Services.ReservationService;
+using BL.Services.ReservationServ;
 using DAL.Enums;
 using DAL.Models;
 using Infrastructure.UnitOfWork;

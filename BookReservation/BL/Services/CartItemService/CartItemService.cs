@@ -7,7 +7,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
-namespace BL.Services.CartItemService
+namespace BL.Services.CartItemServ
 {
     public class CartItemService : ICartItemService
     {

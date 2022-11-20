@@ -2,7 +2,7 @@
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
 
-namespace BL.Services.ReviewService
+namespace BL.Services.ReviewServ
 {
 	public interface IReviewService
 	{

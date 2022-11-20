@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BL.DTOs.QueryObjects;
 using DAL.Models;
 
-namespace BL.Services.StockService
+namespace BL.Services.StockServ
 {
     public interface IStockService
     {

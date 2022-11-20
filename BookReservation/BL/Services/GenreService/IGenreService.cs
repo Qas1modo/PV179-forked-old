@@ -1,7 +1,7 @@
 ﻿using System;
 using BL.DTOs.BasicDtos;
 
-namespace BL.Services.GenreService
+namespace BL.Services.GenreServ
 {
 	public interface IGenreService
 	{

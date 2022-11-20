@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BL.DTOs;
 using DAL.Enums;
 
-namespace BL.Services.ReservationService
+namespace BL.Services.ReservationServ
 {
     public interface IReservationService
     {

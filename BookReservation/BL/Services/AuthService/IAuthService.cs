@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Services.AuthService
+namespace BL.Services.AuthServ
 {
     public interface IAuthService
     {

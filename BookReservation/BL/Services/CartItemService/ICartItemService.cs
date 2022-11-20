@@ -2,7 +2,7 @@
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
 
-namespace BL.Services.CartItemService
+namespace BL.Services.CartItemServ
 {
 	public interface ICartItemService
 	{

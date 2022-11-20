@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
-using BL.Services.Admin;
 using DAL.Enums;
 using DAL.Models;
 using Infrastructure.UnitOfWork;
@@ -14,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace BL.Services.AdminService
+namespace BL.Services.AdminServ
 {
     public class AdminService : IAdminService
     {

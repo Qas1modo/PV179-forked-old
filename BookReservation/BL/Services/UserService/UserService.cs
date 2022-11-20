@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace BL.Services.UserService
+namespace BL.Services.UserServ
 {
     public class UserService : IUserService
     {

@@ -7,7 +7,7 @@ using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
 
-namespace BL.Services.GenreService
+namespace BL.Services.GenreServ
 {
     public class GenreService : IGenreService
     {
