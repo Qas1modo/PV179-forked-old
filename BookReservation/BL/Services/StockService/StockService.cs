@@ -86,7 +86,7 @@ namespace BL.Services.StockService
         public bool BookReturnedStock(int bookId)
         {
             Book book = uow.BookRepository.GetByID(bookId);
-            if (book.Stock > book.Total)
+            if (book.Stock >= book.Total)
             {
                 return false;
             }
