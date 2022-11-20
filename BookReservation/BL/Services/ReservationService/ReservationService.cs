@@ -35,25 +35,22 @@ namespace BL.Services.ReservationService
         public void ChangeState(int reservationId, RentState newState)
         {
             Reservation rent = uow.ReservationRepository.GetByID(reservationId);
-            if (newState == RentState.Reserved)
+            switch(newState)
             {
-                rent.State = newState;
-                rent.ReservedAt = new DateTime();
+                case RentState.Reserved:
+                    rent.ReservedAt = new DateTime();
+                    break;
+
+                case RentState.Returned:
+                    rent.ReturnedAt = new DateTime();
+                    break;
+
+                case RentState.Active:
+                    rent.RentedAt = new DateTime();
+                    break;
             }
-            else if (newState == RentState.Returned) 
-            {
-                rent.State = newState;
-                rent.ReturnedAt = new DateTime();
-            }
-            else if (newState == RentState.Active)
-            {
-                rent.State = newState;
-                rent.RentedAt = new DateTime();
-            } 
-            else
-            {
-                rent.State = newState;
-            }
+
+            rent.State = newState;
             uow.ReservationRepository.Update(rent);
             uow.Commit();
         }
