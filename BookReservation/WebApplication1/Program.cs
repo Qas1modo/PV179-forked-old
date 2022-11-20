@@ -1,8 +1,8 @@
 using AutoMapper;
 using BL.Config;
-using BL.Services.CartItemService;
-using BL.Services.ReservationService;
-using BL.Services.StockService;
+using BL.Services.CartItemServ;
+using BL.Services.ReservationServ;
+using BL.Services.StockServ;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
