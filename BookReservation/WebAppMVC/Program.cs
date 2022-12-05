@@ -23,7 +23,6 @@ using (var db = new BookReservationDbContext())
 }
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IMapper>(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping)));
 
 // Queries
