@@ -41,80 +41,80 @@ namespace Infrastructure.EFCore.Test.Query
         public void TestFindAuthorByName()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<string>(a => a.Name == "Robert");
+            efquery.Where<string>(a => a == "Robert", "Name");
             var result = efquery.Execute();
 
             var expectedResult = dbContext.Authors
                 .Where(a => a.Name == "Robert")
                 .ToList();
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expectedResult, result.Items);
         }
 
         [Fact]
         public void TestFindAuthorWithInvalidId()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id == 13);
+            efquery.Where<int>(a => a == 13, "Id");
             var result = efquery.Execute();
 
-            Assert.False(result.Any());
+            Assert.False(result.Items.Any());
         }
 
         [Fact]
         public void TestFindAuthorsStartingP()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<string>(a => a.Name.StartsWith("P"));
+            efquery.Where<string>(a => a.StartsWith("P"), "Name");
             var result = efquery.Execute();
 
             var expectedResult = dbContext.Authors
                .Where(a => a.Name.StartsWith("P"))
                .ToList();
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorsWithIdGreaterThan5()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id > 5);
+            efquery.Where<int>(a => a > 5, "Id");
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
                .Where(a => a.Id > 5)
                .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorsSortAscendingByName()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.OrderBy<string>(a => a.Name);
+            efquery.OrderBy<string>("Name", true);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
                 .OrderBy(a => a.Name)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorsSortDescendingById()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.OrderBy<int>(a => a.Id, false);
+            efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
                 .OrderByDescending(a => a.Id)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(3)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(3)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
@@ -156,14 +156,14 @@ namespace Infrastructure.EFCore.Test.Query
 
             var ExpectedResult = new List<Author>();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorFilterWithPaggination()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id < 9);
+            efquery.Where<int>(a => a < 9, "Id");
             efquery.Page(2, 4);
             var result = efquery.Execute();
 
@@ -173,15 +173,15 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(4)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorFilterWithOredring()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id < 9);
-            efquery.OrderBy<int>(a => a.Id, false);
+            efquery.Where<int>(a => a < 9, "Id");
+            efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
 
             var ExpectedResult = dbContext.Authors
@@ -189,15 +189,15 @@ namespace Infrastructure.EFCore.Test.Query
                 .OrderByDescending(a => a.Id)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
 
         [Fact]
         public void TestAuthorEverything()
         {
             var efquery = new EFQuery<Author>(dbContext);
-            efquery.Where<int>(a => a.Id > 3);
-            efquery.OrderBy<string>(a => a.Name, true);
+            efquery.Where<int>(a => a > 3, "Id");
+            efquery.OrderBy<string>("Name", true);
             efquery.Page(3, 2);
             var result = efquery.Execute();
 
@@ -208,7 +208,7 @@ namespace Infrastructure.EFCore.Test.Query
                 .Take(2)
                 .ToList();
 
-            Assert.Equal(ExpectedResult, result);
+            Assert.Equal(ExpectedResult, result.Items);
         }
     }
 }

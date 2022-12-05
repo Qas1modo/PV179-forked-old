@@ -13,10 +13,8 @@ namespace DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews{ get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<Rent> Rents { get; set; }
-        public DbSet<ReviewPoint> ReviewPoints { get; set; }
+        public DbSet<Reservation> Rents { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<Address> Addresses { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
@@ -45,7 +43,6 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();
-
             base.OnModelCreating(modelBuilder);
         }
     }

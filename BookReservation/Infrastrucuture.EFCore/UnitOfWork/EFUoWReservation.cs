@@ -1,43 +1,36 @@
 ﻿using DAL.Models;
 using DAL;
 using Infrastructure.UnitOfWork;
-using Infrastrucure.Repository;
-using Infrastrucure.EFCore.Repository;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repository;
 
 namespace Infrastructure.EFCore.UnitOfWork
 {
     public class EFUoWReservation : IUoWReservation
     {
-        private IRepository<Rent> rentRepository;
+        public IRepository<Reservation> ReservationRepository { get; }
 
-        public EFUoWReservation(BookReservationDbContext context)
+        public IRepository<User> UserRepository { get; }
+
+        private readonly BookReservationDbContext context;
+
+        public EFUoWReservation(BookReservationDbContext context,
+            IRepository<Reservation> reservationRepository,
+            IRepository<Book> bookRepository,
+            IRepository<User> userRepository)
         {
-            Context = context;
-        }
-
-        public BookReservationDbContext Context { get; }
-
-        public IRepository<Rent> RentRepository
-        {
-            get
-            {
-                if (rentRepository == null)
-                {
-                    rentRepository = new EFGenericRepository<Rent>(Context);
-                }
-                return rentRepository;
-            }
+            this.context = context;
+            this.ReservationRepository = reservationRepository;
+            this.UserRepository = userRepository;
         }
 
         public async Task Commit()
         {
-            await Context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            Context.Dispose();
+            context.Dispose();
         }
     }
 }

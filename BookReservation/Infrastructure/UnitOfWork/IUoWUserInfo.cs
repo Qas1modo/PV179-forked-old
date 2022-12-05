@@ -1,5 +1,5 @@
 ﻿using DAL.Models;
-using Infrastrucure.Repository;
+using Infrastructure.Repository;
 
 
 namespace Infrastructure.UnitOfWork
@@ -7,6 +7,5 @@ namespace Infrastructure.UnitOfWork
     public interface IUoWUserInfo : IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
-
     }
 }

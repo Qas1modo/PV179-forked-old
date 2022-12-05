@@ -1,10 +1,12 @@
 ﻿using DAL.Models;
-using Infrastrucure.Repository;
+using Infrastructure.Repository;
 
 namespace Infrastructure.UnitOfWork
 {
     public interface IUoWReservation : IUnitOfWork
     {
-        IRepository<Rent> RentRepository { get; }
+        IRepository<Reservation> ReservationRepository { get; }
+
+        IRepository<User> UserRepository { get; }
     }
 }

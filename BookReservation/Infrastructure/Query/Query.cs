@@ -11,26 +11,33 @@ namespace Infrastructure.Query
 {
     public abstract class Query<TEntity> : IQuery<TEntity> where TEntity : BaseEntity, new()
     {
-        protected IQueryable<TEntity> query;
+        public List<(Expression expression, string columnName)> WherePredicates { get; set; } = new();
 
-        public IQuery<TEntity> Page(int page, int pageSize = 20)
+        public (string column, bool ascending, Type type)? OrderByData;
+
+        public int? PageNumber { get; set; }
+
+        public int PageSize = 20;
+
+        public IQuery<TEntity> Page(int page, int pageSize)
         {
-            query = query.Skip((page -1) * pageSize).Take(pageSize);
+            PageNumber = page;
+            PageSize = pageSize;
             return this;
         }
 
-        public IQuery<TEntity> OrderBy<T>(Expression<Func<TEntity, T>> selector, bool ascending = true) where T : IComparable<T>
+        public IQuery<TEntity> OrderBy<T>(string columnName, bool ascending = true) where T : IComparable<T>
         {
-            query = ascending ? query.OrderBy(selector) : query.OrderByDescending(selector);
+            OrderByData = (columnName, ascending, typeof(T));
             return this;
         }
 
-        public IQuery<TEntity> Where<T>(Expression<Func<TEntity, bool>> predicate) where T : IComparable<T>
+        public IQuery<TEntity> Where<T>(Expression<Func<T, bool>> predicate, string columnName)
         {
-            query = query.Where(predicate);
+            WherePredicates.Add((predicate, columnName));
             return this;
         }
 
-        public abstract IEnumerable<TEntity> Execute();
+        public abstract EFQueryResult<TEntity> Execute();
     }
 }

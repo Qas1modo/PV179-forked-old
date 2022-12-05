@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL.Models;
 using DAL.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace DAL.Data
 {
@@ -10,77 +11,84 @@ namespace DAL.Data
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            ///////////////////////////////////////////////////
-            // ENTITY => User, Data Initializaton
-
             User user = new()
             {
                 Id = 1,
-                AddressId = 1,
+                City = "Breclav",
+                Street = "Hlavni",
+                StNumber = 15,
+                ZipCode = 03605,
                 Name = "admin",
                 Email = "matkokukucko@mail.com",
                 Password = "admin",
                 Salt = "jfpajfafjaps",
                 Phone = "+421911999111",
-                BirthDate = new DateTime(1970, 3, 1),
+                BirthDate = new DateOnly(1970, 3, 1),
                 Group = Group.Admin,
-                Picture = "www.nejakycuteobrazok.com",
             };
 
             User user2 = new ()
             {
                 Id = 2,
-                AddressId = 2,
+                City = "Brno",
+                Street = "Manesova",
+                StNumber = 13,
+                ZipCode = 03601,
                 Name = "Peter Marcin",
                 Email = "peter123@mail.com",
                 Password = "jjpjpkf",
                 Salt = "dkpafjapfjpak",
                 Phone = "+421911999222",
-                BirthDate = new DateTime(1980, 3, 1),
+                BirthDate = new DateOnly(1980, 3, 1),
                 Group = Group.Employee,
-                Picture = "www.pictureofemployee.com",
             };
 
             User user3 = new ()
             {
                 Id = 3,
-                AddressId = 3,
+                City = "Praha",
+                Street = "Prazska",
+                StNumber = 9,
+                ZipCode = 03602,
                 Name = "Ferko Turan",
                 Email = "feroslav1@mail.com",
                 Password = "mojeultraheslo",
                 Salt = "dkpafjnpfjpak",
                 Phone = "+421911999333",
-                BirthDate = new DateTime(1983, 3, 1),
+                BirthDate = new DateOnly(1983, 3, 1),
                 Group = Group.User,
-                Picture = "www.pictureofuser.com",
             };
 
             User user4 = new ()
             {
                 Id = 4,
-                AddressId = 4,
+                City = "Ostrava",
+                Street = "Ostravska",
+                StNumber = 1,
+                ZipCode = 03603,
                 Name = "Patrik Vrbovsky",
                 Email = "uzanineviem@mail.com",
                 Password = "JaMamLepsieHeslo",
                 Salt = "dkyafjapfjpak",
                 Phone = "+421911999540",
-                BirthDate = new DateTime(1991, 3, 1),
+                BirthDate = new DateOnly(1991, 3, 1),
                 Group = Group.User,
-                Picture = "www.pictureofdogs.com",
             };
 
             User user5 = new ()
             {
                 Id = 5,
-                AddressId = 5,
+                City = "Brno",
+                Street = "Manesova",
+                StNumber = 12,
+                ZipCode = 03601,
                 Name = "Maurice Richard",
                 Email = "strelec32@mail.com",
                 Password = "bestPasswordEver123",
                 Salt = "dkpafjgbpfjpak",
                 Phone = "+421911999489",
-                BirthDate = new DateTime(2010, 3, 1),
+                BirthDate = new DateOnly(2010, 3, 1),
                 Group = Group.User,
-                Picture = "www.pictureofcat.com",
             };
 
             modelBuilder.Entity<User>().HasData(user);
@@ -374,62 +382,6 @@ namespace DAL.Data
             modelBuilder.Entity<Book>().HasData(gameOfThrones5);
             ///////////////////////////////////////////////////
 
-
-            ///////////////////////////////////////////////////
-            // ENTITY => Address, Data Initializaton
-
-            Address address1 = new()
-            {
-                Id = 1,
-                City = "Brno",
-                Street = "Manesova",
-                StNumber = 12,
-                ZipCode = 03601,
-            };
-
-            Address address2 = new()
-            {
-                Id = 2,
-                City = "Brno",
-                Street = "Manesova",
-                StNumber = 13,
-                ZipCode = 03601,
-            };
-
-            Address address3 = new()
-            {
-                Id = 3,
-                City = "Praha",
-                Street = "Prazska",
-                StNumber = 9,
-                ZipCode = 03602,
-            };
-
-            Address address4 = new()
-            {
-                Id = 4,
-                City = "Ostrava",
-                Street = "Ostravska",
-                StNumber = 1,
-                ZipCode = 03603,
-            };
-
-            Address address5 = new()
-            {
-                Id = 5,
-                City = "Breclav",
-                Street = "Hlavni",
-                StNumber = 15,
-                ZipCode = 03605,
-            };
-
-            modelBuilder.Entity<Address>().HasData(address1);
-            modelBuilder.Entity<Address>().HasData(address2);
-            modelBuilder.Entity<Address>().HasData(address3);
-            modelBuilder.Entity<Address>().HasData(address4);
-            modelBuilder.Entity<Address>().HasData(address5);
-            ///////////////////////////////////////////////////
-
             ///////////////////////////////////////////////////
             // ENTITY => Review, Data Initializaton
 
@@ -503,6 +455,7 @@ namespace DAL.Data
                 Score = 7,
                 UserId = 3,
                 BookId = 3,
+                Description = "Better than average",
             };
 
             Review review10 = new()
@@ -511,6 +464,7 @@ namespace DAL.Data
                 Score = 4,
                 UserId = 4,
                 BookId = 8,
+                Description = "Not very good",
             };
 
             modelBuilder.Entity<Review>().HasData(review1);
@@ -525,220 +479,11 @@ namespace DAL.Data
             modelBuilder.Entity<Review>().HasData(review10);
             ///////////////////////////////////////////////////
 
-            ///////////////////////////////////////////////////
-            // ENTITY => Positive Review, Data Initializaton
-
-            ReviewPoint posReview = new ReviewPoint
-            {
-                Id = 1,
-                Text = "to je tak super",
-                ReviewId = 1,
-                Positive = true,
-            };
-
-            ReviewPoint posReview1 = new ReviewPoint
-            {
-                Id = 2,
-                Text = "to je tak super tiez",
-                ReviewId = 1,
-                Positive = true,
-            };
-
-            ReviewPoint posReview2 = new ReviewPoint
-            {
-                Id = 3,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 1,
-                Positive = true,
-            };
-
-            ReviewPoint posReview3 = new ReviewPoint
-            {
-                Id = 4,
-                Text = "to je tak super tak isto ako aj to pred tym",
-                ReviewId = 1,
-                Positive = true,
-            };
-
-            ReviewPoint posReview4 = new ReviewPoint
-            {
-                Id = 5,
-                Text = "to je tak super",
-                ReviewId = 5,
-                Positive = true,
-            };
-
-            ReviewPoint posReview5 = new ReviewPoint
-            {
-                Id = 6,
-                Text = "to je tak super tiez",
-                ReviewId = 5,
-                Positive = true,
-            };
-
-            ReviewPoint posReview6 = new ReviewPoint
-            {
-                Id = 7,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 5,
-                Positive = true,
-            };
-
-            ReviewPoint posReview7 = new ReviewPoint
-            {
-                Id = 8,
-                Text = "to je tak super tak isto ako aj to pred tym",
-                ReviewId = 5,
-                Positive = true,
-            };
-
-            ReviewPoint posReview8 = new ReviewPoint
-            {
-                Id = 9,
-                Text = "to je tak super tiez",
-                ReviewId = 6,
-                Positive = true,
-            };
-
-            ReviewPoint posReview9 = new ReviewPoint
-            {
-                Id = 10,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 6,
-                Positive = true,
-            };
-
-            ReviewPoint posReview10 = new ReviewPoint
-            {
-                Id = 11,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 6,
-                Positive = true,
-            };
-
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview1);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview2);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview3);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview4);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview5);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview6);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview7);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview8);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview9);
-            modelBuilder.Entity<ReviewPoint>().HasData(posReview10);
-            ///////////////////////////////////////////////////
-
-
-            ///////////////////////////////////////////////////
-            // ENTITY => Negative Review, Data Initializaton
-
-            ReviewPoint negReview = new()
-            {
-                Id = 12,
-                Text = "to je tak zle",
-                ReviewId = 2,
-                Positive = false,
-            };
-
-            ReviewPoint negReview1 = new()
-            {
-                Id = 13,
-                Text = "to je tak zle tiez",
-                ReviewId = 2,
-                Positive = false,
-            };
-
-            ReviewPoint negReview2 = new()
-            {
-                Id = 14,
-                Text = "to je tak zle tiez tiez",
-                ReviewId = 1,
-                Positive = false,
-            };
-
-            ReviewPoint negReview3 = new()
-            {
-                Id = 15,
-                Text = "to je tak zle tak isto ako aj to pred tym",
-                ReviewId = 2,
-                Positive = false,
-            };
-
-            ReviewPoint negReview4 = new()
-            {
-                Id = 16,
-                Text = "to je tak zle",
-                ReviewId = 6,
-                Positive = false,
-            };
-
-            ReviewPoint negReview5 = new()
-            {
-                Id = 17,
-                Text = "to je tak super tiez",
-                ReviewId = 6,
-                Positive = false,
-            };
-
-            ReviewPoint negReview6 = new()
-            {
-                Id = 18,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 6,
-                Positive = false,
-            };
-
-            ReviewPoint negReview7 = new()
-            {
-                Id = 19,
-                Text = "to je tak super tak isto ako aj to pred tym",
-                ReviewId = 6,
-                Positive = false,
-            };
-
-            ReviewPoint negReview8 = new()
-            {
-                Id = 20,
-                Text = "to je tak super tiez",
-                ReviewId = 3,
-                Positive = false,
-            };
-
-            ReviewPoint negReview9 = new()
-            {
-                Id = 21,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 3,
-                Positive = false,
-            };
-
-            ReviewPoint negReview10 = new()
-            {
-                Id = 22,
-                Text = "to je tak super tiez tiez",
-                ReviewId = 3,
-                Positive = false,
-            };
-
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview1);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview2);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview3);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview4);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview5);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview6);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview7);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview8);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview9);
-            modelBuilder.Entity<ReviewPoint>().HasData(negReview10);
-            ///////////////////////////////////////////////////
-
 
             ///////////////////////////////////////////////////
             // ENTITY => Rent, Data Initializaton
 
-            Rent rent = new()
+            Reservation rent = new()
             {
                 Id = 1,
                 UserId = 5,
@@ -747,11 +492,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 200,
+                TotalPrice = 200,
                 State = RentState.Reserved,
             };
 
-            Rent rent1 = new()
+            Reservation rent1 = new()
             {
                 Id = 2,
                 UserId = 5,
@@ -760,11 +505,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2022, 9, 5),
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 20,
+                TotalPrice = 20,
                 State = RentState.Active,
             };
 
-            Rent rent2 = new()
+            Reservation rent2 = new()
             {
                 Id = 3,
                 UserId = 5,
@@ -773,11 +518,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                Price = 50,
+                TotalPrice = 50,
                 State = RentState.Expired,
             };
 
-            Rent rent3 = new()
+            Reservation rent3 = new()
             {
                 Id = 4,
                 UserId = 5,
@@ -786,11 +531,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 10, 3),
                 ReturnedAt = new DateTime(2021, 10, 15),
                 LoanPeriod = 20,
-                Price = 200,
+                TotalPrice = 200,
                 State = RentState.Returned,
             };
 
-            Rent rent4 = new()
+            Reservation rent4 = new()
             {
                 Id = 5,
                 UserId = 4,
@@ -799,11 +544,11 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 120,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Canceled,
             };
 
-            Rent rent5 = new()
+            Reservation rent5 = new()
             {
                 Id = 6,
                 UserId = 2,
@@ -812,11 +557,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2020, 9, 6),
                 ReturnedAt = null,
                 LoanPeriod = 10,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Overdue,
             };
 
-            Rent rent6 = new()
+            Reservation rent6 = new()
             {
                 Id = 7,
                 UserId = 4,
@@ -825,11 +570,11 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 9, 5),
                 ReturnedAt = new DateTime(2021, 9, 29),
                 LoanPeriod = 30,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Returned,
             };
 
-            Rent rent7 = new()
+            Reservation rent7 = new()
             {
                 Id = 8,
                 UserId = 3,
@@ -838,18 +583,18 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 3,
-                Price = 150,
+                TotalPrice = 150,
                 State = RentState.Reserved,
             };
 
-            modelBuilder.Entity<Rent>().HasData(rent);
-            modelBuilder.Entity<Rent>().HasData(rent1);
-            modelBuilder.Entity<Rent>().HasData(rent2);
-            modelBuilder.Entity<Rent>().HasData(rent3);
-            modelBuilder.Entity<Rent>().HasData(rent4);
-            modelBuilder.Entity<Rent>().HasData(rent5);
-            modelBuilder.Entity<Rent>().HasData(rent6);
-            modelBuilder.Entity<Rent>().HasData(rent7);
+            modelBuilder.Entity<Reservation>().HasData(rent);
+            modelBuilder.Entity<Reservation>().HasData(rent1);
+            modelBuilder.Entity<Reservation>().HasData(rent2);
+            modelBuilder.Entity<Reservation>().HasData(rent3);
+            modelBuilder.Entity<Reservation>().HasData(rent4);
+            modelBuilder.Entity<Reservation>().HasData(rent5);
+            modelBuilder.Entity<Reservation>().HasData(rent6);
+            modelBuilder.Entity<Reservation>().HasData(rent7);
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////
@@ -860,6 +605,8 @@ namespace DAL.Data
                 Id = 1,
                 UserId = 5,
                 BookId = 6,
+                LoanPeriod = 7,
+                TotalPrice = 210,
             };
 
             CartItem resItem2 = new()
@@ -867,6 +614,8 @@ namespace DAL.Data
                 Id = 2,
                 UserId = 5,
                 BookId = 7,
+                LoanPeriod = 10,
+                TotalPrice = 230,
             };
 
             CartItem resItem3 = new()
@@ -874,6 +623,8 @@ namespace DAL.Data
                 Id = 3,
                 UserId = 5,
                 BookId = 8,
+                LoanPeriod = 5,
+                TotalPrice = 175,
             };
 
             CartItem resItem4 = new()
@@ -881,6 +632,8 @@ namespace DAL.Data
                 Id = 4,
                 UserId = 5,
                 BookId = 9,
+                LoanPeriod = 3,
+                TotalPrice = 138,
             };
 
             CartItem resItem5 = new()
@@ -888,6 +641,8 @@ namespace DAL.Data
                 Id = 5,
                 UserId = 5,
                 BookId = 10,
+                LoanPeriod = 1,
+                TotalPrice = 25,
             };
 
             modelBuilder.Entity<CartItem>().HasData(resItem);
@@ -900,4 +655,3 @@ namespace DAL.Data
         }
     }
 }
-

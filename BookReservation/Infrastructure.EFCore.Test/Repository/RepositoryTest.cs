@@ -3,7 +3,7 @@ using Infrastructure.EFCore;
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Infrastrucure.EFCore.Repository;
+using Infrastructure.EFCore.Repository;
 using Castle.Core.Resource;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -36,20 +36,30 @@ namespace Infrastructure.EFCore.Test.Repository
             Author dummyAuthorInsert = new Author { Id = 9, Name = "Matko Kubko" };
 
             var efRepository = new EFGenericRepository<Author>(dbContext);
-            efRepository.Insert(dummyAuthorInsert);
+            var actualId = efRepository.Insert(dummyAuthorInsert);
             dbContext.SaveChanges();
 
             Author retrievedDummyAuthor = dbContext.Authors.Single(author => author.Id == dummyAuthorInsert.Id);
             Assert.True(retrievedDummyAuthor.Name.Equals(dummyAuthorInsert.Name));
+            Assert.Equal(actualId, dummyAuthorInsert.Id);
         }
 
         [Fact]
-        public void PassingGetTest()
+        public void PassingGetByIdTest()
         {
             var efRepository = new EFGenericRepository<Author>(dbContext);
             var result = efRepository.GetByID(map["get"].Id);
 
             Assert.True(result.Name.Equals(map["get"].Name));
+        }
+
+        [Fact]
+        public void PassingGetAllTest()
+        {
+            var efRepository = new EFGenericRepository<Author>(dbContext);
+            IEnumerable<Author> result = efRepository.GetAll();
+
+            Assert.Equal(result.Count(), map.Count());
         }
 
         [Fact]

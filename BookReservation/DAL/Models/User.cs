@@ -9,11 +9,6 @@ namespace DAL.Models
         [MaxLength(64), Required]
         public string Name { get; set; }
 
-        public int AddressId { get; set; }
-
-        [ForeignKey(nameof(AddressId))]
-        public virtual Address Address { get; set; }
-
         [Required]
         public string Email { get; set; }
 
@@ -27,14 +22,24 @@ namespace DAL.Models
         public string Phone { get; set; }
 
         [Required]
-        public DateTime BirthDate { get; set; }
-        
+        public DateOnly BirthDate { get; set; }
+
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string Street { get; set; }
+
+        [Required]
+        public int StNumber { get; set; }
+
+        [Required]
+        public int ZipCode { get; set; }
+
         [Required]
         public Group Group { get; set; }
 
-        public string Picture { get; set; }
-
-        public virtual List<Rent> Rents { get; set; }
+        public virtual List<Reservation> Rents { get; set; }
 
         public virtual List<Review> Reviews { get; set; }
 

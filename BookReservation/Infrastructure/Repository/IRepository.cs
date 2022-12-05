@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastrucure.Repository
+namespace Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity GetByID(object id);
+        TEntity GetByID(int id);
 
-        void Insert(TEntity entity);
+        IQueryable<TEntity> GetQueryable();
 
-        void Delete(object id);
+        IEnumerable<TEntity> GetAll();
+
+        int Insert(TEntity entity);
+
+        void Delete(int id);
 
         void Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToUpdate);
     }
 }
-

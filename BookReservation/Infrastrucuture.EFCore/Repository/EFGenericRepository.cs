@@ -1,7 +1,7 @@
 ﻿using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
-using Infrastrucure.Repository;
+using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +10,22 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 
-namespace Infrastrucure.EFCore.Repository
+namespace Infrastructure.EFCore.Repository
 {
     public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         internal BookReservationDbContext context;
+
         internal DbSet<TEntity> dbSet;
 
         public EFGenericRepository(BookReservationDbContext dbcontext)
         {
-            context = dbcontext;
-            dbSet = context.Set<TEntity>();
+            this.context = dbcontext;
+            this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetByID(int id)
         {
-            if (id == null)
-            {
-                throw new Exception("Argument Id is null.");
-            }
-
             TEntity? entity = dbSet.Find(id);
             if (entity == null)
             {
@@ -38,38 +34,27 @@ namespace Infrastrucure.EFCore.Repository
             return entity;
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual int Insert(TEntity entity)
         {
             if (entity == null)
             {
                 throw new Exception("Arugment entity is null");
             }
-
-            dbSet.Add(entity);
+            return dbSet.Add(entity).Entity.Id;
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(int id)
         {
-            if (id == null)
-            {
-                throw new Exception("Argument Id is null.");
-            }
-
             TEntity? entityToDelete = dbSet.Find(id);
             if (entityToDelete == null)
             {
                 throw new Exception("Entity with given Id does not exist.");
             }
-            Delete(entityToDelete);
+            dbSet.Remove(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (entityToDelete == null)
-            {
-                throw new Exception("Argument entityToDelete is null.");
-            }
-
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
@@ -86,6 +71,16 @@ namespace Infrastrucure.EFCore.Repository
 
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            return dbSet.AsQueryable();
+        }
+
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            return dbSet.ToList();
         }
     }
 }

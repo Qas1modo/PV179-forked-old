@@ -3,32 +3,31 @@ using DAL.Enums;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.EFCore.UnitOfWork;
+using Infrastructure.UnitOfWork;
+using Infrastructure.Repository;
+using Infrastructure.EFCore.Repository;
 
 namespace Infrastructure.EFCore.Test.UnitOfWork
 {
     public class EFUoWChangeUserInfoTests
     {
-        private readonly BookReservationDbContext dbContext;        
+        private readonly BookReservationDbContext dbContext;
+        
+        private IRepository<User> userRepository;
+
         private static readonly User dummyUser = new()
         {
-            AddressId = 1,
+            City = "Madrid",
+            Street = "C. De Jorge Juan",
+            StNumber = 106,
+            ZipCode = 28009,
             Name = "Peter Marcin",
             Email = "peter123@mail.com",
             Password = "jjpjpkf",
             Salt = "dkpafjapfjpak",
             Phone = "+421911999222",
-            BirthDate = new DateTime(1980, 3, 1),
+            BirthDate = new DateOnly(1980, 3, 1),
             Group = Group.Employee,
-            Picture = "www.pictureofemployee.com",
-        };
-
-        private static readonly Address dummyAdress = new()
-        {
-            User = dummyUser,
-            City = "Madrid",
-            Street = "C. De Jorge Juan",
-            StNumber = 106,
-            ZipCode = 28009
         };
 
         public EFUoWChangeUserInfoTests()
@@ -40,13 +39,12 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                 .UseInMemoryDatabase(databaseName: myDatabaseName)
                 .Options;
 
-
             dbContext = new BookReservationDbContext(options);
-
-            dbContext.Addresses.Add(dummyAdress);
             dbContext.Users.Add(dummyUser);
 
             dbContext.SaveChanges();
+
+            this.userRepository = new EFGenericRepository<User>(dbContext);
         }
 
         [Fact]
@@ -56,20 +54,18 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             string newCity = "Barcelona";
             string newEmail = "a1abcd23@gmail.com";
 
-            using (var efUnitOfWork = new EFUoWUserInfo(dbContext))
+            using (var efUnitOfWork = new EFUoWUserInfo(dbContext, userRepository))
             {
                 var userRepo = efUnitOfWork.UserRepository;
 
                 var user = userRepo.GetByID(dummyUser.Id);
                 user.Name = newName;
                 user.Email = newEmail;
-
-                var userAddress = user.Address;
-                userAddress.City = newCity;
+                user.City = newCity;
 
                 efUnitOfWork.Commit().Wait();
 
-                using (var eF = new EFUoWUserInfo(dbContext))
+                using (var eF = new EFUoWUserInfo(dbContext, userRepository))
                 {
                     userRepo = eF.UserRepository;
 
@@ -77,13 +73,9 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
 
                     Assert.True(editedUser.Name.Equals(newName));
                     Assert.True(editedUser.Email.Equals(newEmail));
-                    Assert.True(editedUser.Address.City.Equals(newCity));
+                    Assert.True(editedUser.City.Equals(newCity));
                 }
-
             }
-
-
-
         }        
     }
 }
