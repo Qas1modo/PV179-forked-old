@@ -3,6 +3,8 @@ using BL.Config;
 using BL.Services.CartItemServ;
 using BL.Services.ReservationServ;
 using BL.Services.StockServ;
+using BL.Services.ReviewServ;
+using BL.Services.BookServ;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
@@ -60,6 +62,8 @@ builder.Services.AddScoped<IUoWUserInfo, EFUoWUserInfo>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 
 // Add services to the container.
