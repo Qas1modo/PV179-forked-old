@@ -1,10 +1,11 @@
 ﻿using System;
+using BL.DTOs;
 
 namespace BL.Facades.BookFac
 {
     public interface IBookFacade
     {
-        void GetBookDetail(int bookId);
+        BookDetailInfoDto GetBookDetail(int bookId);
     }
 }
 

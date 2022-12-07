@@ -24,10 +24,12 @@ namespace BL.Facades.BookFac
             this.mapper = mapper;
         }
 
-        public void GetBookDetail(int bookId)
+        public BookDetailInfoDto GetBookDetail(int bookId)
         {
-            BookDetailInfoDto book = bookService.GetBook(bookId);
+            BookBasicInfoDto book = bookService.GetBook(bookId);
             IEnumerable<ReviewDetailDto> reviews = reviewService.ShowReviews(bookId);
+
+            return null;
         }
     }
 }

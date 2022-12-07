@@ -5,6 +5,8 @@ using BL.Services.ReservationServ;
 using BL.Services.StockServ;
 using BL.Services.ReviewServ;
 using BL.Services.BookServ;
+using BL.Facades.BookFac;
+using BL.Facades.OrderFac;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
@@ -64,6 +66,10 @@ builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IBookService, BookService>();
+
+// Facades DI Setup
+builder.Services.AddScoped<IBookFacade, BookFacade>();
+builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 
 
 // Add services to the container.
