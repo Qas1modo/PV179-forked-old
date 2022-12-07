@@ -11,6 +11,8 @@ namespace BL.DTOs
     {
         public int Id { get; set; }
 
+        public string Name { get; set; }
+
         public AuthorDto Author { get; set; }
 
         public GenreDto Genre { get; set; }

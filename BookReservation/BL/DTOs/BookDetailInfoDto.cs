@@ -7,6 +7,8 @@ namespace BL.DTOs
     {
         public int Id { get; set; }
 
+        public string Name { get; set; }
+
         public AuthorDto Author { get; set; }
 
         public GenreDto Genre { get; set; }
@@ -16,6 +18,8 @@ namespace BL.DTOs
         public string Photo { get; set; }
 
         public decimal Price { get; set; }
+
+        public int Stock { get; set; }
 
         public IEnumerable<ReviewDetailDto> reviews { get; set; }
     }

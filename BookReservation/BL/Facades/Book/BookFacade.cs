@@ -26,10 +26,13 @@ namespace BL.Facades.BookFac
 
         public BookDetailInfoDto GetBookDetail(int bookId)
         {
-            BookBasicInfoDto book = bookService.GetBook(bookId);
+            BookBasicInfoDto bookDto = bookService.GetBook(bookId);
             IEnumerable<ReviewDetailDto> reviews = reviewService.ShowReviews(bookId);
 
-            return null;
+            BookDetailInfoDto returnDto = mapper.Map<BookDetailInfoDto>(bookDto);
+            returnDto.reviews = reviews;
+
+            return returnDto;
         }
     }
 }
