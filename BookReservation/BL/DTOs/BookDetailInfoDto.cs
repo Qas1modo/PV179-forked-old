@@ -5,10 +5,6 @@ namespace BL.DTOs
 {
     public class BookDetailInfoDto
     {
-        public BookDetailInfoDto()
-        {
-        }
-
         public int Id { get; set; }
 
         public AuthorDto Author { get; set; }

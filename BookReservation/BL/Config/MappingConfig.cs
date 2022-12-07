@@ -10,13 +10,13 @@ using DAL.Enums;
 
 namespace BL.Config
 {
-	public class MappingConfig
-	{
-		public static void ConfigureMapping(IMapperConfigurationExpression config)
-		{
+    public class MappingConfig
+    {
+        public static void ConfigureMapping(IMapperConfigurationExpression config)
+        {
             config.CreateMap<EFQueryResult<BaseEntity>, QueryResultDto<BaseEntity>>().ReverseMap();
-			config.CreateMap<RegistrationDto, User>().ReverseMap();
-			config.CreateMap<BookAvailabilityDto, Book>().ReverseMap();
+            config.CreateMap<RegistrationDto, User>().ReverseMap();
+            config.CreateMap<BookAvailabilityDto, Book>().ReverseMap();
             config.CreateMap<CartItem, CartItemDetailDto>()
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name))
@@ -43,7 +43,8 @@ namespace BL.Config
             config.CreateMap<ReviewDto, Review>().ReverseMap();
             config.CreateMap<UserDto, User>().ReverseMap();
             config.CreateMap<CartItem, ReservationDto>().ReverseMap();
+            config.CreateMap<Book, BookDetailInfoDto>().ReverseMap();
         }
-	}
+    }
 }
 
