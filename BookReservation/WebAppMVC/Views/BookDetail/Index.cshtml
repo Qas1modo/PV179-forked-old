@@ -1,0 +1,25 @@
+﻿@model BookDetailIndexModel
+
+<h4>@Model.bookInfo.Name</h4>
+<h5>@Model.bookInfo.Author.Name</h5>
+<p>@Model.bookInfo.Genre.Name</p>
+<p>@Model.bookInfo.Description</p>
+<p>@Model.bookInfo.Price</p>
+
+
+<a class="btn btn-primary" href="@Url.Action("Add", new { bookId = Model.bookInfo.Id })">Add to cart</a>
+
+
+<h5>Book reviews</h5>
+@foreach (var review in Model.reviews)
+{
+    <div>
+        <div>@review.Name</div>
+        <div>@review.Score</div>
+        <div>@review.Description</div>
+    </div>
+}
+
+<a class="btn btn-primary" href="@Url.Action("MoreReviews",
+                                new { bookId = Model.bookInfo.Id,
+                                    showedReviews = Model.reviews.Count() })">Show more reviews</a>

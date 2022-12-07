@@ -4,12 +4,12 @@ using BL.DTOs.BasicDtos;
 
 namespace BL.Services.ReviewServ
 {
-	public interface IReviewService
-	{
-		void AddReview(ReviewDto reviewDto);
+    public interface IReviewService
+    {
+        void AddReview(ReviewDto reviewDto);
 
-		void DeleteReview(int reviewId);
+        void DeleteReview(int reviewId);
 
-        IEnumerable<ReviewDetailDto> ShowReviews(int bookId);
+        IEnumerable<ReviewDetailDto> ShowReviews(int bookId, int number = 20);
     }
 }

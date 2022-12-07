@@ -18,4 +18,10 @@
     <ProjectReference Include="..\Infrastrucuture.EFCore\Infrastructure.EFCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Views\BookDetail\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\BookDetail\" />
+  </ItemGroup>
 </Project>
