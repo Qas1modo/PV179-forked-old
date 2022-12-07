@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using DAL.Enums;
 
 namespace BL.Services.UserServ
 {
@@ -44,7 +45,26 @@ namespace BL.Services.UserServ
             {
                 throw new Exception("Invaid id");
             }
-            return mapper.Map<PersonalInfoDto>(user);       
+            return mapper.Map<PersonalInfoDto>(user);
+        }
+
+        public IEnumerable<UserDto> ShowUsers()
+        {
+            IEnumerable<User> books = uow.UserRepository.GetAll();
+            return mapper.Map<IEnumerable<UserDto>>(books);
+        }
+
+        public void UpdateUserPermission(int userId, Group newGroup)
+        {
+            User user = uow.UserRepository.GetByID(userId);
+            user.Group = newGroup;
+            uow.UserRepository.Update(user);
+            uow.Commit();
+        }
+
+        public void DeleteUser(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
