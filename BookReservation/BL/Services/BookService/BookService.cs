@@ -25,10 +25,10 @@ namespace BL.Services.BookServ
             return id;
         }
 
-        public BookBasicInfoDto GetBook(int bookId)
+        public BookDetailInfoDto GetBook(int bookId)
         {
             Book book = uow.BookRepository.GetByID(bookId);
-            return mapper.Map<BookBasicInfoDto>(book);
+            return mapper.Map<BookDetailInfoDto>(book);
         }
 
         public void UpdateBook(int bookId, BookDto updatedBook)

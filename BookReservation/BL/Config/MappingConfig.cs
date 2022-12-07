@@ -44,7 +44,6 @@ namespace BL.Config
             config.CreateMap<UserDto, User>().ReverseMap();
             config.CreateMap<CartItem, ReservationDto>().ReverseMap();
             config.CreateMap<Book, BookDetailInfoDto>().ReverseMap();
-            config.CreateMap<BookDetailInfoDto, BookBasicInfoDto>().ReverseMap();
         }
     }
 }

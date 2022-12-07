@@ -8,7 +8,7 @@ namespace BL.Services.BookServ
     {
         int AddBook(BookDto newBook);
 
-        BookBasicInfoDto GetBook(int bookId);
+        BookDetailInfoDto GetBook(int bookId);
 
         void UpdateBook(int bookId, BookDto updatedBook);
 
