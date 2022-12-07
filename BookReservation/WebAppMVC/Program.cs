@@ -5,7 +5,6 @@ using BL.Services.ReservationServ;
 using BL.Services.StockServ;
 using BL.Services.ReviewServ;
 using BL.Services.BookServ;
-using BL.Facades.BookFac;
 using BL.Facades.OrderFac;
 using DAL;
 using DAL.Models;
@@ -68,7 +67,6 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IBookService, BookService>();
 
 // Facades DI Setup
-builder.Services.AddScoped<IBookFacade, BookFacade>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 
 

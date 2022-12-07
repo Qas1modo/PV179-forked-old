@@ -23,7 +23,6 @@
     <None Remove="Services\Genre\" />
     <None Remove="Services\CartItems\" />
     <None Remove="Services\BookService\" />
-    <None Remove="Facades\Book\" />
     <None Remove="Facades\Order\" />
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +31,6 @@
     <Folder Include="Services\ReviewService\" />
     <Folder Include="Services\GenreService\" />
     <Folder Include="Services\BookService\" />
-    <Folder Include="Facades\Book\" />
     <Folder Include="Facades\Order\" />
   </ItemGroup>
   <ItemGroup>
