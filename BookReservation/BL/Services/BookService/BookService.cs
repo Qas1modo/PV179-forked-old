@@ -5,7 +5,7 @@ using DAL.Models;
 using BL.DTOs;
 using Infrastructure.UnitOfWork;
 
-namespace BL.Services.BookService
+namespace BL.Services.BookServ
 {
     public class BookService : IBookService
     {
