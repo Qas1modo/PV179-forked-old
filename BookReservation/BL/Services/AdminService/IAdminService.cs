@@ -11,12 +11,6 @@ namespace BL.Services.AdminServ
 {
     public interface IAdminService
     {
-        void UpdateBook(int bookId, BookDto updatedBook);
-
-        int AddBook(BookDto newBook);
-
-        void DeleteBook(int bookId);
-
         IEnumerable<UserDto> ShowUsers();
 
         void UpdateUserPermission(int userId, Group newGroup);

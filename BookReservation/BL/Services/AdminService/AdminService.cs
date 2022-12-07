@@ -26,29 +26,6 @@ namespace BL.Services.AdminServ
             this.uow = uow;
         }
 
-        public void UpdateBook(int bookId, BookDto updatedBook)
-        {
-            Book book = uow.BookRepository.GetByID(bookId);
-            book = mapper.Map(updatedBook, book);
-            uow.BookRepository.Update(book);
-            uow.Commit();
-        }
-
-        public int AddBook(BookDto newBook)
-        {
-            int id = uow.BookRepository.Insert(mapper.Map<Book>(newBook));
-            uow.Commit();
-            return id;
-        }
-
-        public void DeleteBook(int bookId)
-        {
-            Book book = uow.BookRepository.GetByID(bookId);
-            book.Deleted = true;
-            uow.BookRepository.Update(book);
-            uow.Commit();
-        }
-
         public IEnumerable<UserDto> ShowUsers()
         {
             IEnumerable<User> books = uow.UserRepository.GetAll();
