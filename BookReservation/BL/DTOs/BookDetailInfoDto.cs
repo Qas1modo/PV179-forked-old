@@ -17,7 +17,7 @@ namespace BL.DTOs
 
         public decimal Price { get; set; }
 
-        public int Stock { get; set; }
+        public IEnumerable<ReviewDetailDto> reviews { get; set; }
     }
 }
 

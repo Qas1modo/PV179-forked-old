@@ -12,7 +12,7 @@ namespace BL.DTOs
         public int Id { get; set; }
 
         public AuthorDto Author { get; set; }
-        
+
         public GenreDto Genre { get; set; }
 
         public string Description { get; set; }
@@ -21,5 +21,6 @@ namespace BL.DTOs
 
         public decimal Price { get; set; }
 
+        public int Stock { get; set; }
     }
 }
