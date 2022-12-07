@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Enums;
 
-namespace BL.Facades
+namespace BL.Facades.OrderFac
 {
     public interface IOrderFacade
     {
