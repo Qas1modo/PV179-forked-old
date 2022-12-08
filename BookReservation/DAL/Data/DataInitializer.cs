@@ -23,11 +23,11 @@ namespace DAL.Data
                 Password = "admin",
                 Salt = "jfpajfafjaps",
                 Phone = "+421911999111",
-                BirthDate = new DateOnly(1970, 3, 1),
+                BirthDate = new DateTime(1970, 3, 1),
                 Group = Group.Admin,
             };
 
-            User user2 = new ()
+            User user2 = new()
             {
                 Id = 2,
                 City = "Brno",
@@ -39,11 +39,11 @@ namespace DAL.Data
                 Password = "jjpjpkf",
                 Salt = "dkpafjapfjpak",
                 Phone = "+421911999222",
-                BirthDate = new DateOnly(1980, 3, 1),
+                BirthDate = new DateTime(1980, 3, 1),
                 Group = Group.Employee,
             };
 
-            User user3 = new ()
+            User user3 = new()
             {
                 Id = 3,
                 City = "Praha",
@@ -55,11 +55,11 @@ namespace DAL.Data
                 Password = "mojeultraheslo",
                 Salt = "dkpafjnpfjpak",
                 Phone = "+421911999333",
-                BirthDate = new DateOnly(1983, 3, 1),
+                BirthDate = new DateTime(1983, 3, 1),
                 Group = Group.User,
             };
 
-            User user4 = new ()
+            User user4 = new()
             {
                 Id = 4,
                 City = "Ostrava",
@@ -71,11 +71,11 @@ namespace DAL.Data
                 Password = "JaMamLepsieHeslo",
                 Salt = "dkyafjapfjpak",
                 Phone = "+421911999540",
-                BirthDate = new DateOnly(1991, 3, 1),
+                BirthDate = new DateTime(1991, 3, 1),
                 Group = Group.User,
             };
 
-            User user5 = new ()
+            User user5 = new()
             {
                 Id = 5,
                 City = "Brno",
@@ -87,7 +87,7 @@ namespace DAL.Data
                 Password = "bestPasswordEver123",
                 Salt = "dkpafjgbpfjpak",
                 Phone = "+421911999489",
-                BirthDate = new DateOnly(2010, 3, 1),
+                BirthDate = new DateTime(2010, 3, 1),
                 Group = Group.User,
             };
 
@@ -651,7 +651,7 @@ namespace DAL.Data
             modelBuilder.Entity<CartItem>().HasData(resItem4);
             modelBuilder.Entity<CartItem>().HasData(resItem5);
             ///////////////////////////////////////////////////
-            
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace DAL.Models
         public string Phone { get; set; }
 
         [Required]
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Required]
         public string City { get; set; }

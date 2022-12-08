@@ -10,18 +10,18 @@ using BL.DTOs;
 namespace BL.Services.ReviewServ
 {
     public class ReviewService : IReviewService
-	{
+    {
         private readonly IMapper mapper;
         private readonly IUoWReview uow;
 
         public ReviewService(IUoWReview uow, IMapper mapper)
-		{
-			this.mapper = mapper;
+        {
+            this.mapper = mapper;
             this.uow = uow;
-		}
+        }
 
-		public void AddReview(ReviewDto reviewDto)
-		{
+        public void AddReview(ReviewDto reviewDto)
+        {
             uow.ReviewRepository.Insert(mapper.Map<Review>(reviewDto));
             uow.Commit();
         }
@@ -32,10 +32,10 @@ namespace BL.Services.ReviewServ
             uow.Commit();
         }
 
-        public IEnumerable<ReviewDetailDto> ShowReviews(int bookId)
-		{
+        public IEnumerable<ReviewDetailDto> ShowReviews(int bookId, int number)
+        {
             Book book = uow.BookRepository.GetByID(bookId);
-            return mapper.Map<IEnumerable<ReviewDetailDto>>(book.Reviews);
+            return mapper.Map<IEnumerable<ReviewDetailDto>>(book.Reviews.Take(number));
         }
     }
 }

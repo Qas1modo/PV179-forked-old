@@ -11,7 +11,7 @@ namespace DAL
         private const string _dbName = "BookReservationDB";
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Review> Reviews{ get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Reservation> Rents { get; set; }
         public DbSet<Book> Books { get; set; }

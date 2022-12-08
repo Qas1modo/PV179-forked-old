@@ -20,7 +20,7 @@ namespace BL.DTOs.BasicDtos
 
         public string Phone { get; set; }
 
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public Group Group { get; set; }
     }
