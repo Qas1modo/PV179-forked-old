@@ -28,7 +28,6 @@ namespace BL.Config
             config.CreateMap<ReviewDetailDto, Review>().ReverseMap();
             config.CreateMap<Review, ReviewDetailDto>()
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.User.Name));
-            config.CreateMap<IEnumerable<Review>, IEnumerable<ReviewDetailDto>>().ReverseMap();
             config.CreateMap<AuthorDto, Author>().ReverseMap();
             config.CreateMap<BookDto, Book>()
                 .ForMember(dest => dest.Deleted, cfg => cfg.MapFrom(src => false))

@@ -5,9 +5,9 @@ namespace WebAppMVC.Models
 {
     public class BookDetailIndexModel
     {
-        public BookBasicInfoDto bookInfo;
+        public BookBasicInfoDto bookInfo { get; set; }
 
-        public IEnumerable<ReviewDetailDto> reviews;
+        public IEnumerable<ReviewDetailDto> reviews { get; set; }
     }
 }
 

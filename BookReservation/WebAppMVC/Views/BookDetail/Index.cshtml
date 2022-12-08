@@ -4,22 +4,94 @@
 <h5>@Model.bookInfo.Author.Name</h5>
 <p>@Model.bookInfo.Genre.Name</p>
 <p>@Model.bookInfo.Description</p>
-<p>@Model.bookInfo.Price</p>
+<p>@Model.bookInfo.Price €</p>
 
 
-<a class="btn btn-primary" href="@Url.Action("Add", new { bookId = Model.bookInfo.Id })">Add to cart</a>
-
+<div class="col-auto">
+    <input class="btn btn-primary mb-2" formmethod="post" type="submit" value="Add to cart" onclick="location.href='@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })'" />
+</div>
 
 <h5>Book reviews</h5>
-@foreach (var review in Model.reviews)
-{
-    <div>
-        <div>@review.Name</div>
-        <div>@review.Score</div>
-        <div>@review.Description</div>
-    </div>
-}
+@{
+    if (Model.reviews.Count() != 0)
+    {
+        foreach (var review in Model.reviews)
+        {
+            <div>
+                <div>@review.Name</div>
+                <div><p>Score: </p><p>@review.Score</p></div>
 
-<a class="btn btn-primary" href="@Url.Action("MoreReviews",
+                @if (review.Description != null)
+                {
+                    <div><p>Description: </p><p>@review.Description</p></div>
+                }
+            </div>
+        }
+
+        <a class="btn btn-primary" href="@Url.Action("MoreReviews", "BookDetail",
                                 new { bookId = Model.bookInfo.Id,
                                     showedReviews = Model.reviews.Count() })">Show more reviews</a>
+    }
+
+    else
+    {
+        <p>This product does not have any reviews. Be first to review this product!</p>
+    }
+}
+
+
+<h5>Add review</h5>
+<form method="post">
+    <label>Score </label>
+    <div class="form-group">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+            <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+            <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+            <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+            <label class="form-check-label" for="inlineRadio4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+            <label class="form-check-label" for="inlineRadio5">5</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="6">
+            <label class="form-check-label" for="inlineRadio6">6</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="7">
+            <label class="form-check-label" for="inlineRadio7">7</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="8">
+            <label class="form-check-label" for="inlineRadio8">8</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="9">
+            <label class="form-check-label" for="inlineRadio9">9</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="10">
+            <label class="form-check-label" for="inlineRadio10">10</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Here you can write your book review</label>
+        <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" formaction="@Url.Action("AddReview", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Submit</button>
+    </div>
+</form>
