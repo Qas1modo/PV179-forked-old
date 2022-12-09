@@ -1,3 +1,32 @@
 ﻿@model MainPageIndexModel
 
-<h1>Main Page</h1>
+<h1 class="display-3">Book Reservation System</h1>
+
+@{
+	const int ITEMS_IN_ROW = 3;
+
+	if (Model.Books.Count == 0)
+	{
+		<div class="justify-content-center align-items-center">
+			<h1 class="display-4">There are no books available</h1>
+		</div>
+	}
+	else
+	{
+		<div class="container">
+			@for (int i = 0; i < Model.Books.Count; ++i)
+			{
+
+				if (i > 0 && i % ITEMS_IN_ROW == 0)
+				{
+					@:</div><div class="row">
+				}
+
+				<div class="col-lg-4 col-md-6">
+					<p>@Model.Books[i].Name</p>
+				</div>
+
+			}
+		</div>
+	}
+}
