@@ -5,7 +5,7 @@
 @{
 	const int ITEMS_IN_ROW = 3;
 
-	if (Model.Books.Count == 0)
+	if (Model.Books.Count() == 0)
 	{
 		<div class="justify-content-center align-items-center">
 			<h1 class="display-4">There are no books available</h1>
@@ -14,7 +14,7 @@
 	else
 	{
 		<div class="container">
-			@for (int i = 0; i < Model.Books.Count; ++i)
+			@for (int i = 0; i < Model.Books.Count(); ++i)
 			{
 
 				if (i > 0 && i % ITEMS_IN_ROW == 0)
@@ -23,7 +23,7 @@
 				}
 
 				<div class="col-lg-4 col-md-6">
-					<p>@Model.Books[i].Name</p>
+					<p>@Model.Books.ElementAt(i).Name</p>
 				</div>
 
 			}
