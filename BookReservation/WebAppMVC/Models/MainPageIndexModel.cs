@@ -4,6 +4,6 @@ namespace WebAppMVC.Models
 {
     public class MainPageIndexModel
     {
-        public List<BookBasicInfoDto> Books { get; set; }
+        public IEnumerable<BookBasicInfoDto> Books { get; set; }
     }
 }
