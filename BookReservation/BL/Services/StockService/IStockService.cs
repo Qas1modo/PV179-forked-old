@@ -12,7 +12,7 @@ namespace BL.Services.StockServ
 {
     public interface IStockService
     {
-        QueryResultDto<Book> ShowBooks(BookFilterDto filter);
+        QueryResultDto<BookDto> ShowBooks(BookFilterDto filter);
 
         BookAvailabilityDto GetBookStock(int bookId);
 
