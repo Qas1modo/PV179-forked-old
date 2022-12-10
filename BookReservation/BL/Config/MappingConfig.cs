@@ -15,7 +15,9 @@ namespace BL.Config
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
             config.CreateMap<EFQueryResult<BaseEntity>, QueryResultDto<BaseEntity>>().ReverseMap();
-            config.CreateMap<RegistrationDto, User>().ReverseMap();
+			config.CreateMap<EFQueryResult<Book>, QueryResultDto<BookBasicInfoDto>>().ReverseMap();
+
+			config.CreateMap<RegistrationDto, User>().ReverseMap();
             config.CreateMap<BookAvailabilityDto, Book>().ReverseMap();
             config.CreateMap<CartItem, CartItemDetailDto>()
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
