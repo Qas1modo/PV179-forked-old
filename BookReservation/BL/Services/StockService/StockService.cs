@@ -29,7 +29,7 @@ namespace BL.Services.StockServ
             this.query = query;
         }
 
-        public QueryResultDto<BookDto> ShowBooks(BookFilterDto filter)
+        public QueryResultDto<BookBasicInfoDto> ShowBooks(BookFilterDto filter)
         {
             query.Where<bool>(a => a == false, "Deleted");
             if (filter?.OnStock == true)
@@ -63,7 +63,7 @@ namespace BL.Services.StockServ
             {
                 query.Page(filter.Page.Value, filter.PageSize ?? 20);
             }
-            return mapper.Map<QueryResultDto<BookDto>>(query.Execute());
+            return mapper.Map<QueryResultDto<BookBasicInfoDto>>(query.Execute());
         }
 
         public BookAvailabilityDto GetBookStock(int bookId)
