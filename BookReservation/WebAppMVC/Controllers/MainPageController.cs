@@ -17,18 +17,18 @@ namespace WebAppMVC.Controllers
         public IActionResult Index()
         {
 
-            //var filter = new BookFilterDto
-            //{
-            //    OnStock = true,
-            //    Page = 1
-            //};
+            var filter = new BookFilterDto
+            {
+                OnStock = true,
+                Page = 1
+            };
 
-            //var model = new MainPageIndexModel()
-            //{
-            //    Items = stockService.ShowBooks(filter).Items;
-            //};
+            var model = new MainPageIndexModel
+            {
+                Books = stockService.ShowBooks(filter).Items
+            };
 
-			return View();
+			return View(model);
         }
     }
 }

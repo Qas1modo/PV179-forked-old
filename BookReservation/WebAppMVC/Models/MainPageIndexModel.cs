@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.DTOs.BasicDtos;
 
 namespace WebAppMVC.Models
 {

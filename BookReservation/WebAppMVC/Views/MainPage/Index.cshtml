@@ -14,19 +14,46 @@
 	else
 	{
 		<div class="container">
-			@for (int i = 0; i < Model.Books.Count(); ++i)
-			{
+			<div class="row">
 
-				if (i > 0 && i % ITEMS_IN_ROW == 0)
+				@for (int i = 0; i < Model.Books.Count(); ++i)
 				{
-					@:</div><div class="row">
+
+					if (i > 0 && i % ITEMS_IN_ROW == 0)
+					{
+						@:</div><div class="row">
+					}
+
+					<div class="col-lg-4 col-md-6 my-2">
+
+						<div class="card" style="width: 100%;">
+
+							<div class="card-body">
+								<h5 class="card-title">
+									@Model.Books.ElementAt(i).Name
+								</h5>
+
+								<h6 class="card-subtitle mb-2 text-muted">
+									@Model.Books.ElementAt(i).Author.Name
+								</h6>
+								
+								<h6 class="card-subtitle mb-2 text-muted">
+									@(Model.Books.ElementAt(i).Price + "€")
+								</h6>
+								
+								<p class="card-text">
+									@Model.Books.ElementAt(i).Description
+								</p>
+								<a href="#" class="card-link">Add to cart</a>
+								<a href="#" class="card-link">Details</a>
+							
+							</div>
+						</div>	
+					</div>
+
 				}
 
-				<div class="col-lg-4 col-md-6">
-					<p>@Model.Books.ElementAt(i).Name</p>
-				</div>
-
-			}
+			</div>
 		</div>
 	}
 }
