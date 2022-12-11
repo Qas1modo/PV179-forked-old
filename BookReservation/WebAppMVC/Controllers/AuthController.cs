@@ -27,7 +27,7 @@ namespace WebAppMVC.Controllers
         {
             if (User.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User");
             }
             return View("Register");
         }
@@ -63,7 +63,7 @@ namespace WebAppMVC.Controllers
         {
             if (User.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User");
             }
             return View();
         }
@@ -110,7 +110,7 @@ namespace WebAppMVC.Controllers
         {
             if (!User.Identity?.IsAuthenticated ?? true)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Auth");
             }
             return View("ChangePassword");
 

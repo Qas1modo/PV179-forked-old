@@ -37,10 +37,11 @@ namespace Infrastructure.EFCore.Query
             }
             if (PageNumber is not null)
             {
-                query = query.Skip(((int)PageNumber - 1) * PageSize).Take(PageSize);
+                query = query.Skip(((int)PageNumber - 1) * PageSize).Take(PageSize + 1);
             }
             IEnumerable<TEntity> items = query.ToList();
-            return new EFQueryResult<TEntity>(items, items.Count(), PageSize, PageNumber);
+            return new EFQueryResult<TEntity>(items.Take(PageSize), items.Count() - 1,
+                items.Count() != PageSize + 1, PageSize, PageNumber);
         }
 
         private IQueryable<TEntity> OrderBy(IQueryable<TEntity> query, string orderByColumn, bool ascending, Type orderType)
