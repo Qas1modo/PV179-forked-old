@@ -21,7 +21,7 @@ namespace BL.Services.BookServ
         public int AddBook(BookDto newBook)
         {
             int id = uow.BookRepository.Insert(mapper.Map<Book>(newBook));
-            uow.Commit();
+            uow.CommitAsync();
             return id;
         }
 
@@ -36,7 +36,7 @@ namespace BL.Services.BookServ
             Book book = uow.BookRepository.GetByID(bookId);
             book = mapper.Map(updatedBook, book);
             uow.BookRepository.Update(book);
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void DeleteBook(int bookId)
@@ -44,7 +44,7 @@ namespace BL.Services.BookServ
             Book book = uow.BookRepository.GetByID(bookId);
             book.Deleted = true;
             uow.BookRepository.Update(book);
-            uow.Commit();
+            uow.CommitAsync();
         }
     }
 }

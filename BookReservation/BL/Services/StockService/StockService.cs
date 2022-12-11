@@ -98,7 +98,7 @@ namespace BL.Services.StockServ
         {
             book.Stock += updateStock;
             uow.BookRepository.Update(book);
-            uow.Commit();
+            uow.CommitAsync();
             return true;
         }
     }

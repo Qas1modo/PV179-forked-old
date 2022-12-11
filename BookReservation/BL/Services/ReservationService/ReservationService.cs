@@ -29,7 +29,7 @@ namespace BL.Services.ReservationServ
         public void CreateReservation(ReservationDto rentDto)
         {
             uow.ReservationRepository.Insert(mapper.Map<Reservation>(rentDto));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void ChangeState(int reservationId, RentState newState)
@@ -52,7 +52,7 @@ namespace BL.Services.ReservationServ
 
             rent.State = newState;
             uow.ReservationRepository.Update(rent);
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public IEnumerable<ReservationDetailDto> ShowReservations(int userId)

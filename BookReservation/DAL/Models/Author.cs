@@ -9,7 +9,7 @@ namespace DAL.Models
 {
     public class Author : BaseEntity
     {
-        [Required]
+        [Required, MaxLength(64)]
         public string Name { get; set; }
     }
 }

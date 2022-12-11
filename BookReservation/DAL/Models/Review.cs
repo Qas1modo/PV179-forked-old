@@ -15,7 +15,7 @@ namespace DAL.Models
         [ForeignKey(nameof(BookId))]
         public virtual Book Book { get; set; }
 
-        [Range(1, 10), Required]
+        [Range(0, 10), Required]
         public int Score { get; set; }
 
         public string? Description { get; set; }

@@ -23,13 +23,13 @@ namespace BL.Services.ReviewServ
         public void AddReview(ReviewDto reviewDto)
         {
             uow.ReviewRepository.Insert(mapper.Map<Review>(reviewDto));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void DeleteReview(int reviewId)
         {
             uow.ReviewRepository.Delete(reviewId);
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public IEnumerable<ReviewDetailDto> ShowReviews(int bookId, int number)

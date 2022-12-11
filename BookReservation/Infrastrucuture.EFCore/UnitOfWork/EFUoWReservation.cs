@@ -23,7 +23,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             this.UserRepository = userRepository;
         }
 
-        public async Task Commit()
+        public async Task CommitAsync()
         {
             await context.SaveChangesAsync();
         }

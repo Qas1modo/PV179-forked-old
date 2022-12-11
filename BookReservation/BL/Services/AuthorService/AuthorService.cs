@@ -23,13 +23,13 @@ namespace BL.Services.AuthorServ
         public void AddAuthor(AuthorDto authorDto)
         {
             uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void RemoveAuthor(int id)
         {
             uow.AuthorRepository.Delete(id);
-            uow.Commit();
+            uow.CommitAsync();
         }
     }
 }

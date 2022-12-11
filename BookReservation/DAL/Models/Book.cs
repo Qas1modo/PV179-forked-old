@@ -6,7 +6,7 @@ namespace DAL.Models
 {
     public class Book : BaseEntity
     {
-        [Required]
+        [Required, MaxLength(64)]
         public string Name { get; set; }
 
         [ForeignKey(nameof(AuthorId))]
@@ -26,7 +26,7 @@ namespace DAL.Models
         [Range(0, int.MaxValue), Required]
         public int Total { get; set; }
 
-        [Required]
+        [Required, Range(0, 999999)]
         public decimal Price { get; set; }
 
         public string? Description { get; set; }

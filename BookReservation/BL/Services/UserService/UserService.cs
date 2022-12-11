@@ -35,7 +35,7 @@ namespace BL.Services.UserServ
                 throw new Exception("Invaid id");
             }
             uow.UserRepository.Update(mapper.Map(input, user));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public PersonalInfoDto ShowUserData(int userId)
@@ -59,7 +59,7 @@ namespace BL.Services.UserServ
             User user = uow.UserRepository.GetByID(userId);
             user.Group = newGroup;
             uow.UserRepository.Update(user);
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void DeleteUser(int userId)

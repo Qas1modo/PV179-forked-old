@@ -14,10 +14,13 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using BL.Services.AuthServ;
+using BL.QueryObjects;
 
-
-var builder = WebApplication.CreateBuilder(args);
-
+var builder = WebApplication.CreateBuilder();
 
 using (var db = new BookReservationDbContext())
 {
@@ -25,10 +28,12 @@ using (var db = new BookReservationDbContext())
     db.Database.EnsureCreated();
 }
 
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<BookReservationDbContext>();
+
 // Add services to the container.
 builder.Services.AddSingleton<IMapper>(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping)));
 
-// Queries
+// Queries DI Setup
 builder.Services.AddTransient<IQuery<Author>, EFQuery<Author>>();
 builder.Services.AddTransient<IQuery<Book>, EFQuery<Book>>();
 builder.Services.AddTransient<IQuery<CartItem>, EFQuery<CartItem>>();
@@ -37,7 +42,7 @@ builder.Services.AddTransient<IQuery<Reservation>, EFQuery<Reservation>>();
 builder.Services.AddTransient<IQuery<Review>, EFQuery<Review>>();
 builder.Services.AddTransient<IQuery<User>, EFQuery<User>>();
 
-// Context
+// Context DI Setup
 builder.Services.AddScoped<BookReservationDbContext, BookReservationDbContext>();
 
 // Repositories DI Setup
@@ -65,13 +70,17 @@ builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-// Facades DI Setup
+
+// Facades and QO DI Setup
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
-
+builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(o => o.LoginPath = new PathString("/Auth/Login"));
 
 var app = builder.Build();
 
@@ -87,12 +96,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCookiePolicy();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllers();
 

@@ -16,7 +16,7 @@ namespace DAL.Models
         [ForeignKey(nameof(BookId))]
         public virtual Book Book { get; set; }
 
-        [Required]
+        [Required, Range(1, 365)]
         public int LoanPeriod { get; set; }
 
         [Required]

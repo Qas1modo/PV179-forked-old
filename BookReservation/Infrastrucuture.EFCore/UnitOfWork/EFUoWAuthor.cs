@@ -23,7 +23,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             AuthorRepository = authorRepository;
         }
 
-        public async Task Commit()
+        public async Task CommitAsync()
         {
             await context.SaveChangesAsync();
         }

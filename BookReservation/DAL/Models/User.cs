@@ -1,4 +1,5 @@
 ﻿using DAL.Enums;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,34 +7,34 @@ namespace DAL.Models
 {
     public class User : BaseEntity
     {
-        [MaxLength(64), Required]
+        [StringLength(64), Required]
         public string Name { get; set; }
 
-        [Required]
+        [Required, EmailAddress]
         public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        [Required]
+        [Required, StringLength(64)]
         public string Salt { get; set; }
 
-        [Required]
+        [Required, Phone]
         public string Phone { get; set; }
 
         [Required]
         public DateTime BirthDate { get; set; }
 
-        [Required]
+        [Required, StringLength(64)]
         public string City { get; set; }
 
-        [Required]
+        [Required, StringLength(64)]
         public string Street { get; set; }
 
-        [Required]
+        [Required, Range(1, 99999)]
         public int StNumber { get; set; }
 
-        [Required]
+        [Required, Range(1, 99999)]
         public int ZipCode { get; set; }
 
         [Required]

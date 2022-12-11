@@ -23,13 +23,13 @@ namespace BL.Services.GenreServ
         public void AddGenre(GenreDto genreDto)
         {
             uow.GenreRepository.Insert(mapper.Map<Genre>(genreDto));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void RemoveGenre(int id)
         {
             uow.GenreRepository.Delete(id);
-            uow.Commit();
+            uow.CommitAsync();
         }
     }
 }

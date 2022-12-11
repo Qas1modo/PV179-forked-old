@@ -37,7 +37,7 @@ namespace BL.Tests.Services
                 .Verifiable();
 
             uow.Setup(x => x.ReservationRepository.Update(rent)).Verifiable();
-            uow.Setup(x => x.Commit()).Verifiable();
+            uow.Setup(x => x.CommitAsync()).Verifiable();
 
             // Preconditions
             rent.ReturnedAt = null;

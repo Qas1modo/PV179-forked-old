@@ -26,7 +26,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             Password = "jjpjpkf",
             Salt = "dkpafjapfjpak",
             Phone = "+421911999222",
-            BirthDate = new DateOnly(1980, 3, 1),
+            BirthDate = new DateTime(1980, 3, 1),
             Group = Group.Employee,
         };
 
@@ -63,7 +63,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                 user.Email = newEmail;
                 user.City = newCity;
 
-                efUnitOfWork.Commit().Wait();
+                efUnitOfWork.CommitAsync().Wait();
 
                 using (var eF = new EFUoWUserInfo(dbContext, userRepository))
                 {

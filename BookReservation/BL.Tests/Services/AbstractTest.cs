@@ -25,7 +25,7 @@ namespace BL.Tests.Services
                 Password = "gbvsi",
                 Salt = "g823y8g3gewgew",
                 Phone = "100131224",
-                BirthDate = DateOnly.MaxValue,
+                BirthDate = DateTime.MaxValue,
                 City = "Montreal",
                 Street = "St.Patrick",
                 StNumber = 123,

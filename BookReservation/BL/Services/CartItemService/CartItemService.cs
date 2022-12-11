@@ -23,13 +23,13 @@ namespace BL.Services.CartItemServ
         public void AddItem(CartItemDto itemDto)
         {
             uow.CartItemRepository.Insert(mapper.Map<CartItem>(itemDto));
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void RemoveItem(int id)
         {
             uow.CartItemRepository.Delete(id);
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public void EmptyCart(int userId)
@@ -39,7 +39,7 @@ namespace BL.Services.CartItemServ
             {
                 uow.CartItemRepository.Delete(cartItem.Id);
             }
-            uow.Commit();
+            uow.CommitAsync();
         }
 
         public IEnumerable<CartItemDetailDto> GetCartItems(int userId)

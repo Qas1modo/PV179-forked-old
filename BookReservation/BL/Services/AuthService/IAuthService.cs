@@ -9,12 +9,8 @@ namespace BL.Services.AuthServ
 {
     public interface IAuthService
     {
-        int RegisterUser(RegistrationDto input);
-
-        object ChangePassword();
-
-        object LoginUser();
-
-        object LogoutUser();
+        Task<int> RegisterUserAsync(RegistrationDto input);
+        UserAuthDto? Login(UserLoginDto input);
+        Task<bool> ChangePasswordAsync(ChangePasswordDto input);
     }
 }

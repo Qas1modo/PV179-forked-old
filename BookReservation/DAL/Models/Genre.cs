@@ -9,7 +9,7 @@ namespace DAL.Models
 {
     public class Genre : BaseEntity
     {
-        [Required]
+        [Required, MaxLength(32)]
         public string Name { get; set; }
     }
 }

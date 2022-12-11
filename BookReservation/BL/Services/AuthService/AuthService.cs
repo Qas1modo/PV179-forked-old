@@ -1,56 +1,85 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using DAL;
+using BL.QueryObjects;
 using DAL.Models;
-using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Services.AuthServ
 {
-    public class AuthService: IAuthService
+    public class AuthService : IAuthService
     {
         private readonly IUoWUserInfo uoWUserInfo;
         private readonly IMapper mapper;
-
-        public AuthService(IUoWUserInfo userInfo, IMapper mapper)
+        private readonly UserQueryObject queryObject;
+        private const int saltSize = 16;
+        private const int iterations = 100000;
+        private const int hashLen = 32;
+        public AuthService(IUoWUserInfo userInfo,
+            IMapper mapper,
+            UserQueryObject query)
         {
             this.uoWUserInfo = userInfo;
             this.mapper = mapper;
+            queryObject = query;
         }
 
-        // will be updated after implemented autnhetification (Type change, middleware implementation)
-        public int RegisterUser(RegistrationDto input)
+        public async Task<int> RegisterUserAsync(RegistrationDto input)
         {
+            if (queryObject.GetUserByEmail(input.Email) != null)
+            {
+                return -1;
+            }
+            if (queryObject.GetUserByName(input.Name) != null) 
+            {
+                return -2;
+            }
+            using (var hashedPassword = new Rfc2898DeriveBytes(input.OpenPassword, saltSize, iterations, HashAlgorithmName.SHA256))
+            {
+                input.Salt = Convert.ToBase64String(hashedPassword.Salt);
+                input.Password = Convert.ToBase64String(hashedPassword.GetBytes(hashLen));
+            }
+            input.Group = DAL.Enums.Group.User;
             User user = mapper.Map<User>(input);
-            user.Salt = Encoding.UTF8.GetString(RandomNumberGenerator.GetBytes(32));
-            user.Group = DAL.Enums.Group.User;
-            var hashService = SHA256.Create();
-            byte[] combinedPassword = Encoding.UTF8.GetBytes(input.OpenPassword + user.Salt);
-            user.Password = Convert.ToBase64String(hashService.ComputeHash(combinedPassword));
-            return uoWUserInfo.UserRepository.Insert(user);
+            int result = uoWUserInfo.UserRepository.Insert(user);
+            await uoWUserInfo.CommitAsync();
+            return result;
         }
 
-        public object ChangePassword()
+        public UserAuthDto? Login(UserLoginDto input)
         {
-            throw new NotImplementedException();
+            User? user = queryObject.GetUserByEmail(input.Email);
+            if (user == null || !VerifyPassword(user.Password, user.Salt, input.Password))
+            {
+                return null;
+            }
+            return mapper.Map<User, UserAuthDto>(user);
         }
 
-        public object LoginUser()
+        private static bool VerifyPassword(string storedPassword, string storedSalt, string verifyPassword)
         {
-            throw new NotImplementedException();
+            byte[] password = Convert.FromBase64String(storedPassword);
+            byte[] salt = Convert.FromBase64String(storedSalt);
+            using var hashedPassword = new Rfc2898DeriveBytes(verifyPassword, salt, iterations, HashAlgorithmName.SHA256);
+            var inputPassword = hashedPassword.GetBytes(hashLen);
+            return inputPassword.SequenceEqual(password);
         }
 
-        public object LogoutUser()
+        public async Task<bool> ChangePasswordAsync(ChangePasswordDto input)
         {
-            throw new NotImplementedException();
+            User user = uoWUserInfo.UserRepository.GetByID(input.UserId ?? -1);
+            if (user == null || !VerifyPassword(user.Password, user.Salt, input.OldPassword))
+            {
+                return false;
+            }
+            using (var hashedPassword = new Rfc2898DeriveBytes(input.NewPassword, saltSize, iterations, HashAlgorithmName.SHA256))
+            {
+                user.Salt = Convert.ToBase64String(hashedPassword.Salt);
+                user.Password = Convert.ToBase64String(hashedPassword.GetBytes(hashLen));
+            }
+            uoWUserInfo.UserRepository.Update(user);
+            await uoWUserInfo.CommitAsync();
+            return true;
         }
     }
 }

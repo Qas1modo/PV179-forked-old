@@ -19,7 +19,7 @@ namespace Infrastructure.EFCore.UnitOfWork
             this.GenreRepository = genreRepository;
         }
 
-        public async Task Commit()
+        public async Task CommitAsync()
         {
             await context.SaveChangesAsync();
         }

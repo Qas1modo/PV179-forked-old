@@ -27,7 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
-    <Folder Include="QueryObjects\" />
     <Folder Include="Services\ReviewService\" />
     <Folder Include="Services\GenreService\" />
     <Folder Include="Services\BookService\" />
