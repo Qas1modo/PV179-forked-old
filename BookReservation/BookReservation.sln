@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{B8B12267-66EB-4C68-B52B-D779B4EBEED8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{A9046F6E-13EA-4300-803C-335FDFD92E10}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{8FEB99B4-BD6C-4A9F-AAA5-477052E3B545}"
@@ -30,10 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B8B12267-66EB-4C68-B52B-D779B4EBEED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8B12267-66EB-4C68-B52B-D779B4EBEED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8B12267-66EB-4C68-B52B-D779B4EBEED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8B12267-66EB-4C68-B52B-D779B4EBEED8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9046F6E-13EA-4300-803C-335FDFD92E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9046F6E-13EA-4300-803C-335FDFD92E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9046F6E-13EA-4300-803C-335FDFD92E10}.Release|Any CPU.ActiveCfg = Release|Any CPU

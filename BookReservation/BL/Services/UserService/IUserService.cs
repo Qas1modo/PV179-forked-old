@@ -11,7 +11,7 @@ namespace BL.Services.UserServ
 {
     public interface IUserService
     {
-        void UpdateUserData(PersonalInfoDto input, int userId);
+        Task<int> UpdateUserDataAsync(PersonalInfoDto input, int userId);
 
         PersonalInfoDto ShowUserData(int userId);
 

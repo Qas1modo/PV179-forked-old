@@ -49,7 +49,12 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("Name", "Username already taken!");
                 return View("Register");
-            } 
+            }
+            if (result == -3)
+            {
+                ModelState.AddModelError("BirthDate", "Birthday must be more than three years before today!");
+                return View("Register");
+            }
             return RedirectToAction("Login", "Auth");
         }
 
@@ -77,7 +82,7 @@ namespace WebAppMVC.Controllers
                 return View("Login");
             }
             await CreateTokenAsync(userAuth);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "User");
         }
 
         private async Task CreateTokenAsync(UserAuthDto user)

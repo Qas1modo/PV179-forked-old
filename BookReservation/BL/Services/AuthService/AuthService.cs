@@ -26,6 +26,10 @@ namespace BL.Services.AuthServ
 
         public async Task<int> RegisterUserAsync(RegistrationDto input)
         {
+            if (input.BirthDate > DateTime.Now.AddYears(-3))
+            {
+                return -3;
+            }
             if (queryObject.GetUserByEmail(input.Email) != null)
             {
                 return -1;
