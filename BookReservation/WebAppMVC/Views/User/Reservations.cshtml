@@ -1,5 +1,69 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<BL.DTOs.ReservationDetailDto>
 @{
+    ViewData["Title"] = "User page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="row">
+    <div class="col s12">
+        <div class="row valign-wrapper my-4">
+            <span class="text-xxl-center display-6">Reservation history</span>
+        </div>
+        <div class="row valign-wrapper my-4 h4">
+            <span class="text-xxl-left">Personal information:</span>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2 text-xxl-center">
+            <div class="col s12 l4">Current username:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2  text-xxl-center">
+            <div class="col s12 l4">Current email:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2  text-xxl-center">
+            <div class="col s12 l4">Current phone:</div>
+            <div class="col flex-grow-1">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2  text-xxl-center">
+            <div class="col s12 l4">Current date of birth:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper my-4 h4">
+            <span class="text-xxl-left">Your current address:</span>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2 text-xxl-center">
+            <div class="col s12 l4">Street:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2 text-xl-center">
+            <div class="col s12 l4">Street number:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2 text-xxl-center">
+            <div class="col s12 l4">City:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+        <div class="row valign-wrapper m-2 text-xxl-center">
+            <div class="col s12 l4">Zip code:</div>
+            <div class="col s12 l8">
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>

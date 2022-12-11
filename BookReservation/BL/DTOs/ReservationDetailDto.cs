@@ -28,6 +28,8 @@ namespace BL.DTOs
 
         public decimal Price { get; set; }
 
+        public decimal TotalPrice { get; set; }
+
         public RentState State { get; set; }
     }
 }

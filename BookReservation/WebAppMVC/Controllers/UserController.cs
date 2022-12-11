@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.Services.ReservationServ;
 using BL.Services.UserServ;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,13 @@ namespace WebAppMVC.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IReservationService _reservationService;
 
-
-        public UserController(IUserService userService) 
+        public UserController(IUserService userService,
+            IReservationService reservationService) 
         {
             _userService = userService;
+            _reservationService = reservationService;
         }
 
         [Authorize, HttpGet]
@@ -52,6 +55,18 @@ namespace WebAppMVC.Controllers
                 ModelState.AddModelError("BirthDate", "Birthday must be more than three years before today!");
             }
             return View("ChangeInfo");
+        }
+
+        [Authorize, HttpGet]
+
+        public IActionResult Reservations()
+        {
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+                return View();
+            }
+            return View(_reservationService.ShowReservations(userId));
         }
 
         [Authorize]
