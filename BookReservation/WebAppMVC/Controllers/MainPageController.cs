@@ -27,20 +27,28 @@ namespace WebAppMVC.Controllers
 			this.genreService = genreService;
         }
 
-        [HttpGet("MainPage/{page?}")]
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index([FromForm] FilterForm form, int page = 1)
         {
-            
+
             // Pragmatically show genres
 			var genres = await genreService.GetAllGenres();
 			var dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
 			ViewBag.genres = dropDownItems;
 
-            bookFilter.Page = page < 1 ? 1 : page;
 
-            var model = new MainPageIndexModel
+            // Setup filter with form attribs
+            bookFilter.Page = page < 1 ? 1 : page;
+            bookFilter.GenreFilter = form.Genre;
+
+            // Filter books
+            var serviceResult = stockService.ShowBooks(bookFilter);
+
+            // Prepare model
+			var model = new MainPageIndexModel
             {
-                Books = stockService.ShowBooks(bookFilter).Items
+                Books = serviceResult.Items,
+                Page = serviceResult.PageNumber ?? 1,
+                Total = serviceResult.ItemsCount
             };
 
 			return View(model);
