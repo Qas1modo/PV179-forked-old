@@ -45,9 +45,13 @@ namespace BL.Facades.OrderFac
                 {
                     return false;
                 }
-                rentService.CreateReservation(mapper.Map<ReservationDto>(cartItem));
+                ReservationDto newReservation = mapper.Map<ReservationDto>(cartItem);
+                newReservation.State = RentState.Reserved;
+                newReservation.ReservedAt = new DateTime();
+
+                await rentService.CreateReservation(newReservation);
             }
-            cartService.EmptyCart(userId);
+            await cartService.EmptyCart(userId);
             return true;
         }
 

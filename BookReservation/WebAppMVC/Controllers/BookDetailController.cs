@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using BL.Services.BookServ;
 using BL.Services.ReviewServ;
+using BL.Services.CartItemServ;
 using WebAppMVC.Models;
 using BL.DTOs.BasicDtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppMVC.Controllers
 {
@@ -16,13 +18,17 @@ namespace WebAppMVC.Controllers
 
         private readonly IReviewService reviewService;
 
+        private readonly ICartItemService cartItemService;
+
         public BookDetailController(ILogger<HomeController> logger,
             IBookService bookService,
-            IReviewService reviewService)
+            IReviewService reviewService,
+            ICartItemService cartItemService)
         {
             _logger = logger;
             this.bookService = bookService;
             this.reviewService = reviewService;
+            this.cartItemService = cartItemService;
         }
 
         [Route("book/{bookId}")]
@@ -49,23 +55,25 @@ namespace WebAppMVC.Controllers
             return View("../BookDetail/Index", model);
         }
 
+        [Authorize]
         [Route("book/AddToCart/{bookId}")]
-        public async Task<IActionResult> AddToCart(int bookId)
+        public async Task<IActionResult> AddToCart([FromForm] AddToCartForm form, int bookId)
         {
-            // TODO when user will be known
-            // create cartitem
-            // redirect to cart
-
-            // for now do nothing
-            var model = new BookDetailIndexModel()
+            if (!int.TryParse(User.Identity?.Name, out int userId))
             {
-                bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId)
-            };
+                ModelState.AddModelError("UserId", "Identity error!");
+            }
 
-            return View("../BookDetail/Index", model);
+            CartItemDto newItem = new CartItemDto();
+            newItem.BookId = bookId;
+            newItem.UserId = userId;
+            newItem.LoanPeriod = form.days;
+            await cartItemService.AddItem(newItem);
+
+            return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
         }
 
+        [Authorize]
         [Route("book/AddReview/{bookId}")]
         public async Task<IActionResult> AddReview([FromForm] ReviewForm form, int bookId)
         {

@@ -20,7 +20,5 @@ namespace BL.DTOs
         public decimal Price { get; set; }
 
         public int LoanPeriod { get; set; }
-
-        public decimal TotalPrice { get; set; }
     }
 }
