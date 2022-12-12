@@ -16,11 +16,12 @@
 			<form method="post">
 				<div class="modal-body">
 					<label  class="control-label"> Select City</label>
-					<select name="products" class="form-control" asp-items="@ViewBag.genres"></select>
+					<select name="Genre" class="form-control" asp-items="@ViewBag.genres"></select>
 				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
+					<button type="submit" formaction="@Url.Action("Index", "MainPage", new { page = Model.Page })" class="btn btn-primary mb-2">Submit</button>
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 				</div>
 			</form>
