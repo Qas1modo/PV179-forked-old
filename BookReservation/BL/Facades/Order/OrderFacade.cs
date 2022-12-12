@@ -35,12 +35,13 @@ namespace BL.Facades.OrderFac
             this.mapper = mapper;
         }
 
-        public bool MakeOrder(int userId)
+        public async Task<bool> MakeOrder(int userId)
         {
-            User user = uow.UserRepository.GetByID(userId);
+            User user = await uow.UserRepository.GetByID(userId);
             foreach (var cartItem in user.CartItems)
             {
-                if (!stockService.ReserveBookStock(cartItem.BookId))
+                var isReserved = await stockService.ReserveBookStock(cartItem.BookId);
+                if (!isReserved)
                 {
                     return false;
                 }
@@ -50,14 +51,15 @@ namespace BL.Facades.OrderFac
             return true;
         }
 
-        public bool ReturnBook(int reservationId, RentState newState = RentState.Returned)
+        public async Task<bool> ReturnBook(int reservationId, RentState newState = RentState.Returned)
         {
-            Reservation reservation = uow.ReservationRepository.GetByID(reservationId);
-            if (!stockService.BookReturnedStock(reservation.BookId))
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            var isReturned = await stockService.BookReturnedStock(reservation.BookId);
+            if (!isReturned)
             {
                 return false;
             }
-            return rentService.ChangeState(reservationId, newState, reservation.UserId);
+            return await rentService.ChangeState(reservationId, newState, reservation.UserId);
         }
     }
 }

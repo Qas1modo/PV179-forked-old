@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BL.Services.StockServ
 {
-    public class StockService: IStockService
+    public class StockService : IStockService
     {
         private readonly IMapper mapper;
         private readonly IUoWBook uow;
@@ -41,7 +41,7 @@ namespace BL.Services.StockServ
             }
             if (filter?.AuthorFilter != null)
             {
-                query.Where<Author>(a => a.Name == filter.AuthorFilter , "Author");
+                query.Where<Author>(a => a.Name == filter.AuthorFilter, "Author");
             }
             if (filter?.GenreFilter != null)
             {
@@ -53,7 +53,7 @@ namespace BL.Services.StockServ
                 {
                     query.OrderBy<decimal>("Price", filter?.Ascending ?? true);
                 }
-                else if (filter.OrderBy == "Name") 
+                else if (filter.OrderBy == "Name")
                 {
                     query.OrderBy<string>("Name", filter?.Ascending ?? true);
                 }
@@ -65,15 +65,15 @@ namespace BL.Services.StockServ
             return mapper.Map<QueryResultDto<BookBasicInfoDto>>(query.Execute());
         }
 
-        public BookAvailabilityDto GetBookStock(int bookId)
+        public async Task<BookAvailabilityDto> GetBookStock(int bookId)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             return mapper.Map<BookAvailabilityDto>(book);
         }
 
-        public bool ReserveBookStock(int bookId)
+        public async Task<bool> ReserveBookStock(int bookId)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             if (book.Stock < 1)
             {
                 return false;
@@ -82,9 +82,9 @@ namespace BL.Services.StockServ
             return HelperUpdateStock(book, -1);
         }
 
-        public bool BookReturnedStock(int bookId)
+        public async Task<bool> BookReturnedStock(int bookId)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             if (book.Stock >= book.Total)
             {
                 return false;

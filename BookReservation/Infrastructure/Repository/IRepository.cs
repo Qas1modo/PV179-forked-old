@@ -8,11 +8,11 @@ namespace Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity GetByID(int id);
+        Task<TEntity> GetByID(int id);
 
         IQueryable<TEntity> GetQueryable();
 
-        IEnumerable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> GetAll();
 
         int Insert(TEntity entity);
 

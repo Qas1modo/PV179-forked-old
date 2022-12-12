@@ -32,20 +32,20 @@ namespace BL.Services.ReservationServ
             this.query = query;
         }
 
-        public void CreateReservation(ReservationDto rentDto)
+        public async Task CreateReservation(ReservationDto rentDto)
         {
             uow.ReservationRepository.Insert(mapper.Map<Reservation>(rentDto));
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
 
-        public bool ChangeState(int reservationId, RentState newState, int userId = -1)
+        public async Task<bool> ChangeState(int reservationId, RentState newState, int userId = -1)
         {
-            Reservation rent = uow.ReservationRepository.GetByID(reservationId);
+            Reservation rent = await uow.ReservationRepository.GetByID(reservationId);
             if (userId != -1 && userId != rent.UserId)
             {
                 return false;
             }
-            switch(newState)
+            switch (newState)
             {
                 case RentState.Reserved:
                     rent.ReservedAt = new DateTime();
@@ -59,7 +59,7 @@ namespace BL.Services.ReservationServ
             }
             rent.State = newState;
             uow.ReservationRepository.Update(rent);
-            uow.CommitAsync();
+            await uow.CommitAsync();
             return true;
         }
 

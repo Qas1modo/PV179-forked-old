@@ -20,21 +20,21 @@ namespace BL.Services.ReviewServ
             this.uow = uow;
         }
 
-        public void AddReview(ReviewDto reviewDto)
+        public async Task AddReview(ReviewDto reviewDto)
         {
             uow.ReviewRepository.Insert(mapper.Map<Review>(reviewDto));
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
 
-        public void DeleteReview(int reviewId)
+        public async Task DeleteReview(int reviewId)
         {
             uow.ReviewRepository.Delete(reviewId);
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
 
-        public IEnumerable<ReviewDetailDto> ShowReviews(int bookId, int number)
+        public async Task<IEnumerable<ReviewDetailDto>> ShowReviews(int bookId, int number)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             return mapper.Map<IEnumerable<ReviewDetailDto>>(book.Reviews.Take(number));
         }
     }

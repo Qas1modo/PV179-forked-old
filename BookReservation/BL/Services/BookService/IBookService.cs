@@ -6,13 +6,13 @@ namespace BL.Services.BookServ
 {
     public interface IBookService
     {
-        int AddBook(BookDto newBook);
+        Task<int> AddBook(BookDto newBook);
 
-        BookBasicInfoDto GetBook(int bookId);
+        Task<BookBasicInfoDto> GetBook(int bookId);
 
-        void UpdateBook(int bookId, BookDto updatedBook);
+        Task UpdateBook(int bookId, BookDto updatedBook);
 
-        void DeleteBook(int bookId);
+        Task DeleteBook(int bookId);
     }
 }
 

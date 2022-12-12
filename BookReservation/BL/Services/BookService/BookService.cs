@@ -18,33 +18,33 @@ namespace BL.Services.BookServ
             this.mapper = mapper;
         }
 
-        public int AddBook(BookDto newBook)
+        public async Task<int> AddBook(BookDto newBook)
         {
             int id = uow.BookRepository.Insert(mapper.Map<Book>(newBook));
-            uow.CommitAsync();
+            await uow.CommitAsync();
             return id;
         }
 
-        public BookBasicInfoDto GetBook(int bookId)
+        public async Task<BookBasicInfoDto> GetBook(int bookId)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             return mapper.Map<BookBasicInfoDto>(book);
         }
 
-        public void UpdateBook(int bookId, BookDto updatedBook)
+        public async Task UpdateBook(int bookId, BookDto updatedBook)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             book = mapper.Map(updatedBook, book);
             uow.BookRepository.Update(book);
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
 
-        public void DeleteBook(int bookId)
+        public async Task DeleteBook(int bookId)
         {
-            Book book = uow.BookRepository.GetByID(bookId);
+            Book book = await uow.BookRepository.GetByID(bookId);
             book.Deleted = true;
             uow.BookRepository.Update(book);
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
     }
 }
