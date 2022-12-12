@@ -63,7 +63,6 @@ namespace BL.Tests.Services
                 ReservedAt = DateTime.Now.AddMinutes(-600),
                 RentedAt = DateTime.Now,
                 LoanPeriod = 20,
-                TotalPrice = decimal.MaxValue,
                 State = DAL.Enums.RentState.Active // change within test if needed
             };
         }

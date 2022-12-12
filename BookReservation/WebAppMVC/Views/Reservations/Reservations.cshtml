@@ -16,17 +16,12 @@
                 Reservations
             </a>
             <a class="btn col col-sm-3 text-decoration-none m-1
-                @(ViewData.Model.CurrentState == DAL.Enums.RentState.Expired ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/@(Model.UserId)/expired/">
-                Expired
-            </a>
-            <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Canceled ? "disabled bg-secondary" : "bg-primary")"
                href="/reservations/@(Model.UserId)/canceled/">
                 Canceled
             </a>
-         </div>
-         <div class="row justify-content-around">
+        </div>
+        <div class="row justify-content-around">
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Active ? "disabled bg-secondary" : "bg-primary")"
                href="/reservations/@(Model.UserId)/active/">
@@ -37,26 +32,26 @@
                href="/reservations/@(Model.UserId)/returned/">
                 Returned
             </a>
-            <a class="btn col col-sm-3 text-decoration-none m-1
-                @(ViewData.Model.CurrentState == DAL.Enums.RentState.Overdue ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/@(Model.UserId)/overdue/">
-                Overdue
-            </a>
         </div>
         <hr />
         @foreach (BL.DTOs.ReservationDetailDto detail in Model.Items)
         {
             int lateBy = 0;
             decimal fine = 0;
-            if (detail.State == DAL.Enums.RentState.Overdue && detail.RentedAt != null)
+            bool expired = DateTime.Now.Subtract(detail.ReservedAt.AddDays(7)).Days < 0;
+            string pickUp = detail.ReservedAt.AddDays(8).ToShortDateString();
+            if (detail.RentedAt != null)
             {
                 lateBy = DateTime.Now.Subtract(detail.RentedAt.Value.AddDays(detail.LoanPeriod)).Days;
-                if (lateBy < 1) {
+                if (lateBy < 1)
+                {
                     lateBy = 0;
                 }
-                fine = lateBy * detail.Price;
-            } 
-          
+                else
+                {
+                    fine = lateBy * detail.Price;
+                }
+            }
             <div class="row m-3">
                 <div class="col-sm">
                     <div class="row">
@@ -73,43 +68,52 @@
                     <div class="row text-end">
                         <span class="h5 m-0">
                             @(detail.Price * detail.LoanPeriod)
-                            @if(fine > 0) {
+                            @if (fine > 0)
+                            {
                                 <span class="text-danger">+@(fine)</span>
                             }
-                            <span style="font-size: 1rem" class="p-1">[@(
-                            detail.Price
-                            )/day]</span>
+                            <span style="font-size: 1rem" class="p-1">
+                                [@(detail.Price)/day]
+                            </span>
                         </span>
                     </div>
                     <div class="row text-end">
                         @if (detail.State == DAL.Enums.RentState.Reserved)
                         {
-                            <span class="text-info">
-                                Pick up before @(detail.ReservedAt.AddDays(7).ToShortDateString())
-                            </span>
+                            if (expired)
+                            {
+                                <span class="text-warning">Reservation expired at @(pickUp)</span>
+                            }
+                            else
+                            {
+                                <span class="text-info">
+                                    Pick up before @(pickUp)
+                                </span>
+                            }
                         }
                         @if (detail.State == DAL.Enums.RentState.Canceled)
                         {
                             <span class="text-danger">Reservation canceled</span>
                         }
-                        @if (detail.State == DAL.Enums.RentState.Active)
+                        @if (detail.State == DAL.Enums.RentState.Active && detail.RentedAt != null)
                         {
-                            <span class="text-info">Return before @(detail.RentedAt.Value.AddDays(detail.LoanPeriod).ToShortDateString())</span>
+                            if (lateBy > 0)
+                            {
+                                <span class="text-danger">Late by @(lateBy) day(s)</span>
+                            }
+                            else
+                            {
+                                <span class="text-info">Return before @(detail.RentedAt.Value.AddDays(detail.LoanPeriod).ToShortDateString())</span>
+                            }
                         }
-                        @if (detail.State == DAL.Enums.RentState.Expired)
+                        @if (detail.State == DAL.Enums.RentState.Returned && detail.ReturnedAt != null)
                         {
-                            <span class="text-warning">Reservation expired at @(detail.ReservedAt.AddDays(8).ToShortDateString())</span>
-                        }
-                        @if (detail.State == DAL.Enums.RentState.Overdue)
-                        {
-                            <span class="text-danger">Late by @(lateBy) day(s)</span>
-                        }
-                        @if (detail.State == DAL.Enums.RentState.Returned)
-                        {
-                            int overdue = detail.ReturnedAt.Value.Subtract(detail.RentedAt.Value).Days - detail.LoanPeriod;
-                            if (overdue > 0) {
-                                <span class="text-danger">Returned late by @(overdue) day(s) at @(detail.ReturnedAt.Value.ToShortDateString())</span>
-                            } else {
+                            if (lateBy > 0)
+                            {
+                                <span class="text-danger">Returned late by @(lateBy) day(s) at @(detail.ReturnedAt.Value.ToShortDateString())</span>
+                            }
+                            else
+                            {
                                 <span class="text-info">Returned at @(detail.ReturnedAt.Value.ToShortDateString())</span>
                             }
                         }
@@ -119,38 +123,37 @@
                     </div>
                 </div>
                 <div class="row justify-content-end">
-                    @if (Model.CurrentState == DAL.Enums.RentState.Reserved) 
+                    @if (Model.CurrentState == DAL.Enums.RentState.Reserved)
                     {
                         <a class="btn col col-sm-2 text-decoration-none m-2 text-black bg-danger"
-                        href="/reservations/@(Model.UserId)/cancel/@(detail.Id)">
+                   href="/reservations/@(Model.UserId)/cancel/@(detail.Id)">
                             Cancel
                         </a>
                         <a class="btn col col-sm-2 text-decoration-none m-2 bg-success
                             @(Model.Group != "User" ? "" : "d-none")"
-                            href="reservations/@(Model.UserId)/picked/@(detail.Id)">
+                   href="reservations/@(Model.UserId)/picked/@(detail.Id)">
                             Picked
                         </a>
                     }
-                    @if ((Model.CurrentState == DAL.Enums.RentState.Overdue ||
-                    Model.CurrentState == DAL.Enums.RentState.Active)
-                    && Model.Group != "User") 
+                    @if (( Model.CurrentState == DAL.Enums.RentState.Active)
+                   && Model.Group != "User")
                     {
                         <a class="btn col col-sm-2 text-decoration-none m-2 bg-success"
-                        href="reservations/@(Model.UserId)/returned/@(detail.Id)">
+                   href="reservations/@(Model.UserId)/returned/@(detail.Id)">
                             Returned
                         </a>
                     }
-                    </div>
+                </div>
             </div>
             <hr />
         }
         <div class="row justify-content-around">
             <a class="btn col col-md-3 text-decoration-none m-2 text-black
                 @(ViewData.Model.PageNumber < 2 ? "disabled bg-secondary" : "bg-primary")"
-                href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.UserId}/{Model.PageNumber - 1}")">
+               href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.UserId}/{Model.PageNumber - 1}")">
                 Previous page
             </a>
-            <a class="btn col col-md-3 text-decoration-none m-2 
+            <a class="btn col col-md-3 text-decoration-none m-2
                 @(ViewData.Model.NextPageEmpty ? "disabled bg-secondary" : "bg-primary")"
                href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.UserId}/{Model.PageNumber + 1}")">
                 Next page

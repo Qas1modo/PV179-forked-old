@@ -4,9 +4,7 @@
     {
         Reserved,
         Canceled,
-        Expired,
         Active,
         Returned,
-        Overdue,
     }
 }

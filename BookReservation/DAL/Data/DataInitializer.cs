@@ -492,7 +492,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                TotalPrice = 200,
                 State = RentState.Reserved,
             };
 
@@ -505,7 +504,6 @@ namespace DAL.Data
                 RentedAt = new DateTime(2022, 9, 5),
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 30,
                 State = RentState.Active,
             };
 
@@ -518,8 +516,7 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                TotalPrice = 50,
-                State = RentState.Expired,
+                State = RentState.Reserved,
             };
 
             Reservation rent3 = new()
@@ -531,7 +528,6 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 10, 3),
                 ReturnedAt = new DateTime(2021, 10, 15),
                 LoanPeriod = 20,
-                TotalPrice = 200,
                 State = RentState.Returned,
             };
 
@@ -544,7 +540,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 120,
-                TotalPrice = 150,
                 State = RentState.Canceled,
             };
 
@@ -557,8 +552,7 @@ namespace DAL.Data
                 RentedAt = new DateTime(2020, 9, 6),
                 ReturnedAt = null,
                 LoanPeriod = 10,
-                TotalPrice = 150,
-                State = RentState.Overdue,
+                State = RentState.Active,
             };
 
             Reservation rent6 = new()
@@ -570,7 +564,6 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 9, 5),
                 ReturnedAt = new DateTime(2021, 9, 29),
                 LoanPeriod = 30,
-                TotalPrice = 150,
                 State = RentState.Returned,
             };
 
@@ -583,7 +576,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 3,
-                TotalPrice = 150,
                 State = RentState.Reserved,
             };
 
@@ -596,7 +588,6 @@ namespace DAL.Data
                 RentedAt = new DateTime(2021, 10, 3),
                 ReturnedAt = new DateTime(2021, 10, 15),
                 LoanPeriod = 5,
-                TotalPrice = 200,
                 State = RentState.Returned,
             };
 
@@ -609,7 +600,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -622,7 +612,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -635,7 +624,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -648,7 +636,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -661,7 +648,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
             Reservation rent14 = new()
@@ -673,7 +659,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -686,7 +671,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -699,7 +683,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -712,7 +695,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -725,7 +707,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -738,7 +719,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -751,7 +731,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -764,7 +743,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -777,7 +755,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -790,7 +767,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -803,7 +779,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -816,7 +791,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -829,7 +803,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -842,7 +815,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -855,7 +827,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -868,7 +839,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -881,7 +851,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -894,7 +863,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -907,7 +875,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -920,7 +887,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -933,7 +899,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -946,7 +911,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -959,7 +923,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -972,7 +935,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 1,
-                TotalPrice = 16,
                 State = RentState.Canceled,
             };
 
@@ -985,7 +947,6 @@ namespace DAL.Data
                 RentedAt = null,
                 ReturnedAt = null,
                 LoanPeriod = 20,
-                TotalPrice = 200,
                 State = RentState.Reserved,
             };
             modelBuilder.Entity<Reservation>().HasData(rent);

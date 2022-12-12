@@ -21,8 +21,6 @@ namespace BL.DTOs.BasicDtos
 
         public int LoanPeriod { get; set; }
 
-        public decimal TotalPrice { get; set; }
-
         public RentState State { get; set; }
     }
 }

@@ -28,9 +28,6 @@ namespace DAL.Models
         public int LoanPeriod { get; set; }
 
         [Required]
-        public decimal TotalPrice { get; set; }
-
-        [Required]
         public RentState State { get; set; }
     }
 }

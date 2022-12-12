@@ -58,7 +58,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
             {
                 var userRepo = efUnitOfWork.UserRepository;
 
-                var user = userRepo.GetByID(dummyUser.Id);
+                var user = userRepo.GetByID(dummyUser.Id).Result;
                 user.Name = newName;
                 user.Email = newEmail;
                 user.City = newCity;
@@ -69,7 +69,7 @@ namespace Infrastructure.EFCore.Test.UnitOfWork
                 {
                     userRepo = eF.UserRepository;
 
-                    User editedUser = userRepo.GetByID(dummyUser.Id);
+                    User editedUser = userRepo.GetByID(dummyUser.Id).Result;
 
                     Assert.True(editedUser.Name.Equals(newName));
                     Assert.True(editedUser.Email.Equals(newEmail));
