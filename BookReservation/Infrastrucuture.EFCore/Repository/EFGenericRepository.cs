@@ -24,9 +24,9 @@ namespace Infrastructure.EFCore.Repository
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(int id)
+        public async virtual Task<TEntity> GetByID(int id)
         {
-            TEntity? entity = dbSet.Find(id);
+            TEntity? entity = await dbSet.FindAsync(id);
             if (entity == null)
             {
                 throw new Exception("Entity with given Id does not exist.");
@@ -78,9 +78,9 @@ namespace Infrastructure.EFCore.Repository
             return dbSet.AsQueryable();
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public async virtual Task<IEnumerable<TEntity>> GetAll()
         {
-            return dbSet.ToList();
+            return await dbSet.ToListAsync();
         }
     }
 }

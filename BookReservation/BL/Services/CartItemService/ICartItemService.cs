@@ -4,15 +4,15 @@ using BL.DTOs.BasicDtos;
 
 namespace BL.Services.CartItemServ
 {
-	public interface ICartItemService
-	{
-        void AddItem(CartItemDto itemDto);
+    public interface ICartItemService
+    {
+        Task AddItem(CartItemDto itemDto);
 
-        void RemoveItem(int id);
+        Task RemoveItem(int id);
 
-        void EmptyCart(int userId);
+        Task EmptyCart(int userId);
 
-        IEnumerable<CartItemDetailDto> GetCartItems(int userId);
+        Task<IEnumerable<CartItemDetailDto>> GetCartItems(int userId);
     }
 }
 

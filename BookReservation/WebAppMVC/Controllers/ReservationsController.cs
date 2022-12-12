@@ -25,7 +25,7 @@ namespace WebAppMVC.Controllers
             _reservationService = reservationService;
         }
 
-        private PaginationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId) 
+        private PaginationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
         {
             if (page < 1) page = 1;
             string group = GetGroup(User);
@@ -70,7 +70,7 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpPut("cancel/{id:int}")]
-        public IActionResult Cancel(int userId, int id)
+        public async Task<IActionResult> Cancel(int userId, int id)
         {
             string group = GetGroup(User);
             if (!int.TryParse(User.Identity?.Name, out int signedUserId))
@@ -82,7 +82,8 @@ namespace WebAppMVC.Controllers
             {
                 userId = signedUserId;
             }
-            if (!_reservationService.ChangeState(id, RentState.Canceled, userId))
+            var isChanged = await _reservationService.ChangeState(id, RentState.Canceled, userId);
+            if (!isChanged)
             {
                 ModelState.AddModelError("Id", "Invalid permissions!");
             };

@@ -9,8 +9,8 @@ namespace BL.Facades.OrderFac
 {
     public interface IOrderFacade
     {
-        bool MakeOrder(int userId);
+        Task<bool> MakeOrder(int userId);
 
-        bool ReturnBook(int reservationId, RentState rentSate);
+        Task<bool> ReturnBook(int reservationId, RentState rentSate);
     }
 }

@@ -33,14 +33,14 @@ namespace BL.Services.UserServ
 
         public async Task UpdateUserDataAsync(PersonalInfoDto input, int userId)
         {
-            User user = uow.UserRepository.GetByID(userId);
+            User user = await uow.UserRepository.GetByID(userId);
             uow.UserRepository.Update(mapper.Map(input, user));
             await uow.CommitAsync();
         }
 
-        public PersonalInfoDto ShowUserData(int userId)
+        public async Task<PersonalInfoDto> ShowUserData(int userId)
         {
-            User user = uow.UserRepository.GetByID(userId);
+            User user = await uow.UserRepository.GetByID(userId);
             if (user == null)
             {
                 throw new Exception("Invaid id");
@@ -60,18 +60,18 @@ namespace BL.Services.UserServ
             return user == null ? -1 : user.Id;
         }
 
-        public IEnumerable<UserDto> ShowUsers()
+        public async Task<IEnumerable<UserDto>> ShowUsers()
         {
-            IEnumerable<User> users = uow.UserRepository.GetAll();
+            IEnumerable<User> users = await uow.UserRepository.GetAll();
             return mapper.Map<IEnumerable<UserDto>>(users);
         }
 
-        public void UpdateUserPermission(int userId, Group newGroup)
+        public async Task UpdateUserPermission(int userId, Group newGroup)
         {
-            User user = uow.UserRepository.GetByID(userId);
+            User user = await uow.UserRepository.GetByID(userId);
             user.Group = newGroup;
             uow.UserRepository.Update(user);
-            uow.CommitAsync();
+            await uow.CommitAsync();
         }
 
         public void DeleteUser(int userId)

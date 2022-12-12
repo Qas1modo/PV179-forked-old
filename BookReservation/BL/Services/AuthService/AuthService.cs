@@ -59,7 +59,7 @@ namespace BL.Services.AuthServ
 
         public async Task<bool> ChangePasswordAsync(ChangePasswordDto input)
         {
-            User user = uoWUserInfo.UserRepository.GetByID(input.UserId ?? -1);
+            User user = await uoWUserInfo.UserRepository.GetByID(input.UserId ?? -1);
             if (user == null || !VerifyPassword(user.Password, user.Salt, input.OldPassword))
             {
                 return false;
