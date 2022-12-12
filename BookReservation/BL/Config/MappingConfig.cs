@@ -13,15 +13,14 @@ namespace BL.Config
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
-			config.CreateMap<QueryResult<Book>, QueryResultDto<BookBasicInfoDto>>().ReverseMap();
-			config.CreateMap<RegistrationDto, User>().ReverseMap();
+            config.CreateMap<QueryResult<Book>, QueryResultDto<BookBasicInfoDto>>().ReverseMap();
+            config.CreateMap<RegistrationDto, User>().ReverseMap();
             config.CreateMap<BookAvailabilityDto, Book>().ReverseMap();
             config.CreateMap<CartItem, CartItemDetailDto>()
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name))
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
-            config.CreateMap<IEnumerable<CartItem>, IEnumerable<CartItemDetailDto>>().ReverseMap();
             config.CreateMap<PersonalInfoDto, User>().ReverseMap();
             config.CreateMap<ReviewDetailDto, Review>().ReverseMap();
             config.CreateMap<Review, ReviewDetailDto>()
