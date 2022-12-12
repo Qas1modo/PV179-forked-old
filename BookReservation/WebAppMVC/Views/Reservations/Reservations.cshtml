@@ -104,13 +104,13 @@
             <hr />
         }
         <div class="row justify-content-around">
-            <a class="btn col col-md-3 text-decoration-none m-2
-                @(ViewData.Model.PageNumber < 2 ? "disabled bg-dark" : "bg-primary")"
+            <a class="btn col col-md-3 text-decoration-none m-2 text-black
+                @(ViewData.Model.PageNumber < 2 ? "disabled bg-secondary" : "bg-primary")"
                 href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.PageNumber - 1}")">
                 Previous page
             </a>
             <a class="btn col col-md-3 text-decoration-none m-2 
-                @(ViewData.Model.NextPageEmpty ? "disabled bg-dark" : "bg-primary")" 
+                @(ViewData.Model.NextPageEmpty ? "disabled bg-secondary" : "bg-primary")" 
                 href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.PageNumber + 1}")">
                 Next page
             </a>
