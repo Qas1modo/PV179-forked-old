@@ -1,9 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BL.Services.UserServ;
+using Microsoft.AspNetCore.Mvc;
+using WebAppMVC.Models;
+
 
 namespace WebAppMVC.Controllers
 {
 	public class AdminPageController : Controller
 	{
+
+		public IUserService userService;
+
+		public AdminPageController(IUserService userService) 
+		{ 
+			this.userService = userService;
+		}
+
 		public IActionResult Index()
 		{
 			return View();
@@ -11,7 +22,8 @@ namespace WebAppMVC.Controllers
 
 		public IActionResult Users()
 		{
-			return View();
+			var model = new AdminPageUsersModel();
+			return View(model);
 		}
 	}
 }
