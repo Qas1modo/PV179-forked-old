@@ -31,5 +31,12 @@ namespace BL.Services.GenreServ
             uow.GenreRepository.Delete(id);
             uow.CommitAsync();
         }
+
+        public async Task<IEnumerable<GenreDto>> GetAllGenres()
+        {
+            var result = await uow.GenreRepository.GetAll();
+
+			return mapper.Map<IEnumerable<GenreDto>>(result);
+        }
     }
 }

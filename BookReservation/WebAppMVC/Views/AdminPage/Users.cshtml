@@ -1,4 +1,25 @@
 ﻿@model AdminPageUsersModel
 
 <h1>Users</h1>
+<ol class="list-group list-group-numbered">
 
+	@{
+		if (Model.Users == null || Model.Users.Count() == 0)
+		{
+			<li class="list-style-type: none;"><h4>No users</h4></li>
+		}
+		else
+		{
+			foreach (var user in Model.Users)
+			{
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">@user.Name</div>
+						@user.Email
+					</div>
+				</li>
+			}
+		}
+
+	}
+</ol>

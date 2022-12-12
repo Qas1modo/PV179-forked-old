@@ -4,6 +4,8 @@ using BL.DTOs;
 using WebAppMVC.Models;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using BL.Services.GenreServ;
 
 namespace WebAppMVC.Controllers
 {
@@ -11,60 +13,38 @@ namespace WebAppMVC.Controllers
     {
         private readonly IStockService stockService;
 
-        public MainPageController(IStockService stockService)
+		private readonly IGenreService genreService;
+
+        private BookFilterDto bookFilter = new BookFilterDto
+        {
+            OnStock = true,
+        };
+
+
+		public MainPageController(IStockService stockService, IGenreService genreService)
         {
             this.stockService = stockService;
+			this.genreService = genreService;
         }
 
-        public IActionResult Index()
+        [HttpGet("MainPage/{page?}")]
+        public async Task<IActionResult> Index(int page = 1)
         {
-            // Move to BL ?
-            var filter = new BookFilterDto
-            {
-                OnStock = true,
-                Page = 1
-            };
+            
+            // Pragmatically show genres
+			var genres = await genreService.GetAllGenres();
+			var dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
+			ViewBag.genres = dropDownItems;
+
+            bookFilter.Page = page < 1 ? 1 : page;
 
             var model = new MainPageIndexModel
             {
-                Books = stockService.ShowBooks(filter).Items
+                Books = stockService.ShowBooks(bookFilter).Items
             };
 
 			return View(model);
         }
-        [HttpPost]
-		public IActionResult Index(MainPageIndexModel model)
-        {
-
-			var filter = new BookFilterDto
-			{
-				OnStock = true,
-				Page = 1
-			};
-
-			if (model.Page != null)
-            {
-                filter.Page = model.Page;
-            }
-
-            if (model.Genre != null)
-            {
-				filter.GenreFilter = model.Genre;
-			}
-
-			if (model.Author != null)
-			{
-				filter.AuthorFilter = model.Author;
-			}
-
-			var model2 = new MainPageIndexModel
-			{
-				Books = stockService.ShowBooks(filter).Items
-			};
-
-			return View(model2);
-
-		}
 
 	}
 }
