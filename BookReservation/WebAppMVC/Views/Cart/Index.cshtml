@@ -1,0 +1,35 @@
+﻿@model CartIndexModel
+
+@{
+    foreach (var item in Model.cartItems)
+    {
+        <div class="card-body">
+            <h5 class="card-title">
+                @item.Name
+            </h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">
+                @item.Author
+            </h6>
+
+            <p class="card-text">
+                Loan period: @item.LoanPeriod
+            </p>
+            @*<button type="submit" class="btn btn-primary mb-2">Delete</button>*@
+            <button type="submit" formaction="@Url.Action("Delete", "Cart", new { cartId = item.Id })" class="btn btn-primary mb-2">Delete</button>
+        </div>
+    }
+}
+
+@{
+    if (Model.cartItems.Count() == 0)
+    {
+        <p>Your cart is empty!</p>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary mb-2">Make Order</button>
+        @*<button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Make Order</button>*@
+
+    }
+}

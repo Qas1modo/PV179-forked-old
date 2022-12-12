@@ -70,7 +70,7 @@ namespace WebAppMVC.Controllers
             newItem.LoanPeriod = form.days;
             await cartItemService.AddItem(newItem);
 
-            return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
+            return RedirectToAction(nameof(Index), new { bookId = bookId });
         }
 
         [Authorize]
