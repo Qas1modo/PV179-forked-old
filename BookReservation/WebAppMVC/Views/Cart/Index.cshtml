@@ -27,7 +27,9 @@
     }
     else
     {
-        <a href="@Url.Action("MakeOrder", "Cart", new {  })" class="btn btn-primary mb-2">Make Order</a>
+        @*<a href="@Url.Action("", "Cart", new {  })" class="btn btn-primary mb-2">Make Order</a>*@
         <button type="submit" class="btn btn-primary mb-2">Make Order</button>
+        @*<button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Make Order</button>*@
+
     }
 }
