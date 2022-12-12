@@ -35,6 +35,7 @@ namespace WebAppMVC.Controllers
         }
 
         [Authorize]
+        [Route("cart/DeleteItem/{itemId}")]
         public async Task<IActionResult> DeleteItem(int itemId)
         {
             await cartItemService.RemoveItem(itemId);

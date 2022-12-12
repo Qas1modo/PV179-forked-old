@@ -15,8 +15,7 @@
             <p class="card-text">
                 Loan period: @item.LoanPeriod
             </p>
-            @*<button type="submit" class="btn btn-primary mb-2">Delete</button>*@
-            <button type="submit" formaction="@Url.Action("Delete", "Cart", new { cartId = item.Id })" class="btn btn-primary mb-2">Delete</button>
+            <a href="@Url.Action("DeleteItem", "Cart", new { itemId = item.Id })" class="btn btn-primary mb-2">Delete</a>
         </div>
     }
 }
@@ -28,8 +27,7 @@
     }
     else
     {
+        <a href="@Url.Action("MakeOrder", "Cart", new {  })" class="btn btn-primary mb-2">Make Order</a>
         <button type="submit" class="btn btn-primary mb-2">Make Order</button>
-        @*<button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Make Order</button>*@
-
     }
 }
