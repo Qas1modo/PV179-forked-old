@@ -11,6 +11,7 @@
     <Content Remove="Views\NewFolder1\**" />
     <EmbeddedResource Remove="Views\NewFolder1\**" />
     <None Remove="Views\NewFolder1\**" />
+    <None Remove="Views\Cart\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BookDetail\" />
+    <Folder Include="Views\Cart\" />
   </ItemGroup>
 </Project>

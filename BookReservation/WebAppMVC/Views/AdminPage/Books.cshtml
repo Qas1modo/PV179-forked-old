@@ -1,0 +1,56 @@
+﻿@model AdminPageBooksModel
+
+<h1>Books</h1>
+<ol class="list-group list-group-numbered">
+
+	@{
+		if (Model.Books == null || Model.Books.Count() == 0)
+		{
+			<li class="list-style-type: none;"><h4>No Books</h4></li>
+		}
+		else
+		{
+			foreach (var book in Model.Books)
+			{
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+						<div class="fw-bold">@book.Name</div>
+						@book.Author.Name
+					</div>
+					<span class="badge bg-primary rounded-pill">@book.Stock</span>
+				</li>
+			}
+		}
+
+	}
+</ol>
+
+
+<nav>
+	<ul class="pagination justify-content-center">
+		@if (Model.Page > 1)
+		{
+			// Go to Page - 1
+			<li class="page-item disabled">
+				<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+			</li>
+		}
+		@for (int i = Model.Page; i < Math.Min(Model.Page + 3, Model.Total); ++i)
+		{
+			if (Model.Page == i)
+			{
+				<li class="page-item active" aria-current="page"><a class="page-link" href="#">@i</a></li>
+				continue;
+			}
+			<li class="page-item"><a class="page-link" href="#">@i</a></li>
+		}
+	
+		@if (Model.Page < Model.Total)
+		{
+			// Go to Page + 1
+			<li class="page-item">
+				<a class="page-link" href="#">Next</a>
+			</li>
+		}
+	</ul>
+</nav>
