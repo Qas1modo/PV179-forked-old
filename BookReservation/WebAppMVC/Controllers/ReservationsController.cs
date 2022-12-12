@@ -114,18 +114,6 @@ namespace WebAppMVC.Controllers
             return View("Reservations", Reservations(page, RentState.Returned, userId));
         }
 
-        [HttpGet("expired/{page:int?}")]
-        public IActionResult Expired(int userId, int page = 1)
-        {
-            return View("Reservations", Reservations(page, RentState.Expired, userId));
-        }
-
-        [HttpGet("overdue/{page:int?}")]
-        public IActionResult Overdue(int userId, int page = 1)
-        {
-            return View("Reservations", Reservations(page, RentState.Overdue, userId));
-        }
-
         [HttpGet("{page:int?}")]
         public IActionResult Index(int userId, int page = 1)
         {
