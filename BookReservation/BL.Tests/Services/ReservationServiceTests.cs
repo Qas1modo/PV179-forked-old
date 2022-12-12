@@ -56,7 +56,7 @@ namespace BL.Tests.Services
 
             var service = new ReservationService(uow.Object, mapper.Object, (IQuery<Reservation>)query);
 
-            service.ChangeState(rent.Id, DAL.Enums.RentState.Returned);
+            service.ChangeState(rent.Id, RentState.Returned);
 
             // Verify that setups have been called within service
             uow.Verify();

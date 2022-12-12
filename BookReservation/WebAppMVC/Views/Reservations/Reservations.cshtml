@@ -12,40 +12,51 @@
         <div class="row justify-content-around">
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Reserved ? "disabled bg-secondary" : "bg-primary")"
-               href="@($"/reservations/reserved/")">
+               href="/reservations/@(Model.UserId)/reserved/">
                 Reservations
             </a>
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Expired ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/expired/">
+               href="/reservations/@(Model.UserId)/expired/">
                 Expired
             </a>
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Canceled ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/canceled/">
+               href="/reservations/@(Model.UserId)/canceled/">
                 Canceled
             </a>
          </div>
          <div class="row justify-content-around">
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Active ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/active/">
+               href="/reservations/@(Model.UserId)/active/">
                 Active
             </a>
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Returned ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/returned/">
+               href="/reservations/@(Model.UserId)/returned/">
                 Returned
             </a>
             <a class="btn col col-sm-3 text-decoration-none m-1
                 @(ViewData.Model.CurrentState == DAL.Enums.RentState.Overdue ? "disabled bg-secondary" : "bg-primary")"
-               href="/reservations/overdue/">
+               href="/reservations/@(Model.UserId)/overdue/">
                 Overdue
             </a>
         </div>
         <hr />
         @foreach (BL.DTOs.ReservationDetailDto detail in Model.Items)
         {
+            int lateBy = 0;
+            decimal fine = 0;
+            if (detail.State == DAL.Enums.RentState.Overdue && detail.RentedAt != null)
+            {
+                lateBy = DateTime.Now.Subtract(detail.RentedAt.Value.AddDays(detail.LoanPeriod)).Days;
+                if (lateBy < 1) {
+                    lateBy = 0;
+                }
+                fine = lateBy * detail.Price;
+            } 
+          
             <div class="row m-3">
                 <div class="col-sm">
                     <div class="row">
@@ -60,7 +71,15 @@
                 </div>
                 <div class="col-sm">
                     <div class="row text-end">
-                        <span class="h5 m-0">@(detail.TotalPrice) <span style="font-size: 1rem" class=" p-1">[@(detail.Price)/day]</span></span>
+                        <span class="h5 m-0">
+                            @(detail.Price * detail.LoanPeriod)
+                            @if(fine > 0) {
+                                <span class="text-danger">+@(fine)</span>
+                            }
+                            <span style="font-size: 1rem" class="p-1">[@(
+                            detail.Price
+                            )/day]</span>
+                        </span>
                     </div>
                     <div class="row text-end">
                         @if (detail.State == DAL.Enums.RentState.Reserved)
@@ -83,7 +102,7 @@
                         }
                         @if (detail.State == DAL.Enums.RentState.Overdue)
                         {
-                            <span class="text-danger">Late by @(DateTime.Now.Subtract(detail.RentedAt.Value.AddDays(detail.LoanPeriod)).Days) day(s)</span>
+                            <span class="text-danger">Late by @(lateBy) day(s)</span>
                         }
                         @if (detail.State == DAL.Enums.RentState.Returned)
                         {
@@ -93,25 +112,47 @@
                             } else {
                                 <span class="text-info">Returned at @(detail.ReturnedAt.Value.ToShortDateString())</span>
                             }
-                            
                         }
                     </div>
                     <div class="row text-end">
                         <span class="text-muted">Rent for @(detail.LoanPeriod) day(s)</span>
                     </div>
                 </div>
+                <div class="row justify-content-end">
+                    @if (Model.CurrentState == DAL.Enums.RentState.Reserved) 
+                    {
+                        <a class="btn col col-sm-2 text-decoration-none m-2 text-black bg-danger"
+                        href="/reservations/@(Model.UserId)/cancel/@(detail.Id)">
+                            Cancel
+                        </a>
+                        <a class="btn col col-sm-2 text-decoration-none m-2 bg-success
+                            @(Model.Group != "User" ? "" : "d-none")"
+                            href="reservations/@(Model.UserId)/picked/@(detail.Id)">
+                            Picked
+                        </a>
+                    }
+                    @if ((Model.CurrentState == DAL.Enums.RentState.Overdue ||
+                    Model.CurrentState == DAL.Enums.RentState.Active)
+                    && Model.Group != "User") 
+                    {
+                        <a class="btn col col-sm-2 text-decoration-none m-2 bg-success"
+                        href="reservations/@(Model.UserId)/returned/@(detail.Id)">
+                            Returned
+                        </a>
+                    }
+                    </div>
             </div>
             <hr />
         }
         <div class="row justify-content-around">
             <a class="btn col col-md-3 text-decoration-none m-2 text-black
                 @(ViewData.Model.PageNumber < 2 ? "disabled bg-secondary" : "bg-primary")"
-                href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.PageNumber - 1}")">
+                href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.UserId}/{Model.PageNumber - 1}")">
                 Previous page
             </a>
             <a class="btn col col-md-3 text-decoration-none m-2 
-                @(ViewData.Model.NextPageEmpty ? "disabled bg-secondary" : "bg-primary")" 
-                href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.PageNumber + 1}")">
+                @(ViewData.Model.NextPageEmpty ? "disabled bg-secondary" : "bg-primary")"
+               href="@($"/reservations/{Model.CurrentState.ToString()}/{Model.UserId}/{Model.PageNumber + 1}")">
                 Next page
             </a>
         </div>

@@ -5,12 +5,17 @@ using BL.Services.UserServ;
 using DAL.Enums;
 using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Drawing.Printing;
+using System.Security.Claims;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
 {
+    [Route("/reservations/{userId:int}"), Authorize]
     public class ReservationsController : Controller
     {
         private readonly IReservationService _reservationService;
@@ -20,17 +25,18 @@ namespace WebAppMVC.Controllers
             _reservationService = reservationService;
         }
 
-        [Authorize]
-        private PaginationModel<ReservationDetailDto>? Reservations(int page, RentState state) 
+        private PaginationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId) 
         {
-            if (page < 1)
-            {
-                page = 1;
-            }
-            if (!int.TryParse(User.Identity?.Name, out int userId))
+            if (page < 1) page = 1;
+            string group = GetGroup(User);
+            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
                 return null;
+            }
+            if (userId != signedUserId && group == "User")
+            {
+                userId = signedUserId;
             }
             var result = _reservationService.ShowReservations(userId, page, state);
             PaginationModel<ReservationDetailDto> model = new()
@@ -38,52 +44,91 @@ namespace WebAppMVC.Controllers
                 CurrentState = state,
                 Items = result.Items,
                 NextPageEmpty = result.NextPageEmpty,
-                PageNumber = result.PageNumber ?? 1
+                PageNumber = result.PageNumber ?? 1,
+                Group = group,
+                UserId = userId,
             };
             return model;
         }
 
-
-        [Authorize, HttpGet]
-        public IActionResult Reserved(int id = 1)
+        private static string GetGroup(ClaimsPrincipal user)
         {
-            return View("Reservations", Reservations(id, RentState.Reserved));
+            string result;
+            var identity = (ClaimsIdentity?)user.Identity;
+            if (identity == null)
+            {
+                result = "User";
+            }
+            else
+            {
+                result = identity.Claims
+               .Where(c => c.Type == ClaimTypes.Role)
+               .Select(c => c.Value)
+               .FirstOrDefault("User");
+            }
+            return result;
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Canceled(int id = 1)
+        [HttpPut("cancel/{id:int}")]
+        public IActionResult Cancel(int userId, int id)
         {
-            return View("Reservations", Reservations(id, RentState.Canceled));
+            string group = GetGroup(User);
+            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+                return View();
+            }
+            if (userId != signedUserId && group == "User")
+            {
+                userId = signedUserId;
+            }
+            if (!_reservationService.ChangeState(id, RentState.Canceled, userId))
+            {
+                ModelState.AddModelError("Id", "Invalid permissions!");
+            };
+            return View("Reservations");
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Active(int id = 1)
+        [HttpGet("reserved/{page:int?}")]
+        public IActionResult Reserved(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(id, RentState.Active));
+            return View("Reservations", Reservations(page, RentState.Reserved, userId));
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Returned(int id = 1)
+        [HttpGet("canceled/{page:int?}")]
+        public IActionResult Canceled(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(id, RentState.Returned));
+            return View("Reservations", Reservations(page, RentState.Canceled, userId));
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Expired(int id = 1)
+        [HttpGet("active/{page:int?}")]
+        public IActionResult Active(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(id, RentState.Expired));
+            return View("Reservations", Reservations(page, RentState.Active, userId));
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Overdue(int id = 1)
+        [HttpGet("returned/{page:int?}")]
+        public IActionResult Returned(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(id, RentState.Overdue));
+            return View("Reservations", Reservations(page, RentState.Returned, userId));
         }
 
-        [Authorize, HttpGet]
-        public IActionResult Index(int id = 1)
+        [HttpGet("expired/{page:int?}")]
+        public IActionResult Expired(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(id, RentState.Reserved));
+            return View("Reservations", Reservations(page, RentState.Expired, userId));
+        }
+
+        [HttpGet("overdue/{page:int?}")]
+        public IActionResult Overdue(int userId, int page = 1)
+        {
+            return View("Reservations", Reservations(page, RentState.Overdue, userId));
+        }
+
+        [HttpGet("{page:int?}")]
+        public IActionResult Index(int userId, int page = 1)
+        {
+            return View("Reservations", Reservations(page, RentState.Reserved, userId));
         }
     }
 }

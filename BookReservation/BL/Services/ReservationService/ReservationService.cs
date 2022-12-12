@@ -38,15 +38,18 @@ namespace BL.Services.ReservationServ
             uow.CommitAsync();
         }
 
-        public void ChangeState(int reservationId, RentState newState)
+        public bool ChangeState(int reservationId, RentState newState, int userId = -1)
         {
             Reservation rent = uow.ReservationRepository.GetByID(reservationId);
+            if (userId != -1 && userId != rent.UserId)
+            {
+                return false;
+            }
             switch(newState)
             {
                 case RentState.Reserved:
                     rent.ReservedAt = new DateTime();
                     break;
-
                 case RentState.Returned:
                     rent.ReturnedAt = new DateTime();
                     break;
@@ -54,10 +57,10 @@ namespace BL.Services.ReservationServ
                     rent.RentedAt = new DateTime();
                     break;
             }
-
             rent.State = newState;
             uow.ReservationRepository.Update(rent);
             uow.CommitAsync();
+            return true;
         }
 
         public QueryResultDto<ReservationDetailDto> ShowReservations(int userId,

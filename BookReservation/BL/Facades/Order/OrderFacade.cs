@@ -57,8 +57,7 @@ namespace BL.Facades.OrderFac
             {
                 return false;
             }
-            rentService.ChangeState(reservationId, newState);
-            return true;
+            return rentService.ChangeState(reservationId, newState, reservation.UserId);
         }
     }
 }

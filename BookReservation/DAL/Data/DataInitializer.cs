@@ -67,7 +67,7 @@ namespace DAL.Data
                 StNumber = 1,
                 ZipCode = 03603,
                 Name = "Patrik Vrbovsky",
-                Email = "uzanineviem@mail.com",
+                Email = "patrik@mail.com",
                 Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "+421911999540",
@@ -975,6 +975,19 @@ namespace DAL.Data
                 TotalPrice = 16,
                 State = RentState.Canceled,
             };
+
+            Reservation rent38 = new()
+            {
+                Id = 39,
+                UserId = 4,
+                BookId = 11,
+                ReservedAt = new DateTime(2022, 9, 1),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 20,
+                TotalPrice = 200,
+                State = RentState.Reserved,
+            };
             modelBuilder.Entity<Reservation>().HasData(rent);
             modelBuilder.Entity<Reservation>().HasData(rent1);
             modelBuilder.Entity<Reservation>().HasData(rent2);
@@ -1013,6 +1026,7 @@ namespace DAL.Data
             modelBuilder.Entity<Reservation>().HasData(rent35);
             modelBuilder.Entity<Reservation>().HasData(rent36);
             modelBuilder.Entity<Reservation>().HasData(rent37);
+            modelBuilder.Entity<Reservation>().HasData(rent38);
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////

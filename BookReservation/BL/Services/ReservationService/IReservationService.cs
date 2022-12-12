@@ -15,7 +15,7 @@ namespace BL.Services.ReservationServ
     {
         void CreateReservation(ReservationDto rentDto);
 
-        void ChangeState(int reservationId, RentState newState);
+        bool ChangeState(int reservationId, RentState newState, int userId);
 
         QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
             int pageNumber,
