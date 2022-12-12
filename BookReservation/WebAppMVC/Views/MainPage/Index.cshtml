@@ -4,26 +4,29 @@
 
 <!-- The Modal -->
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-      </div>
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Modal Heading</h4>
+			</div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
+			 <!-- Modal body -->
+			<form method="post">
+				<div class="modal-body">
+					<label  class="control-label"> Select City</label>
+					<select name="products" class="form-control" asp-items="@ViewBag.genres"></select>
+				</div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
 
-    </div>
-  </div>
+		</div>
+	</div>
 </div>
 
 <!-- Show books -->

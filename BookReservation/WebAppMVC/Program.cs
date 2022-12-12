@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using BL.Services.AuthServ;
 using BL.QueryObjects;
 using BL.Services.UserServ;
+using BL.Services.GenreServ;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -73,6 +74,7 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 
 
 // Facades and QO DI Setup

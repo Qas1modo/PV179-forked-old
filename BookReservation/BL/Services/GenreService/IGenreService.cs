@@ -8,6 +8,9 @@ namespace BL.Services.GenreServ
         void AddGenre(GenreDto genreDto);
 
         void RemoveGenre(int id);
-    }
+
+		Task<IEnumerable<GenreDto>> GetAllGenres();
+
+	}
 }
 
