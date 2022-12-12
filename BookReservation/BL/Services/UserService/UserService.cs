@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using DAL.Enums;
 using BL.QueryObjects;
+using Castle.Core.Logging;
 
 namespace BL.Services.UserServ
 {
@@ -30,26 +31,11 @@ namespace BL.Services.UserServ
             queryObject = userQuery;
         }
 
-        public async Task<int> UpdateUserDataAsync(PersonalInfoDto input, int userId)
+        public async Task UpdateUserDataAsync(PersonalInfoDto input, int userId)
         {
-            if (input.BirthDate > DateTime.Now.AddYears(-3))
-            {
-                return -3;
-            }
             User user = uow.UserRepository.GetByID(userId);
-            User? userByEmail = queryObject.GetUserByEmail(input.Email);
-            User? userByName = queryObject.GetUserByEmail(input.Name);
-            if (userByEmail != null && userByEmail.Id != user.Id)
-            {
-                return -1;
-            }
-            if (userByName != null && userByName.Id != user.Id)
-            {
-                return -2;
-            }
             uow.UserRepository.Update(mapper.Map(input, user));
             await uow.CommitAsync();
-            return userId;
         }
 
         public PersonalInfoDto ShowUserData(int userId)
@@ -62,10 +48,22 @@ namespace BL.Services.UserServ
             return mapper.Map<User, PersonalInfoDto>(user);
         }
 
+        public int IdUserWithEmail(string email)
+        {
+            User? user = queryObject.GetUserByEmail(email);
+            return user == null ? -1 : user.Id;
+        }
+
+        public int IdUserWithUsername(string username)
+        {
+            User? user = queryObject.GetUserByName(username);
+            return user == null ? -1 : user.Id;
+        }
+
         public IEnumerable<UserDto> ShowUsers()
         {
-            IEnumerable<User> books = uow.UserRepository.GetAll();
-            return mapper.Map<IEnumerable<UserDto>>(books);
+            IEnumerable<User> users = uow.UserRepository.GetAll();
+            return mapper.Map<IEnumerable<UserDto>>(users);
         }
 
         public void UpdateUserPermission(int userId, Group newGroup)

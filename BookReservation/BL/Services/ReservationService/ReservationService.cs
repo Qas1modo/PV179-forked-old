@@ -4,7 +4,9 @@ using BL.DTOs.BasicDtos;
 using DAL;
 using DAL.Enums;
 using DAL.Models;
+using Infrastructure.EFCore.Query;
 using Infrastructure.EFCore.UnitOfWork;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,11 +21,15 @@ namespace BL.Services.ReservationServ
     {
         private readonly IMapper mapper;
         private readonly IUoWReservation uow;
+        private readonly IQuery<Reservation> query;
 
-        public ReservationService(IUoWReservation uow, IMapper mapper)
+        public ReservationService(IUoWReservation uow,
+            IMapper mapper,
+            IQuery<Reservation> query)
         {
             this.mapper = mapper;
             this.uow = uow;
+            this.query = query;
         }
 
         public void CreateReservation(ReservationDto rentDto)
@@ -44,7 +50,6 @@ namespace BL.Services.ReservationServ
                 case RentState.Returned:
                     rent.ReturnedAt = new DateTime();
                     break;
-
                 case RentState.Active:
                     rent.RentedAt = new DateTime();
                     break;
@@ -55,10 +60,16 @@ namespace BL.Services.ReservationServ
             uow.CommitAsync();
         }
 
-        public IEnumerable<ReservationDetailDto> ShowReservations(int userId)
+        public QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
+            int pageNumber,
+            RentState state)
         {
-            User user = uow.UserRepository.GetByID(userId);
-            return mapper.Map<IEnumerable<ReservationDetailDto>>(user.Rents);
+            query.Where<int>(x => x == userId, "UserId");
+            query.Where<RentState>(x => x.Equals(state), "State");
+            query.OrderBy<DateTime>("ReservedAt", false);
+            query.Page(pageNumber, 10);
+            var result = query.Execute();
+            return mapper.Map<QueryResult<Reservation>, QueryResultDto<ReservationDetailDto>>(result);
         }
     }
 }

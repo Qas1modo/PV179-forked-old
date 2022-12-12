@@ -11,11 +11,15 @@ namespace BL.Services.UserServ
 {
     public interface IUserService
     {
-        Task<int> UpdateUserDataAsync(PersonalInfoDto input, int userId);
+        Task UpdateUserDataAsync(PersonalInfoDto input, int userId);
 
         PersonalInfoDto ShowUserData(int userId);
 
         IEnumerable<UserDto> ShowUsers();
+
+        int IdUserWithEmail(string email);
+
+        int IdUserWithUsername(string username);
 
         void UpdateUserPermission(int userId, Group newGroup);
 

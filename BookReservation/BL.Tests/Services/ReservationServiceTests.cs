@@ -2,6 +2,8 @@
 using BL.Services.ReservationServ;
 using DAL.Enums;
 using DAL.Models;
+using Infrastructure.EFCore.Query;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,13 @@ namespace BL.Tests.Services
     {
         private readonly Mock<IMapper> mapper;
         private readonly Mock<IUoWReservation> uow;
+        private readonly Mock<IQuery<Reservation>> query;
 
         public ReservationServiceTests()
         {
             mapper = new Mock<IMapper>();
             uow = new Mock<IUoWReservation>();
+            query = new Mock<IQuery<Reservation>>();
         }
 
         private void SetupUoWForChangeStateTest()
@@ -42,7 +46,7 @@ namespace BL.Tests.Services
             // Preconditions
             rent.ReturnedAt = null;
             rent.RentedAt = null;
-            rent.State = DAL.Enums.RentState.Active;
+            rent.State = RentState.Active;
         }
 
         [Fact(DisplayName = "Return book test")]
@@ -50,7 +54,7 @@ namespace BL.Tests.Services
         {
             SetupUoWForChangeStateTest();
 
-            var service = new ReservationService(uow.Object, mapper.Object);
+            var service = new ReservationService(uow.Object, mapper.Object, (IQuery<Reservation>)query);
 
             service.ChangeState(rent.Id, DAL.Enums.RentState.Returned);
 
@@ -67,7 +71,7 @@ namespace BL.Tests.Services
         {
             SetupUoWForChangeStateTest();
 
-            var service = new ReservationService(uow.Object, mapper.Object);
+            var service = new ReservationService(uow.Object, mapper.Object, (IQuery<Reservation>)query);
 
             Assert.Throws<Exception>(() => service.ChangeState(42, RentState.Returned));
         }
@@ -79,7 +83,7 @@ namespace BL.Tests.Services
             SetupUoWForChangeStateTest();
 
 
-            var service = new ReservationService(uow.Object, mapper.Object);
+            var service = new ReservationService(uow.Object, mapper.Object, (IQuery<Reservation>)query);
 
             service.ChangeState(rent.Id, RentState.Active);
 

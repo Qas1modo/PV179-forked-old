@@ -26,18 +26,6 @@ namespace BL.Services.AuthServ
 
         public async Task<int> RegisterUserAsync(RegistrationDto input)
         {
-            if (input.BirthDate > DateTime.Now.AddYears(-3))
-            {
-                return -3;
-            }
-            if (queryObject.GetUserByEmail(input.Email) != null)
-            {
-                return -1;
-            }
-            if (queryObject.GetUserByName(input.Name) != null) 
-            {
-                return -2;
-            }
             using (var hashedPassword = new Rfc2898DeriveBytes(input.OpenPassword, saltSize, iterations, HashAlgorithmName.SHA256))
             {
                 input.Salt = Convert.ToBase64String(hashedPassword.Salt);

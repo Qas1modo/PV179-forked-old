@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
-using BL.DTOs.QueryObjects;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;

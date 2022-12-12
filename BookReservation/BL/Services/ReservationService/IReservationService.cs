@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.DTOs;
 using DAL.Enums;
+using Infrastructure.Query;
 
 namespace BL.Services.ReservationServ
 {
@@ -16,6 +17,8 @@ namespace BL.Services.ReservationServ
 
         void ChangeState(int reservationId, RentState newState);
 
-        IEnumerable<ReservationDetailDto> ShowReservations(int userId);
+        QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
+            int pageNumber,
+            RentState state);
     }
 }

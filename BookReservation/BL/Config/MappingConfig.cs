@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BL.DTOs.QueryObjects;
 using System;
 using Infrastructure.Query;
 using DAL.Models;
@@ -14,9 +13,7 @@ namespace BL.Config
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
-            config.CreateMap<EFQueryResult<BaseEntity>, QueryResultDto<BaseEntity>>().ReverseMap();
-			config.CreateMap<EFQueryResult<Book>, QueryResultDto<BookBasicInfoDto>>().ReverseMap();
-
+			config.CreateMap<QueryResult<Book>, QueryResultDto<BookBasicInfoDto>>().ReverseMap();
 			config.CreateMap<RegistrationDto, User>().ReverseMap();
             config.CreateMap<BookAvailabilityDto, Book>().ReverseMap();
             config.CreateMap<CartItem, CartItemDetailDto>()
@@ -26,7 +23,6 @@ namespace BL.Config
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
             config.CreateMap<IEnumerable<CartItem>, IEnumerable<CartItemDetailDto>>().ReverseMap();
             config.CreateMap<PersonalInfoDto, User>().ReverseMap();
-            config.CreateMap<ReservationDetailDto, Reservation>();
             config.CreateMap<ReviewDetailDto, Review>().ReverseMap();
             config.CreateMap<Review, ReviewDetailDto>()
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.User.Name));
@@ -36,14 +32,14 @@ namespace BL.Config
                 .ReverseMap();
             config.CreateMap<CartItemDto, CartItem>().ReverseMap();
             config.CreateMap<GenreDto, Genre>().ReverseMap();
-            config.CreateMap<ReservationDto, Reservation>()
-                .ForMember(dest => dest.State, cfg => cfg.MapFrom(src => RentState.Reserved));
+            config.CreateMap<QueryResult<Reservation>, QueryResultDto<ReservationDetailDto>>();
             config.CreateMap<Reservation, ReservationDetailDto>()
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name))
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
-            config.CreateMap<IEnumerable<Reservation>, IEnumerable<ReservationDetailDto>>().ReverseMap();
+            config.CreateMap<ReservationDto, Reservation>()
+                .ForMember(dest => dest.State, cfg => cfg.MapFrom(src => RentState.Reserved));
             config.CreateMap<ReviewDto, Review>().ReverseMap();
             config.CreateMap<UserDto, User>().ReverseMap();
             config.CreateMap<CartItem, ReservationDto>().ReverseMap();

@@ -16,6 +16,6 @@ namespace Infrastructure.Query
 
         IQuery<TEntity> Page(int page, int pageSize);
 
-        EFQueryResult<TEntity> Execute();
+        QueryResult<TEntity> Execute();
     }
 }

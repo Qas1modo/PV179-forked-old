@@ -486,8 +486,8 @@ namespace DAL.Data
             Reservation rent = new()
             {
                 Id = 1,
-                UserId = 5,
-                BookId = 4,
+                UserId = 1,
+                BookId = 11,
                 ReservedAt = new DateTime(2022, 9, 1),
                 RentedAt = null,
                 ReturnedAt = null,
@@ -499,20 +499,20 @@ namespace DAL.Data
             Reservation rent1 = new()
             {
                 Id = 2,
-                UserId = 5,
+                UserId = 1,
                 BookId = 6,
                 ReservedAt = new DateTime(2022, 9, 1),
                 RentedAt = new DateTime(2022, 9, 5),
                 ReturnedAt = null,
-                LoanPeriod = 20,
-                TotalPrice = 20,
+                LoanPeriod = 1,
+                TotalPrice = 30,
                 State = RentState.Active,
             };
 
             Reservation rent2 = new()
             {
                 Id = 3,
-                UserId = 5,
+                UserId = 1,
                 BookId = 7,
                 ReservedAt = new DateTime(2021, 9, 1),
                 RentedAt = null,
@@ -525,7 +525,7 @@ namespace DAL.Data
             Reservation rent3 = new()
             {
                 Id = 4,
-                UserId = 5,
+                UserId = 1,
                 BookId = 2,
                 ReservedAt = new DateTime(2021, 10, 1),
                 RentedAt = new DateTime(2021, 10, 3),
@@ -538,7 +538,7 @@ namespace DAL.Data
             Reservation rent4 = new()
             {
                 Id = 5,
-                UserId = 4,
+                UserId = 1,
                 BookId = 1,
                 ReservedAt = new DateTime(2020, 12, 5),
                 RentedAt = null,
@@ -551,7 +551,7 @@ namespace DAL.Data
             Reservation rent5 = new()
             {
                 Id = 6,
-                UserId = 2,
+                UserId = 1,
                 BookId = 1,
                 ReservedAt = new DateTime(2020, 9, 2),
                 RentedAt = new DateTime(2020, 9, 6),
@@ -564,7 +564,7 @@ namespace DAL.Data
             Reservation rent6 = new()
             {
                 Id = 7,
-                UserId = 4,
+                UserId = 1,
                 BookId = 2,
                 ReservedAt = new DateTime(2021, 9, 2),
                 RentedAt = new DateTime(2021, 9, 5),
@@ -577,7 +577,7 @@ namespace DAL.Data
             Reservation rent7 = new()
             {
                 Id = 8,
-                UserId = 3,
+                UserId = 1,
                 BookId = 3,
                 ReservedAt = new DateTime(2022, 10, 1),
                 RentedAt = null,
@@ -587,6 +587,394 @@ namespace DAL.Data
                 State = RentState.Reserved,
             };
 
+            Reservation rent8 = new()
+            {
+                Id = 9,
+                UserId = 1,
+                BookId = 2,
+                ReservedAt = new DateTime(2021, 10, 1),
+                RentedAt = new DateTime(2021, 10, 3),
+                ReturnedAt = new DateTime(2021, 10, 15),
+                LoanPeriod = 5,
+                TotalPrice = 200,
+                State = RentState.Returned,
+            };
+
+            Reservation rent9 = new()
+            {
+                Id = 10,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent10 = new()
+            {
+                Id = 11,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent11 = new()
+            {
+                Id = 12,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent12 = new()
+            {
+                Id = 13,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent13 = new()
+            {
+                Id = 14,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+            Reservation rent14 = new()
+            {
+                Id = 15,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent15 = new()
+            {
+                Id = 16,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent16 = new()
+            {
+                Id = 17,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent17 = new()
+            {
+                Id = 18,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent18 = new()
+            {
+                Id = 19,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent19 = new()
+            {
+                Id = 20,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent20 = new()
+            {
+                Id = 21,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent21 = new()
+            {
+                Id = 22,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent22 = new()
+            {
+                Id = 23,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent23 = new()
+            {
+                Id = 24,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent24 = new()
+            {
+                Id = 25,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent25 = new()
+            {
+                Id = 26,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent26 = new()
+            {
+                Id = 27,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent27 = new()
+            {
+                Id = 28,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent28 = new()
+            {
+                Id = 29,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent29 = new()
+            {
+                Id = 30,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent30 = new()
+            {
+                Id = 31,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent31 = new()
+            {
+                Id = 32,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent32 = new()
+            {
+                Id = 33,
+                UserId = 1,
+                BookId = 2,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent33 = new()
+            {
+                Id = 34,
+                UserId = 1,
+                BookId = 2,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent34 = new()
+            {
+                Id = 35,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent35 = new()
+            {
+                Id = 36,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent36 = new()
+            {
+                Id = 37,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
+
+            Reservation rent37 = new()
+            {
+                Id = 38,
+                UserId = 1,
+                BookId = 1,
+                ReservedAt = new DateTime(2020, 12, 5),
+                RentedAt = null,
+                ReturnedAt = null,
+                LoanPeriod = 1,
+                TotalPrice = 16,
+                State = RentState.Canceled,
+            };
             modelBuilder.Entity<Reservation>().HasData(rent);
             modelBuilder.Entity<Reservation>().HasData(rent1);
             modelBuilder.Entity<Reservation>().HasData(rent2);
@@ -595,6 +983,36 @@ namespace DAL.Data
             modelBuilder.Entity<Reservation>().HasData(rent5);
             modelBuilder.Entity<Reservation>().HasData(rent6);
             modelBuilder.Entity<Reservation>().HasData(rent7);
+            modelBuilder.Entity<Reservation>().HasData(rent8);
+            modelBuilder.Entity<Reservation>().HasData(rent9);
+            modelBuilder.Entity<Reservation>().HasData(rent10);
+            modelBuilder.Entity<Reservation>().HasData(rent11);
+            modelBuilder.Entity<Reservation>().HasData(rent12);
+            modelBuilder.Entity<Reservation>().HasData(rent13);
+            modelBuilder.Entity<Reservation>().HasData(rent14);
+            modelBuilder.Entity<Reservation>().HasData(rent15);
+            modelBuilder.Entity<Reservation>().HasData(rent16);
+            modelBuilder.Entity<Reservation>().HasData(rent17);
+            modelBuilder.Entity<Reservation>().HasData(rent18);
+            modelBuilder.Entity<Reservation>().HasData(rent19);
+            modelBuilder.Entity<Reservation>().HasData(rent20);
+            modelBuilder.Entity<Reservation>().HasData(rent21);
+            modelBuilder.Entity<Reservation>().HasData(rent22);
+            modelBuilder.Entity<Reservation>().HasData(rent23);
+            modelBuilder.Entity<Reservation>().HasData(rent24);
+            modelBuilder.Entity<Reservation>().HasData(rent25);
+            modelBuilder.Entity<Reservation>().HasData(rent26);
+            modelBuilder.Entity<Reservation>().HasData(rent27);
+            modelBuilder.Entity<Reservation>().HasData(rent28);
+            modelBuilder.Entity<Reservation>().HasData(rent29);
+            modelBuilder.Entity<Reservation>().HasData(rent30);
+            modelBuilder.Entity<Reservation>().HasData(rent31);
+            modelBuilder.Entity<Reservation>().HasData(rent32);
+            modelBuilder.Entity<Reservation>().HasData(rent33);
+            modelBuilder.Entity<Reservation>().HasData(rent34);
+            modelBuilder.Entity<Reservation>().HasData(rent35);
+            modelBuilder.Entity<Reservation>().HasData(rent36);
+            modelBuilder.Entity<Reservation>().HasData(rent37);
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////

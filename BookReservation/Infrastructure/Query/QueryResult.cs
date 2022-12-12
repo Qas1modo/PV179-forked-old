@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Query
 {
-    public class EFQueryResult<TEntity>
+    public class QueryResult<TEntity>
     {
         public int ItemsCount { get; }
 
@@ -20,7 +20,7 @@ namespace Infrastructure.Query
 
         public IEnumerable<TEntity> Items { get; }
 
-        public EFQueryResult(IEnumerable<TEntity> items, int itemsCount, bool nextPageEmpty, int pageSize = 20, int? requestedPageNumber = null)
+        public QueryResult(IEnumerable<TEntity> items, int itemsCount, bool nextPageEmpty, int pageSize, int? requestedPageNumber)
         {
             this.Items = items;
             this.ItemsCount = itemsCount;

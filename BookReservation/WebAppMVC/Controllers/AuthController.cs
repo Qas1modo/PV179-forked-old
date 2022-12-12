@@ -15,11 +15,14 @@ namespace WebAppMVC.Controllers
     public class AuthController : Controller
     {
 
-        private readonly IAuthService _authServ;
+        private readonly IAuthService _authService;
+        private readonly IUserService _userService;
 
-        public AuthController(IAuthService authServ)
+        public AuthController(IAuthService authService, 
+            IUserService userService)
         {
-            _authServ = authServ;
+            _authService = authService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -35,26 +38,23 @@ namespace WebAppMVC.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(RegistrationDto user)
         {
+            if (user.BirthDate > DateTime.Now.AddYears(-3))
+            {
+                ModelState.AddModelError("BirthDate", "Birthday must be more than three years before today!");
+            }
+            if (_userService.IdUserWithEmail(user.Email) != -1)
+            {
+                ModelState.AddModelError("Email", "Email already taken!");       
+            }
+            if (_userService.IdUserWithUsername(user.Name) != -1)
+            {
+                ModelState.AddModelError("Name", "Username already taken!");
+            }
             if (!ModelState.IsValid)
             {
                 return View("Register");
             }
-            int result = await _authServ.RegisterUserAsync(user);
-            if (result == -1)
-            {
-                ModelState.AddModelError("Email", "Email already taken!");
-                return View("Register");
-            }
-            if (result == -2)
-            {
-                ModelState.AddModelError("Name", "Username already taken!");
-                return View("Register");
-            }
-            if (result == -3)
-            {
-                ModelState.AddModelError("BirthDate", "Birthday must be more than three years before today!");
-                return View("Register");
-            }
+            await _authService.RegisterUserAsync(user);
             return RedirectToAction("Login", "Auth");
         }
 
@@ -75,7 +75,7 @@ namespace WebAppMVC.Controllers
             {
                 return View("Login");
             }
-            UserAuthDto? userAuth = _authServ.Login(userLogin);
+            UserAuthDto? userAuth = _authService.Login(userLogin);
             if (userAuth == null)
             {
                 ModelState.AddModelError("Password", "Invalid credentials!");
@@ -119,17 +119,16 @@ namespace WebAppMVC.Controllers
         [Authorize, HttpPost]
         public async Task<IActionResult> ChangePasswordAsync(ChangePasswordDto input)
         {
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+            }
             if (!ModelState.IsValid)
             {
                 return View("ChangePassword");
             }
-            if (!int.TryParse(User.Identity?.Name, out int userId))
-            {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return View("ChangePassword");
-            }
             input.UserId = userId;
-            if (!await _authServ.ChangePasswordAsync(input))
+            if (!await _authService.ChangePasswordAsync(input))
             {
                 ModelState.AddModelError("Password", "Old password is invalid!");
             }
