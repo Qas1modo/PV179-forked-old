@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppMVC.Controllers
 {
-    public class BookDetailController : Controller
+    public class BookDetailController : CommonController
     {
         private readonly IBookService bookService;
 
@@ -33,7 +33,8 @@ namespace WebAppMVC.Controllers
             var model = new BookDetailIndexModel()
             {
                 bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId)
+                reviews = await reviewService.ShowReviews(bookId),
+                group = GetGroup()
             };
 
             return View(model);
