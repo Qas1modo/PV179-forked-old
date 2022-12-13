@@ -34,9 +34,19 @@ namespace WebAppMVC.Controllers
 			return View();
 		}
 
-		public IActionResult Users()
+		[HttpGet("AdminPage/Users/{page?}")]
+		public IActionResult Users(int page = 1)
 		{
+			page = page < 1 ? 1 : page;
+			
 			var model = new AdminPageUsersModel();
+			
+			var users = userService.ShowUsersPaging(page);
+			
+			model.Users = users.Items;
+			model.Page = users.PageNumber ?? 1;
+			model.Total = users.ItemsCount;
+
 			return View(model);
 		}
 
