@@ -1,5 +1,16 @@
 ﻿@model MainPageIndexModel
 
+
+<style>
+
+.card:hover{
+    transform: scale(1.05);
+	box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+	cursor: pointer;
+}
+
+</style>
+
 <h1 class="display-3">Book Reservation System</h1>
 
 <!-- The Modal -->
@@ -60,7 +71,7 @@
 	else
 	{
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-		  Open modal
+		  Filter books
 		</button>
 		<div class="container">
 
@@ -94,6 +105,8 @@
 								<p class="card-text">
 									@Model.Books.ElementAt(i).Description
 								</p>
+
+								<a href="@Url.Action("Index", "BookDetail", new { bookId = Model.Books.ElementAt(i).Id })" class="stretched-link"></a>
 							</div>
 						</div>	
 					</div>

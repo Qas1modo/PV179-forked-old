@@ -59,7 +59,7 @@ namespace WebAppMVC.Controllers
             {
                 Books = serviceResult.Items,
                 Page = serviceResult.PageNumber ?? 1,
-                Total = serviceResult.ItemsCount
+                Total = serviceResult.ItemsCount / serviceResult.PageSize
             };
 
 			return View(model);
