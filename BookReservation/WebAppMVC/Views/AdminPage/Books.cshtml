@@ -18,6 +18,7 @@
 						@book.Author.Name
 					</div>
 					<span class="badge bg-primary rounded-pill">@book.Stock</span>
+					<a href="@Url.Action("ChangeBookInfo", "AdminPage", new { id = book.Id })" class="stretched-link"></a>
 				</li>
 			}
 		}

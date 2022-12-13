@@ -1,4 +1,6 @@
 ﻿using BL.DTOs;
+using BL.Services.BookServ;
+using BL.Services.ReviewServ;
 using BL.Services.StockServ;
 using BL.Services.UserServ;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +14,17 @@ namespace WebAppMVC.Controllers
 
 		private readonly IUserService userService;
 		private readonly IStockService stockService;
+        private readonly IBookService bookService;
 
-		private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
 
-		public AdminPageController(IUserService userService, IStockService stockService) 
+        private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
+
+		public AdminPageController(IUserService userService, IStockService stockService,
+            IBookService bookService) 
 		{ 
 			this.userService = userService;
 			this.stockService = stockService;
+			this.bookService = bookService;
 		}
 
 		public IActionResult Index()
@@ -47,6 +53,29 @@ namespace WebAppMVC.Controllers
 			model.Total = serviceResult.ItemsCount / serviceResult.PageSize;
 			
 			return View(model);
+		}
+
+        public async Task<IActionResult> ChangeBookInfo(int id)
+		{
+			var model = new BookDetailIndexModel()
+			{
+                bookInfo = await bookService.GetBook(id),
+                reviews = null
+            };
+
+            return View(model);
+		}
+
+		public async Task<IActionResult> EditBookInfo(BookDetailIndexModel model)
+		{
+			var book = await bookService.GetBook(model.bookInfo.Id);
+
+			book.Author = model.bookInfo.Author;
+			book.Name = model.bookInfo.Name;
+			book.Stock = model.bookInfo.Stock;
+
+			// udpate book -- change service to accept book BookBasicInfoDto since BookDto is not used at all
+			return RedirectToAction(nameof(ChangeBookInfo), new { id = book.Id });
 		}
 	}
 }
