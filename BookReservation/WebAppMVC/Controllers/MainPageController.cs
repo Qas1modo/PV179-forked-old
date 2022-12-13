@@ -27,28 +27,39 @@ namespace WebAppMVC.Controllers
 			this.genreService = genreService;
         }
 
+        [Route("mainpage/{page?}")]
         public async Task<IActionResult> Index([FromForm] FilterForm form, int page = 1)
         {
+            const string allGenre = "All";
 
             // Pragmatically show genres
 			var genres = await genreService.GetAllGenres();
-			var dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
-			ViewBag.genres = dropDownItems;
+            List<SelectListItem> dropDownItems = genres.Select(x => new SelectListItem { Value=x.Name, Text=x.Name }).ToList();
+            dropDownItems.Insert(0, new SelectListItem { Value = allGenre, Text = allGenre });
+            
+            ViewBag.genres = dropDownItems;
 
 
             // Setup filter with form attribs
             bookFilter.Page = page < 1 ? 1 : page;
-            bookFilter.GenreFilter = form.Genre;
+            bookFilter.GenreFilter = form.Genre == allGenre ? null : form.Genre; 
 
-            // Filter books
-            var serviceResult = stockService.ShowBooks(bookFilter);
+            // Null - on stock, NotNull - everything
+            bookFilter.OnStock = form.Stock == null;
+
+            bookFilter.AuthorFilter = form.Author;
+
+            bookFilter.NameFilter = form.BookName;
+
+			// Filter books
+			var serviceResult = stockService.ShowBooks(bookFilter);
 
             // Prepare model
 			var model = new MainPageIndexModel
             {
                 Books = serviceResult.Items,
                 Page = serviceResult.PageNumber ?? 1,
-                Total = serviceResult.ItemsCount
+                Total = serviceResult.ItemsCount / serviceResult.PageSize
             };
 
 			return View(model);

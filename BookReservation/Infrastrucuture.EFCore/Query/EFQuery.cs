@@ -31,6 +31,10 @@ namespace Infrastructure.EFCore.Query
             {
                 query = ApplyWhere(query, expression.expression, expression.columnName);
             }
+            
+            // Total count of items with already applied where filtering
+            var totalCount = query.Count();
+
             if (OrderByData is not null)
             {
                 query = OrderBy(query, OrderByData.Value.column, OrderByData.Value.ascending, OrderByData.Value.type);
@@ -40,8 +44,7 @@ namespace Infrastructure.EFCore.Query
                 query = query.Skip(((int)PageNumber - 1) * PageSize).Take(PageSize + 1);
             }
             IEnumerable<TEntity> items = query.ToList();
-            return new QueryResult<TEntity>(items.Take(PageSize),
-                items.Count() > PageSize ? PageSize : items.Count(),
+            return new QueryResult<TEntity>(items.Take(PageSize), totalCount,
                 items.Count() != PageSize + 1,
                 PageSize,
                 PageNumber);

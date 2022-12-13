@@ -1,5 +1,16 @@
 ﻿@model MainPageIndexModel
 
+
+<style>
+
+.card:hover{
+    transform: scale(1.05);
+	box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+	cursor: pointer;
+}
+
+</style>
+
 <h1 class="display-3">Book Reservation System</h1>
 
 <!-- The Modal -->
@@ -15,8 +26,25 @@
 			 <!-- Modal body -->
 			<form method="post">
 				<div class="modal-body">
-					<label  class="control-label"> Select City</label>
+					
+					<!--GENRE FILTER-->
+					<label  class="control-label">Select Genre</label>
 					<select name="Genre" class="form-control" asp-items="@ViewBag.genres"></select>
+					
+					<!--AUTHOR FILTER-->
+					<label  class="control-label">Filter with author name</label>
+					<input type="text" name="Author" class="form-control" />
+
+					<label  class="control-label">Filter with book name</label>
+					<input type="text" name="BookName" class="form-control" />
+
+
+					<!--ON STOCK OPTION FILTER-->
+					<input class="form-check-input" name="Stock" type="checkbox" value="0" id="filterCheckbox">
+					<label class="form-check-label" for="filterCheckbox">
+						Include books that are currently not in stock
+					</label>
+
 				</div>
 
 				<!-- Modal footer -->
@@ -43,7 +71,7 @@
 	else
 	{
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-		  Open modal
+		  Filter books
 		</button>
 		<div class="container">
 
@@ -71,15 +99,14 @@
 								</h6>
 								
 								<h6 class="card-subtitle mb-2 text-muted">
-									@(Model.Books.ElementAt(i).Price + "€")
+									@(Model.Books.ElementAt(i).Genre.Name)
 								</h6>
 								
 								<p class="card-text">
 									@Model.Books.ElementAt(i).Description
 								</p>
-								<a href="#" class="card-link">Add to cart</a>
-								<a href="#" class="card-link">Details</a>
-							
+
+								<a href="@Url.Action("Index", "BookDetail", new { bookId = Model.Books.ElementAt(i).Id })" class="stretched-link"></a>
 							</div>
 						</div>	
 					</div>
@@ -94,25 +121,25 @@
 			@if (Model.Page > 1)
 			{
 				// Go to Page - 1
-				<li class="page-item disabled">
-					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+				<li class="page-item">
+					<a class="page-link" href="mainpage/@(Model.Page - 1)">Previous</a>
 				</li>
 			}
 			@for (int i = Model.Page; i < Math.Min(Model.Page + 3, Model.Total); ++i)
 			{
 				if (Model.Page == i)
 				{
-					<li class="page-item active" aria-current="page"><a class="page-link" href="#">@i</a></li>
+					<li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
 					continue;
 				}
-				<li class="page-item"><a class="page-link" href="#">@i</a></li>
+				<li class="page-item"><a class="page-link" href="mainpage/@i">@i</a></li>
 			}
 	
 			@if (Model.Page < Model.Total)
 			{
 				// Go to Page + 1
 				<li class="page-item">
-					<a class="page-link" href="#">Next</a>
+					<a class="page-link" href="mainpage/@(Model.Page + 1)">Next</a>
 				</li>
 			}
 			</ul>

@@ -1,0 +1,47 @@
+﻿@model BookDetailIndexModel
+
+<div class="row">
+    <div class="col s12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="row valign-wrapper my-4 display-6">
+                <span class="text-xxl-center">Change book data</span>
+            </div>
+            <hr />
+            <div class="row valign-wrapper m-2 text-xxl-center">
+                <div class="col s12 l4">Name:</div>
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.bookInfo.Name, new { placeholder = Model.bookInfo.Name, required = true })
+                </div>
+            </div>
+            <hr />
+            <div class="row valign-wrapper m-2 text-xxl-center">
+                <div class="col s12 l4">Author:</div>
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.bookInfo.Author.Name, new { placeholder = Model.bookInfo.Author.Name, required = true })
+                </div>
+            </div>
+            <hr />
+            <div class="row valign-wrapper m-2 text-xxl-center">
+                <div class="col s12 l4">Description:</div>
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.bookInfo.Description, new { placeholder = "Description", required = true })
+                </div>
+            </div>
+            <hr />
+            <div class="row valign-wrapper m-2 text-xxl-center">
+                <div class="col s12 l4">Stock:</div>
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.bookInfo.Stock, new { required = true, type = "number" })
+                </div>
+            </div>
+            <div class="row justify-content-around">
+                <a class="btn col col-md-3 text-decoration-none m-2 bg-danger" href="/AdminPage/Books">
+                    Cancel change
+                </a>
+                <input type="submit" value="Confirm change" class="btn col col-md-3 m-2 bg-success" />
+            </div>
+        }
+    </div>
+</div>
