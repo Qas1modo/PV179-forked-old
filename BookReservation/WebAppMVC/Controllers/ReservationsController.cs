@@ -101,7 +101,6 @@ namespace WebAppMVC.Controllers
         [HttpGet("reserved/{page:int?}")]
         public async Task<IActionResult> Reserved(int userId, int page = 1)
         {
-            await _orderFacade.ExpireOldReservations(); // to be removed - button admin page, trigger at midnight.
             return View("Reservations", Reservations(page, RentState.Reserved, userId));
         }
 

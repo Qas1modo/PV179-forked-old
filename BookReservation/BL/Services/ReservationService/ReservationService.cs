@@ -26,7 +26,7 @@ namespace BL.Services.ReservationServ
         public void CreateReservation(ReservationDto rentDto, bool commit = false)
         {
             rentDto.State = RentState.Reserved;
-            rentDto.ReservedAt = new DateTime();
+            rentDto.ReservedAt = DateTime.Now;
             uow.ReservationRepository.Insert(mapper.Map<Reservation>(rentDto));
             if (commit) uow.CommitAsync(); 
         }
