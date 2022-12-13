@@ -27,6 +27,7 @@ namespace WebAppMVC.Controllers
 			this.genreService = genreService;
         }
 
+        [Route("mainpage/{page?}")]
         public async Task<IActionResult> Index([FromForm] FilterForm form, int page = 1)
         {
             const string allGenre = "All";
