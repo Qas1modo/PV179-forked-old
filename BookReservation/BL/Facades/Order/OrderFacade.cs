@@ -11,6 +11,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Diagnostics;
+using System.Transactions;
 
 namespace BL.Facades.OrderFac
 {
@@ -40,30 +41,43 @@ namespace BL.Facades.OrderFac
             User user = await uow.UserRepository.GetByID(userId);
             foreach (var cartItem in user.CartItems)
             {
-                var isReserved = await stockService.ReserveBookStock(cartItem.BookId);
+                bool isReserved = await stockService.ReserveBookStock(cartItem.BookId);
                 if (!isReserved)
                 {
                     return false;
                 }
-                ReservationDto newReservation = mapper.Map<ReservationDto>(cartItem);
-                newReservation.State = RentState.Reserved;
-                newReservation.ReservedAt = new DateTime();
-
-                await rentService.CreateReservation(newReservation);
+                rentService.CreateReservation(mapper.Map<ReservationDto>(cartItem));
             }
             await cartService.EmptyCart(userId);
+            await uow.CommitAsync();
             return true;
         }
 
-        public async Task<bool> ReturnBook(int reservationId, RentState newState = RentState.Returned)
+        public async Task<bool> ReserveBook(int reservationId, int userId)
         {
-            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
-            var isReturned = await stockService.BookReturnedStock(reservation.BookId);
-            if (!isReturned)
+            int bookId = await rentService.ChangeState(reservationId, RentState.Reserved, userId);
+            if (bookId == -1 || !await stockService.ReserveBookStock(bookId))
             {
                 return false;
             }
-            return await rentService.ChangeState(reservationId, newState, reservation.UserId);
+            await uow.CommitAsync();
+            return true;
+        }
+
+        public async Task<bool> ReturnBook(int reservationId, int userId, RentState newState = RentState.Returned)
+        {
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            if (userId == -1)
+            {
+                userId = reservation.UserId;
+            }
+            int bookId = await rentService.ChangeState(reservationId, newState, userId);
+            if (bookId == -1 || ! await stockService.BookReturnedStock(bookId))
+            {
+                return false;
+            }
+            await uow.CommitAsync();
+            return true;
         }
     }
 }

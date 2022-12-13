@@ -2,7 +2,7 @@
 
 namespace WebAppMVC.Models
 {
-    public class PaginationModel<TEntity>
+    public class ReservationModel<TEntity>
     {
         public int PageNumber { get; set; }
         public bool NextPageEmpty { get; set; }

@@ -20,6 +20,8 @@ namespace DAL.Models
         [Required]
         public DateTime ReservedAt { get; set; }
 
+        public DateTime? CanceledAt { get; set; }
+
         public DateTime? RentedAt { get; set; }
 
         public DateTime? ReturnedAt { get; set; }

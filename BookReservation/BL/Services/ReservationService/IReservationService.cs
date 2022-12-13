@@ -13,9 +13,10 @@ namespace BL.Services.ReservationServ
 {
     public interface IReservationService
     {
-        Task CreateReservation(ReservationDto rentDto);
+        void CreateReservation(ReservationDto rentDto, bool commit = false);
 
-        Task<bool> ChangeState(int reservationId, RentState newState, int userId);
+        Task<int> ChangeState(int reservationId, RentState newState,
+            int userId, bool commit = false);
 
         QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
             int pageNumber,

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.Facades.OrderFac;
 using BL.Services.ReservationServ;
 using BL.Services.UserServ;
 using DAL.Enums;
@@ -19,13 +20,16 @@ namespace WebAppMVC.Controllers
     public class ReservationsController : Controller
     {
         private readonly IReservationService _reservationService;
+        private readonly IOrderFacade _orderFacade;
 
-        public ReservationsController(IReservationService reservationService)
+        public ReservationsController(IReservationService reservationService,
+            IOrderFacade orderFacade)
         {
             _reservationService = reservationService;
+            _orderFacade = orderFacade;
         }
 
-        private PaginationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
+        private ReservationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
         {
             if (page < 1) page = 1;
             string group = GetGroup(User);
@@ -39,7 +43,7 @@ namespace WebAppMVC.Controllers
                 userId = signedUserId;
             }
             var result = _reservationService.ShowReservations(userId, page, state);
-            PaginationModel<ReservationDetailDto> model = new()
+            ReservationModel<ReservationDetailDto> model = new()
             {
                 CurrentState = state,
                 Items = result.Items,
@@ -69,25 +73,41 @@ namespace WebAppMVC.Controllers
             return result;
         }
 
-        [HttpPut("cancel/{id:int}")]
-        public async Task<IActionResult> Cancel(int userId, int id)
+        [Route("cancel/{id:int}/{page:int?}")]
+        [Authorize]
+        public async Task<IActionResult> Cancel(int userId, int id, int page = 1)
         {
             string group = GetGroup(User);
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
+            if (!int.TryParse(User.Identity?.Name, out int signedUserId) ||
+                (userId != signedUserId && group == "User"))
             {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return View();
+                ModelState.AddModelError("UserId", "Invalid permissions!");
+                return View("Reservations", Reservations(page, RentState.Reserved, userId));
             }
-            if (userId != signedUserId && group == "User")
-            {
-                userId = signedUserId;
-            }
-            var isChanged = await _reservationService.ChangeState(id, RentState.Canceled, userId);
+            var isChanged = await _orderFacade.ReturnBook(id, userId, RentState.Canceled);
             if (!isChanged)
             {
-                ModelState.AddModelError("Id", "Invalid permissions!");
+                ModelState.AddModelError("Id", "Invalid operation!");
             };
-            return View("Reservations");
+            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+        }
+
+        [Route("renew/{id:int}/{page:int?}")]
+        [Authorize]
+        public async Task<IActionResult> Renew(int userId, int id, int page = 1)
+        {
+            string group = GetGroup(User);
+            if (!int.TryParse(User.Identity?.Name, out int signedUserId) ||
+                (userId != signedUserId && group == "User"))
+            {
+                ModelState.AddModelError("UserId", "Invalid permissions!");
+                return View("Reservations", Reservations(page, RentState.Expired, userId));
+            }
+            if (!await _orderFacade.ReserveBook(id, userId))
+            {
+                ModelState.AddModelError("Id", "Invalid operation!");
+            }
+            return View("Reservations", Reservations(page, RentState.Expired, userId));
         }
 
         [HttpGet("reserved/{page:int?}")]
@@ -112,6 +132,12 @@ namespace WebAppMVC.Controllers
         public IActionResult Returned(int userId, int page = 1)
         {
             return View("Reservations", Reservations(page, RentState.Returned, userId));
+        }
+
+        [HttpGet("expired/{page:int?}")]
+        public IActionResult Expired(int userId, int page = 1)
+        {
+            return View("Reservations", Reservations(page, RentState.Expired, userId));
         }
 
         [HttpGet("{page:int?}")]

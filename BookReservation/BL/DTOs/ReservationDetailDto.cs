@@ -24,6 +24,8 @@ namespace BL.DTOs
 
         public DateTime? ReturnedAt { get; set; }
 
+        public DateTime? CanceledAt { get; set; }
+
         public int LoanPeriod { get; set; }
 
         public decimal Price { get; set; }

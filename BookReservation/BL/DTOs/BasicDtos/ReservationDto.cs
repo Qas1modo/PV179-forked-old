@@ -19,6 +19,8 @@ namespace BL.DTOs.BasicDtos
 
         public DateTime? ReturnedAt { get; set; }
 
+        public DateTime? CanceledAt { get; set; }
+
         public int LoanPeriod { get; set; }
 
         public RentState State { get; set; }
