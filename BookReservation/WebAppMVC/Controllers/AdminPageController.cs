@@ -16,14 +16,14 @@ namespace WebAppMVC.Controllers
 
 		private readonly IUserService userService;
 		private readonly IStockService stockService;
-        private readonly IBookService bookService;
+		private readonly IBookService bookService;
 
 
-        private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
+		private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
 
 		public AdminPageController(IUserService userService, IStockService stockService,
-            IBookService bookService) 
-		{ 
+			IBookService bookService)
+		{
 			this.userService = userService;
 			this.stockService = stockService;
 			this.bookService = bookService;
@@ -38,11 +38,11 @@ namespace WebAppMVC.Controllers
 		public IActionResult Users(int page = 1)
 		{
 			page = page < 1 ? 1 : page;
-			
+
 			var model = new AdminPageUsersModel();
-			
+
 			var users = userService.ShowUsersPaging(page);
-			
+
 			model.Users = users.Items;
 			model.Page = users.PageNumber ?? 1;
 			model.Total = users.ItemsCount;
@@ -63,31 +63,33 @@ namespace WebAppMVC.Controllers
 			model.Books = serviceResult.Items;
 			model.Page = serviceResult.PageNumber ?? 1;
 			model.Total = serviceResult.ItemsCount / serviceResult.PageSize;
-			
+
 			return View(model);
 		}
 
-        public async Task<IActionResult> ChangeBookInfo(int id)
+		public async Task<IActionResult> ChangeBookInfo(int id, BookDetailIndexModel model)
 		{
-			var model = new BookDetailIndexModel()
+			var book = await bookService.GetBook(id);
+
+			if (book == null)
 			{
-                bookInfo = await bookService.GetBook(id),
-                reviews = null
-            };
+				return RedirectToAction(nameof(Books));
+			}
 
-            return View(model);
-		}
-
-		public async Task<IActionResult> EditBookInfo(BookDetailIndexModel model)
-		{
-			var book = await bookService.GetBook(model.bookInfo.Id);
+			if (model.bookInfo == null)
+			{
+				return View(new BookDetailIndexModel { bookInfo = book });
+			}
 
 			book.Author = model.bookInfo.Author;
 			book.Name = model.bookInfo.Name;
 			book.Stock = model.bookInfo.Stock;
+			book.Description = model.bookInfo.Description;
 
-			// udpate book -- change service to accept book BookBasicInfoDto since BookDto is not used at all
+			await bookService.UpdateBook(book.Id, book);
+
 			return RedirectToAction(nameof(ChangeBookInfo), new { id = book.Id });
 		}
+
 	}
 }
