@@ -34,7 +34,8 @@ namespace WebAppMVC.Controllers
             {
                 bookInfo = await bookService.GetBook(bookId),
                 reviews = await reviewService.ShowReviews(bookId),
-                group = GetGroup()
+                group = GetGroup(),
+                hasMore = true
             };
 
             return View(model);
@@ -43,10 +44,13 @@ namespace WebAppMVC.Controllers
         [Route("book/{bookId}/{showedReviews}")]
         public async Task<IActionResult> MoreReviews(int bookId, int showedReviews)
         {
+            var newReviews = await reviewService.ShowReviews(bookId, showedReviews + 10);
+
             var model = new BookDetailIndexModel()
             {
                 bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId, showedReviews + 10)
+                reviews = newReviews,
+                hasMore = newReviews.Count() != showedReviews
             };
 
             return View("../BookDetail/Index", model);

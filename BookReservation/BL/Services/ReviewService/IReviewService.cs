@@ -10,6 +10,6 @@ namespace BL.Services.ReviewServ
 
         Task DeleteReview(int reviewId);
 
-        Task<IEnumerable<ReviewDetailDto>> ShowReviews(int bookId, int number = 20);
+        Task<IEnumerable<ReviewDetailDto>> ShowReviews(int bookId, int number = 5);
     }
 }

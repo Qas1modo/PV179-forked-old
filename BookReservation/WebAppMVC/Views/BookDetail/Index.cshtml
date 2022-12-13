@@ -76,7 +76,7 @@
             </div>
         }
 
-        <a class="btn btn-primary" href="@Url.Action("MoreReviews", "BookDetail",
+        <a class="btn btn-primary @(Model.hasMore == true ? "" : "d-none")" href="@Url.Action("MoreReviews", "BookDetail",
                                 new { bookId = Model.bookInfo.Id,
                                     showedReviews = Model.reviews.Count() })">Show more reviews</a>
     }

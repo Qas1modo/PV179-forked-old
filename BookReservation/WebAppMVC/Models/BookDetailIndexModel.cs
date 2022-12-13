@@ -10,6 +10,8 @@ namespace WebAppMVC.Models
         public IEnumerable<ReviewDetailDto> reviews { get; set; }
 
         public string group { get; set; }
+
+        public bool hasMore { get; set; }
     }
 }
 
