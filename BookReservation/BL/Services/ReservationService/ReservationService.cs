@@ -1,19 +1,10 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
-using DAL;
 using DAL.Enums;
 using DAL.Models;
-using Infrastructure.EFCore.Query;
-using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Services.ReservationServ
 {
@@ -61,6 +52,7 @@ namespace BL.Services.ReservationServ
                 case RentState.Reserved:
                     if (rent.State != RentState.Expired) return -1;
                     rent.ReservedAt = DateTime.Now;
+                    rent.CanceledAt = null;
                     break;
                 case RentState.Returned:
                     if (rent.State != RentState.Active) return -1;

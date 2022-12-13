@@ -11,6 +11,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Transactions;
 
 namespace BL.Facades.OrderFac
@@ -64,20 +65,33 @@ namespace BL.Facades.OrderFac
             return true;
         }
 
-        public async Task<bool> ReturnBook(int reservationId, int userId, RentState newState = RentState.Returned)
+        public async Task<bool> ReturnBook(int reservationId, int userId,
+            RentState newState = RentState.Returned, bool commit = true)
         {
-            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
-            if (userId == -1)
-            {
-                userId = reservation.UserId;
-            }
             int bookId = await rentService.ChangeState(reservationId, newState, userId);
             if (bookId == -1 || ! await stockService.BookReturnedStock(bookId))
             {
                 return false;
             }
-            await uow.CommitAsync();
+            if (commit) await uow.CommitAsync();
             return true;
+        }
+
+        public async Task ExpireOldReservations()
+        {
+            IEnumerable<Reservation> reservations = uow.ReservationRepository
+                .GetQueryable()
+                .Where(x => x.State == RentState.Reserved)
+                .ToList();
+            foreach (Reservation reservation in reservations)
+            {
+                if (reservation.State == RentState.Reserved &&
+                    DateTime.Now.Subtract(reservation.ReservedAt).Days > 7)
+                {
+                    await ReturnBook(reservation.Id, reservation.UserId, RentState.Expired, false);
+                }
+            }
+            await uow.CommitAsync();
         }
     }
 }

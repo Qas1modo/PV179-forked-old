@@ -41,10 +41,6 @@ namespace BL.Services.UserServ
         public async Task<PersonalInfoDto> ShowUserData(int userId)
         {
             User user = await uow.UserRepository.GetByID(userId);
-            if (user == null)
-            {
-                throw new Exception("Invaid id");
-            }
             return mapper.Map<User, PersonalInfoDto>(user);
         }
 
