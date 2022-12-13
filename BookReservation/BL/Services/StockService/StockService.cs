@@ -41,7 +41,7 @@ namespace BL.Services.StockServ
             }
             if (filter?.AuthorFilter != null)
             {
-                query.Where<Author>(a => a.Name == filter.AuthorFilter, "Author");
+                query.Where<Author>(a => a.Name.Contains(filter.AuthorFilter), "Author");
             }
             if (filter?.GenreFilter != null)
             {

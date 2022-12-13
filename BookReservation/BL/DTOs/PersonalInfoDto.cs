@@ -9,6 +9,8 @@ namespace BL.DTOs
 {
     public class PersonalInfoDto
     {
+        public int? Id { get; set; }
+
         [Required, StringLength(64, ErrorMessage = "Username name too long!")]
         [MinLength(3, ErrorMessage = "Username must be at least 3 characters long!")]
         public string Name { get; set; }

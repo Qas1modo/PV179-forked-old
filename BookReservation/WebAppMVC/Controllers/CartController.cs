@@ -9,6 +9,7 @@ using BL.Services.CartItemServ;
 
 namespace WebAppMVC.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartItemService cartItemService;
@@ -18,32 +19,31 @@ namespace WebAppMVC.Controllers
             this.cartItemService = cartItemService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
-
             var model = new CartIndexModel()
             {
                 cartItems = await cartItemService.GetCartItems(userId),
             };
-
             return View(model);
         }
 
-        [Authorize]
         [Route("cart/DeleteItem/{itemId}")]
         public async Task<IActionResult> DeleteItem(int itemId)
         {
-            await cartItemService.RemoveItem(itemId);
-
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+                return RedirectToAction(nameof(Index));
+            }
+            await cartItemService.RemoveItem(itemId, userId);
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize]
         public async Task<IActionResult> MakeOrder()
         {
             // todo for now, do nothing

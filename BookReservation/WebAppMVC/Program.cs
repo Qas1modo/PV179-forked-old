@@ -84,14 +84,17 @@ builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(o => o.LoginPath = new PathString("/Auth/Login"));
-
+        .AddCookie(o =>
+        {
+            o.LoginPath = new PathString("/Auth/Login");
+            o.AccessDeniedPath = new PathString("/MainPage/AceessDenied");
+        });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/MainPage/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

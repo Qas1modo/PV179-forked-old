@@ -26,9 +26,14 @@ namespace BL.Services.CartItemServ
             await uow.CommitAsync();
         }
 
-        public async Task RemoveItem(int id)
+        public async Task RemoveItem(int id, int userId)
         {
-            uow.CartItemRepository.Delete(id);
+            CartItem item = await uow.CartItemRepository.GetByID(id);
+            if (item.UserId != userId)
+            {
+                return;
+            }
+            uow.CartItemRepository.Delete(item);
             await uow.CommitAsync();
         }
 

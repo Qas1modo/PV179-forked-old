@@ -17,7 +17,7 @@ using WebAppMVC.Models;
 namespace WebAppMVC.Controllers
 {
     [Route("/reservations/{userId:int}"), Authorize]
-    public class ReservationsController : Controller
+    public class ReservationsController : CommonController
     {
         private readonly IReservationService _reservationService;
         private readonly IOrderFacade _orderFacade;
@@ -27,24 +27,6 @@ namespace WebAppMVC.Controllers
         {
             _reservationService = reservationService;
             _orderFacade = orderFacade;
-        }
-
-        private string GetGroup()
-        {
-            string result;
-            var identity = (ClaimsIdentity?)User.Identity;
-            if (identity == null)
-            {
-                result = "User";
-            }
-            else
-            {
-                result = identity.Claims
-               .Where(c => c.Type == ClaimTypes.Role)
-               .Select(c => c.Value)
-               .FirstOrDefault("User");
-            }
-            return result;
         }
 
         private ReservationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
@@ -71,25 +53,6 @@ namespace WebAppMVC.Controllers
                 UserId = userId,
             };
             return model;
-        }
-        private bool CheckPermissions(int userId)
-        {
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
-            {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return false;
-            }
-            if (userId == signedUserId)
-            {
-                return true;
-            }
-            string group = GetGroup();
-            if (group == "Admin" || group == "Employee")
-            {
-                return true;
-            }
-            ModelState.AddModelError("UserId", "Invalid permissions!");
-            return false;
         }
 
         [Route("cancel/{id:int}/{page:int?}")]

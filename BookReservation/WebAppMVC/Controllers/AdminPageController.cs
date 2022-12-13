@@ -3,12 +3,14 @@ using BL.Services.BookServ;
 using BL.Services.ReviewServ;
 using BL.Services.StockServ;
 using BL.Services.UserServ;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAppMVC.Models;
 
 
 namespace WebAppMVC.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class AdminPageController : Controller
 	{
 

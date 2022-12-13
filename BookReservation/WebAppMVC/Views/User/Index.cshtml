@@ -74,12 +74,14 @@
         </div>
         <hr />
         <div class="row justify-content-around">
-            <a class="btn col col-md-3 text-decoration-none m-2 bg-primary" href="/User/ChangeInfo">
+            <a class="btn col col-md-3 text-decoration-none m-2 bg-primary" href="/User/@(Model.Id)/changeinfo">
                 Change personal info
             </a>
-            <a class="btn col col-md-3 text-decoration-none m-2 bg-primary" href="/Auth/ChangePassword">
-                Change password
-            </a>
+            @if (ViewBag.showChange){
+                <a class="btn col col-md-3 text-decoration-none m-2 bg-primary" href="/Auth/ChangePassword">
+                    Change password
+                </a>
+            }
         </div>
     </div>
 </div>

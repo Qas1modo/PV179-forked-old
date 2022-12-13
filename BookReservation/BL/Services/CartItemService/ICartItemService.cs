@@ -8,7 +8,7 @@ namespace BL.Services.CartItemServ
     {
         Task AddItem(CartItemDto itemDto);
 
-        Task RemoveItem(int id);
+        Task RemoveItem(int id, int userId);
 
         Task EmptyCart(int userId);
 
