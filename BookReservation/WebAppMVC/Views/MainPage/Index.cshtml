@@ -15,8 +15,25 @@
 			 <!-- Modal body -->
 			<form method="post">
 				<div class="modal-body">
-					<label  class="control-label"> Select City</label>
+					
+					<!--GENRE FILTER-->
+					<label  class="control-label">Select Genre</label>
 					<select name="Genre" class="form-control" asp-items="@ViewBag.genres"></select>
+					
+					<!--AUTHOR FILTER-->
+					<label  class="control-label">Filter with author name</label>
+					<input type="text" name="Author" class="form-control" />
+
+					<label  class="control-label">Filter with book name</label>
+					<input type="text" name="BookName" class="form-control" />
+
+
+					<!--ON STOCK OPTION FILTER-->
+					<input class="form-check-input" name="Stock" type="checkbox" value="0" id="filterCheckbox">
+					<label class="form-check-label" for="filterCheckbox">
+						Include books that are currently not in stock
+					</label>
+
 				</div>
 
 				<!-- Modal footer -->
@@ -71,7 +88,7 @@
 								</h6>
 								
 								<h6 class="card-subtitle mb-2 text-muted">
-									@(Model.Books.ElementAt(i).Price + "€")
+									@(Model.Books.ElementAt(i).Genre.Name)
 								</h6>
 								
 								<p class="card-text">
