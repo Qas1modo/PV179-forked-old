@@ -12,20 +12,16 @@ namespace WebAppMVC.Controllers
 {
     public class BookDetailController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly IBookService bookService;
 
         private readonly IReviewService reviewService;
 
         private readonly ICartItemService cartItemService;
 
-        public BookDetailController(ILogger<HomeController> logger,
-            IBookService bookService,
+        public BookDetailController(IBookService bookService,
             IReviewService reviewService,
             ICartItemService cartItemService)
         {
-            _logger = logger;
             this.bookService = bookService;
             this.reviewService = reviewService;
             this.cartItemService = cartItemService;

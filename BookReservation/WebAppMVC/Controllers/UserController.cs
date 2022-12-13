@@ -17,14 +17,13 @@ namespace WebAppMVC.Controllers
         }
 
         [Authorize, HttpGet]
-        public IActionResult ChangeInfo()
+        public async Task<IActionResult> ChangeInfo()
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return View();
+                return View("Index", "MainPage");
             }
-            return View(_userService.ShowUserData(userId));
+            return View(await _userService.ShowUserData(userId));
         }
 
         [Authorize, HttpPost]
@@ -59,14 +58,14 @@ namespace WebAppMVC.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
-                return View("Index", "Home");
+                return View("Index", "MainPage");
             }
-            return View(_userService.ShowUserData(userId));
+            return View(await _userService.ShowUserData(userId));
         }
     }
 }

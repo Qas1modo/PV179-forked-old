@@ -29,10 +29,28 @@ namespace WebAppMVC.Controllers
             _orderFacade = orderFacade;
         }
 
+        private string GetGroup()
+        {
+            string result;
+            var identity = (ClaimsIdentity?)User.Identity;
+            if (identity == null)
+            {
+                result = "User";
+            }
+            else
+            {
+                result = identity.Claims
+               .Where(c => c.Type == ClaimTypes.Role)
+               .Select(c => c.Value)
+               .FirstOrDefault("User");
+            }
+            return result;
+        }
+
         private ReservationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
         {
             if (page < 1) page = 1;
-            string group = GetGroup(User);
+            string group = GetGroup();
             if (!int.TryParse(User.Identity?.Name, out int signedUserId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
@@ -54,38 +72,35 @@ namespace WebAppMVC.Controllers
             };
             return model;
         }
-
-        private static string GetGroup(ClaimsPrincipal user)
+        private bool CheckPermissions(int userId)
         {
-            string result;
-            var identity = (ClaimsIdentity?)user.Identity;
-            if (identity == null)
+            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
             {
-                result = "User";
+                ModelState.AddModelError("UserId", "Identity error!");
+                return false;
             }
-            else
+            if (userId == signedUserId)
             {
-                result = identity.Claims
-               .Where(c => c.Type == ClaimTypes.Role)
-               .Select(c => c.Value)
-               .FirstOrDefault("User");
+                return true;
             }
-            return result;
+            string group = GetGroup();
+            if (group == "Admin" || group == "Employee")
+            {
+                return true;
+            }
+            ModelState.AddModelError("UserId", "Invalid permissions!");
+            return false;
         }
 
         [Route("cancel/{id:int}/{page:int?}")]
         [Authorize]
         public async Task<IActionResult> Cancel(int userId, int id, int page = 1)
         {
-            string group = GetGroup(User);
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId) ||
-                (userId != signedUserId && group == "User"))
+            if (!CheckPermissions(userId))
             {
-                ModelState.AddModelError("UserId", "Invalid permissions!");
                 return View("Reservations", Reservations(page, RentState.Reserved, userId));
             }
-            var isChanged = await _orderFacade.ReturnBook(id, userId, RentState.Canceled);
-            if (!isChanged)
+            if (!await _orderFacade.ReturnBook(id, userId, RentState.Canceled))
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             };
@@ -96,18 +111,36 @@ namespace WebAppMVC.Controllers
         [Authorize]
         public async Task<IActionResult> Renew(int userId, int id, int page = 1)
         {
-            string group = GetGroup(User);
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId) ||
-                (userId != signedUserId && group == "User"))
+            if (CheckPermissions(userId))
             {
-                ModelState.AddModelError("UserId", "Invalid permissions!");
-                return View("Reservations", Reservations(page, RentState.Expired, userId));
+                if (!await _orderFacade.ReserveBook(id, userId))
+                {
+                    ModelState.AddModelError("Id", "Invalid operation!");
+                }
             }
-            if (!await _orderFacade.ReserveBook(id, userId))
+            return View("Reservations", Reservations(page, RentState.Expired, userId));
+        }
+
+        [Route("picked/{id:int}/{page:int?}")]
+        [Authorize(Roles = "Admin, Employee")]
+        public async Task<IActionResult> Picked(int userId, int id, int page = 1)
+        {
+            if (await _reservationService.ChangeState(id, RentState.Active, userId, true) == -1)
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             }
-            return View("Reservations", Reservations(page, RentState.Expired, userId));
+            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+        }
+
+        [Route("returned/{id:int}/{page:int?}")]
+        [Authorize(Roles = "Admin, Employee")]
+        public async Task<IActionResult> Returned(int userId, int id, int page = 1)
+        {
+            if (await _reservationService.ChangeState(id, RentState.Returned, userId, true) == -1)
+            {
+                ModelState.AddModelError("Id", "Invalid operation!");
+            }
+            return View("Reservations", Reservations(page, RentState.Active, userId));
         }
 
         [HttpGet("reserved/{page:int?}")]

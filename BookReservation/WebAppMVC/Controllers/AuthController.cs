@@ -102,7 +102,7 @@ namespace WebAppMVC.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync("Cookies");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "MainPage");
         }
 
         [HttpGet]
