@@ -140,6 +140,7 @@ namespace WebAppMVC.Controllers
         [HttpGet("{page:int?}")]
         public IActionResult Index(int userId, int page = 1)
         {
+
             return View("Reservations", Reservations(page, RentState.Reserved, userId));
         }
     }

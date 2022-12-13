@@ -92,6 +92,15 @@ namespace WebAppMVC.Controllers
 
             return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
         }
+
+        public IActionResult LayoutReservationIndex()
+        {
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+            }
+            return Redirect("/reservations/" + userId);
+        }
     }
 }
 
