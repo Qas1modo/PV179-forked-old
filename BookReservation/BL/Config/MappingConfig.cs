@@ -32,7 +32,8 @@ namespace BL.Config
             config.CreateMap<CartItemDto, CartItem>().ReverseMap();
             config.CreateMap<GenreDto, Genre>().ReverseMap();
             config.CreateMap<QueryResult<Reservation>, QueryResultDto<ReservationDetailDto>>();
-            config.CreateMap<Reservation, ReservationDetailDto>()
+			config.CreateMap<QueryResult<User>, QueryResultDto<UserDto>>();
+			config.CreateMap<Reservation, ReservationDetailDto>()
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name))
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))

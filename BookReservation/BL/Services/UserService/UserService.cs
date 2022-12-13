@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using DAL.Enums;
 using BL.QueryObjects;
 using Castle.Core.Logging;
+using Infrastructure.Query;
 
 namespace BL.Services.UserServ
 {
@@ -23,12 +24,16 @@ namespace BL.Services.UserServ
         private readonly IMapper mapper;
         private readonly IUoWUserInfo uow;
         private readonly UserQueryObject queryObject;
+        private readonly IQuery<User> query;
 
-        public UserService(IUoWUserInfo uow, IMapper mapper, UserQueryObject userQuery)
+
+
+		public UserService(IUoWUserInfo uow, IMapper mapper, UserQueryObject userQuery, IQuery<User> query)
         {
             this.mapper = mapper;
             this.uow = uow;
             queryObject = userQuery;
+            this.query = query;
         }
 
         public async Task UpdateUserDataAsync(PersonalInfoDto input, int userId)
@@ -62,7 +67,14 @@ namespace BL.Services.UserServ
             return mapper.Map<IEnumerable<UserDto>>(users);
         }
 
-        public async Task UpdateUserPermission(int userId, Group newGroup)
+		public QueryResultDto<UserDto> ShowUsersPaging(int pageNumber)
+		{
+			query.Page(pageNumber, 20);
+			var result = query.Execute();
+			return mapper.Map<QueryResult<User>, QueryResultDto<UserDto>>(result);
+		}
+
+		public async Task UpdateUserPermission(int userId, Group newGroup)
         {
             User user = await uow.UserRepository.GetByID(userId);
             user.Group = newGroup;

@@ -17,7 +17,10 @@ namespace BL.Services.UserServ
 
         Task<IEnumerable<UserDto>> ShowUsers();
 
-        int IdUserWithEmail(string email);
+        QueryResultDto<UserDto> ShowUsersPaging(int pageNumber);
+
+
+		int IdUserWithEmail(string email);
 
         int IdUserWithUsername(string username);
 
