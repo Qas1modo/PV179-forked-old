@@ -20,19 +20,26 @@ namespace WebAppMVC.Controllers
         [HttpGet, Route("changeinfo")]
         public async Task<IActionResult> ChangeInfo(int? id)
         {
-            int userId = GetValidUser(id);
-            ViewBag.userId = userId;
-            if (userId == -1)
+            int? userId = GetValidUser(id);
+            userId ??= id; 
+            if (userId == -1 || userId == null)
             {
                 return View("Index", "MainPage");
             }
-            return View(await _userService.ShowUserData(userId));
+            ViewBag.userId = userId;
+            return View(await _userService.ShowUserData(userId.Value));
         }
 
         [HttpPost, Route("changeinfo")]
         public async Task<IActionResult> ChangeInfoAsync(int? id, PersonalInfoDto input)
         {
-            int userId = GetValidUser(id);
+            if (!int.TryParse(User.Identity?.Name, out int signedUser))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+                return View("Index", "MainPage");
+            }
+            int userId = GetValidUser(id, signedUser: signedUser);
+            ViewBag.showChange = userId == signedUser;
             if (input.BirthDate > DateTime.Now.AddYears(-3))
             {
                 ModelState.AddModelError("BirthDate", "Birthday must be more than three years before today!");
@@ -56,13 +63,17 @@ namespace WebAppMVC.Controllers
         }
         public async Task<IActionResult> Index(int? id)
         {
-            
-            int userId = GetValidUser(id);
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
+            if (!int.TryParse(User.Identity?.Name, out int signedUser))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+                return View("Index", "MainPage");
+            }
+            int userId = GetValidUser(id,signedUser: signedUser);
+            ViewBag.showChange = userId == signedUser;
+            if (userId == -1)
             {
                 return View("Index", "MainPage");
             }
-            ViewBag.showChange = signedUserId == userId;
             return View(await _userService.ShowUserData(userId));
         }
     }

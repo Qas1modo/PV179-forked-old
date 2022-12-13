@@ -41,23 +41,26 @@ namespace WebAppMVC.Controllers
             ModelState.AddModelError("UserId", "Invalid permissions!");
             return false;
         }
-        protected int GetValidUser(int? userId)
+        protected int GetValidUser(int? userId, string? group = null, int signedUser = -1)
         {
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
+            group ??= GetGroup();
+            if (signedUser == -1)
             {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return -1;
+                if (!int.TryParse(User.Identity?.Name, out signedUser))
+                {
+                    ModelState.AddModelError("UserId", "Identity error!");
+                    return -1;
+                }
             }
-            if (userId == null || userId == signedUserId)
+            if (userId == null || userId == signedUser)
             {
-                return signedUserId;
+                return signedUser;
             }
-            string group = GetGroup();
             if (group == "Admin" || group == "Employee")
             {
                 return userId.Value;
             }
-            return signedUserId;
+            return signedUser;
         }
     }
 }

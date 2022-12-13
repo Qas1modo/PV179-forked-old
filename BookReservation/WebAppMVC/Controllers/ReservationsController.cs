@@ -33,15 +33,7 @@ namespace WebAppMVC.Controllers
         {
             if (page < 1) page = 1;
             string group = GetGroup();
-            if (!int.TryParse(User.Identity?.Name, out int signedUserId))
-            {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return null;
-            }
-            if (userId != signedUserId && group == "User")
-            {
-                userId = signedUserId;
-            }
+            userId = GetValidUser(userId, group);
             var result = _reservationService.ShowReservations(userId, page, state);
             ReservationModel<ReservationDetailDto> model = new()
             {
