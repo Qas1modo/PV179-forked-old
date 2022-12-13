@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppMVC.Controllers
 {
-    public class BookDetailController : Controller
+    public class BookDetailController : CommonController
     {
         private readonly IBookService bookService;
 
@@ -33,7 +33,9 @@ namespace WebAppMVC.Controllers
             var model = new BookDetailIndexModel()
             {
                 bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId)
+                reviews = await reviewService.ShowReviews(bookId),
+                group = GetGroup(),
+                hasMore = true
             };
 
             return View(model);
@@ -42,10 +44,13 @@ namespace WebAppMVC.Controllers
         [Route("book/{bookId}/{showedReviews}")]
         public async Task<IActionResult> MoreReviews(int bookId, int showedReviews)
         {
+            var newReviews = await reviewService.ShowReviews(bookId, showedReviews + 10);
+
             var model = new BookDetailIndexModel()
             {
                 bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId, showedReviews + 10)
+                reviews = newReviews,
+                hasMore = newReviews.Count() != showedReviews
             };
 
             return View("../BookDetail/Index", model);
@@ -86,6 +91,15 @@ namespace WebAppMVC.Controllers
             await reviewService.AddReview(newReview);
 
             return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
+        }
+
+        public IActionResult LayoutReservationIndex()
+        {
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+            }
+            return Redirect("/reservations/" + userId);
         }
     }
 }

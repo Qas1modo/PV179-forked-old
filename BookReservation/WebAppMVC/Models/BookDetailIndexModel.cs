@@ -8,6 +8,10 @@ namespace WebAppMVC.Models
         public BookBasicInfoDto bookInfo { get; set; }
 
         public IEnumerable<ReviewDetailDto> reviews { get; set; }
+
+        public string group { get; set; }
+
+        public bool hasMore { get; set; }
     }
 }
 

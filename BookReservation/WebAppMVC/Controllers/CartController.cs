@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using WebAppMVC.Models;
 using BL.Services.CartItemServ;
+using BL.Facades.OrderFac;
 
 namespace WebAppMVC.Controllers
 {
@@ -14,9 +15,13 @@ namespace WebAppMVC.Controllers
     {
         private readonly ICartItemService cartItemService;
 
-        public CartController(ICartItemService cartItemService)
+        private readonly IOrderFacade orderFacade;
+
+        public CartController(ICartItemService cartItemService,
+            IOrderFacade orderFacade)
         {
             this.cartItemService = cartItemService;
+            this.orderFacade = orderFacade;
         }
 
         public async Task<IActionResult> Index()
@@ -25,10 +30,12 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
+
             var model = new CartIndexModel()
             {
                 cartItems = await cartItemService.GetCartItems(userId),
             };
+
             return View(model);
         }
 
@@ -40,25 +47,31 @@ namespace WebAppMVC.Controllers
                 ModelState.AddModelError("UserId", "Identity error!");
                 return RedirectToAction(nameof(Index));
             }
+
             await cartItemService.RemoveItem(itemId, userId);
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> MakeOrder()
+        public async Task<IActionResult> EmptyCart()
         {
-            // todo for now, do nothing
-
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
 
-            var model = new CartIndexModel()
-            {
-                cartItems = await cartItemService.GetCartItems(userId),
-            };
+            await cartItemService.EmptyCart(userId);
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View(model);
+        public async Task<IActionResult> MakeOrder()
+        {
+            if (!int.TryParse(User.Identity?.Name, out int userId))
+            {
+                ModelState.AddModelError("UserId", "Identity error!");
+            }
+
+            await orderFacade.MakeOrder(userId);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
