@@ -109,7 +109,7 @@
 			{
 				// Go to Page - 1
 				<li class="page-item">
-					<a class="page-link" href="@(Model.Page - 1)">Previous</a>
+					<a class="page-link" href="mainpage/@(Model.Page - 1)">Previous</a>
 				</li>
 			}
 			@for (int i = Model.Page; i < Math.Min(Model.Page + 3, Model.Total); ++i)
@@ -119,14 +119,14 @@
 					<li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
 					continue;
 				}
-				<li class="page-item"><a class="page-link" href="@i">@i</a></li>
+				<li class="page-item"><a class="page-link" href="mainpage/@i">@i</a></li>
 			}
 	
 			@if (Model.Page < Model.Total)
 			{
 				// Go to Page + 1
 				<li class="page-item">
-					<a class="page-link" href="@(Model.Page + 1)">Next</a>
+					<a class="page-link" href="mainpage/@(Model.Page + 1)">Next</a>
 				</li>
 			}
 			</ul>
