@@ -10,7 +10,7 @@ namespace BL.Services.BookServ
 
         Task<BookBasicInfoDto> GetBook(int bookId);
 
-        Task UpdateBook(int bookId, BookDto updatedBook);
+        Task UpdateBook(int bookId, BookBasicInfoDto updatedBook);
 
         Task DeleteBook(int bookId);
     }

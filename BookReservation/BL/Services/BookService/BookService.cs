@@ -31,7 +31,7 @@ namespace BL.Services.BookServ
             return mapper.Map<BookBasicInfoDto>(book);
         }
 
-        public async Task UpdateBook(int bookId, BookDto updatedBook)
+        public async Task UpdateBook(int bookId, BookBasicInfoDto updatedBook)
         {
             Book book = await uow.BookRepository.GetByID(bookId);
             book = mapper.Map(updatedBook, book);
