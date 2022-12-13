@@ -20,14 +20,13 @@ namespace WebAppMVC.Controllers
         [HttpGet, Route("changeinfo")]
         public async Task<IActionResult> ChangeInfo(int? id)
         {
-            int? userId = GetValidUser(id);
-            userId ??= id; 
-            if (userId == -1 || userId == null)
+            int userId = GetValidUser(id);
+            if (userId == -1)
             {
                 return View("Index", "MainPage");
             }
             ViewBag.userId = userId;
-            return View(await _userService.ShowUserData(userId.Value));
+            return View(await _userService.ShowUserData(userId));
         }
 
         [HttpPost, Route("changeinfo")]

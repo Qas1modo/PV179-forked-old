@@ -132,6 +132,7 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("Password", "Old password is invalid!");
             }
+            ModelState.AddModelError("NewPassword", "Password changed sucessfully!");
             return View("ChangePassword");
         }
 
