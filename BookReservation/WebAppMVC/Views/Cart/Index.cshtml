@@ -1,21 +1,25 @@
 ﻿@model CartIndexModel
 
+<h3 class="display-3">Your cart</h3>
+
 @{
     foreach (var item in Model.cartItems)
     {
-        <div class="card-body">
-            <h5 class="card-title">
-                @item.Name
-            </h5>
+        <div class="card my-3" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a class="card-title text-decoration-none" href="/book/@item.Id" style="font-size: 1.2rem">@item.Name</a>
+                </h5>
 
-            <h6 class="card-subtitle mb-2 text-muted">
-                @item.Author
-            </h6>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    @item.Author
+                </h6>
 
-            <p class="card-text">
-                Loan period: @item.LoanPeriod
-            </p>
-            <a href="@Url.Action("DeleteItem", "Cart", new { itemId = item.Id })" class="btn btn-primary mb-2">Delete</a>
+                <p class="card-text">
+                    Loan period: @item.LoanPeriod
+                </p>
+                <a href="@Url.Action("DeleteItem", "Cart", new { itemId = item.Id })" class="btn btn-danger mb-2">Delete</a>
+            </div>
         </div>
     }
 }
@@ -23,13 +27,11 @@
 @{
     if (Model.cartItems.Count() == 0)
     {
-        <p>Your cart is empty!</p>
+        <h5 class="display-5">Your cart is empty!</h5>
     }
     else
     {
-        @*<a href="@Url.Action("", "Cart", new {  })" class="btn btn-primary mb-2">Make Order</a>*@
-        <button type="submit" class="btn btn-primary mb-2">Make Order</button>
-        @*<button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Make Order</button>*@
-
+        <a href="@Url.Action("MakeOrder", "Cart")" class="btn btn-primary mb-2">Make Reservation</a>
+        <a href="@Url.Action("EmptyCart", "Cart")" class="btn btn-danger mb-2">Empty cart</a>
     }
 }
