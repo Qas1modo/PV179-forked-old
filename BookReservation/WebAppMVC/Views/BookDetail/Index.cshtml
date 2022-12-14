@@ -75,7 +75,6 @@
                 </div>
             </div>
         }
-
         <a class="btn btn-primary @(Model.hasMore == true ? "" : "d-none")" href="@Url.Action("MoreReviews", "BookDetail",
                                 new { bookId = Model.bookInfo.Id,
                                     showedReviews = Model.reviews.Count() })">Show more reviews</a>
@@ -87,7 +86,7 @@
     }
 }
 
-<button type="button" class="btn btn-primary @(Model.group != "User" ? "" : "invisible")" data-bs-toggle="modal" data-bs-target="#myModal1">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
     Add review
 </button>
 
