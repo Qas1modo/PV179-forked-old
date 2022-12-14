@@ -1,10 +1,13 @@
 ﻿using BL.DTOs;
 using BL.Services.BookServ;
+using BL.Services.GenreServ;
 using BL.Services.ReviewServ;
 using BL.Services.StockServ;
 using BL.Services.UserServ;
+using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppMVC.Models;
 
 
@@ -17,16 +20,18 @@ namespace WebAppMVC.Controllers
 		private readonly IUserService userService;
 		private readonly IStockService stockService;
 		private readonly IBookService bookService;
+		private readonly IGenreService genreService;
 
 
-		private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
+        private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
 
 		public AdminPageController(IUserService userService, IStockService stockService,
-			IBookService bookService)
+			IBookService bookService, IGenreService genreService)
 		{
 			this.userService = userService;
 			this.stockService = stockService;
 			this.bookService = bookService;
+			this.genreService = genreService;
 		}
 
 		public IActionResult Index()
@@ -91,5 +96,26 @@ namespace WebAppMVC.Controllers
 			return RedirectToAction(nameof(ChangeBookInfo), new { id = book.Id });
 		}
 
-	}
+		public async Task<IActionResult> AddBook()
+		{
+			// Get genres
+            var genres = await genreService.GetAllGenres();
+            SelectList dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
+			ViewBag.genres = dropDownItems;
+
+			return View(new AdminPageAddBookModel
+			{
+				Author = new(),
+				Book = new(),
+				Genre = new()
+			});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBook(AdminPageAddBookModel model)
+        {
+			//# Call facade
+			return RedirectToAction(nameof(Index));
+        }
+    }
 }
