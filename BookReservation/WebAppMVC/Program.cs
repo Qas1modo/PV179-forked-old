@@ -22,6 +22,7 @@ using BL.Services.AuthServ;
 using BL.QueryObjects;
 using BL.Services.UserServ;
 using BL.Services.GenreServ;
+using BL.Services.AuthorServ;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder();
@@ -77,6 +78,7 @@ builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 
 // Facades and QO DI Setup
