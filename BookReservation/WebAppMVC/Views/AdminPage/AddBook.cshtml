@@ -47,7 +47,7 @@
                 @*<div class="input-field col s12 l8">
                     @Html.DropDownList(model => model.Genre.Name, ViewBag.genres, "Select Genre")
                 </div>*@
-                <select name="Genre" asp-for="Genre.Name" class="form-control" asp-items="@ViewBag.genres"></select>
+                <select asp-for="GenreName" class="form-control" asp-items="@ViewBag.genres"></select>
             </div>
             <hr />
 

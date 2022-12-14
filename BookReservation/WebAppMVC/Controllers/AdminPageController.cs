@@ -117,9 +117,12 @@ namespace WebAppMVC.Controllers
         public async Task<IActionResult> AddBook(AdminPageAddBookModel model)
         {
 
-			if (model.NewGenre != null && model.NewGenre.Name != "")
+			if (model.NewGenre.Name != null && model.NewGenre.Name != "")
 			{
 				model.Genre = model.NewGenre;
+			} else if (model.GenreName != null)
+			{ 
+				model.Genre= new BL.DTOs.BasicDtos.GenreDto { Name = model.GenreName };
 			}
 
 			await bookFacade.addBook(model.Author, model.Book, model.Genre);

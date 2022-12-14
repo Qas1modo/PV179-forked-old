@@ -11,6 +11,8 @@ namespace WebAppMVC.Models
 
         public GenreDto Genre { get; set; }
 
+        public string GenreName { get; set; } 
+
         public GenreDto NewGenre { get; set; }
 
     }
