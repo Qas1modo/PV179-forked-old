@@ -56,6 +56,13 @@ namespace BL.Facades.BookFac
             if (author == null)
             {
                 var authorId = await authorService.AddAuthor(authorDto);
+
+                //# Workaround
+                var checkID = authorQueryObject.GetAuthorByName(authorDto.Name);
+
+                if (checkID != null)
+                    authorId = checkID.Id;
+
                 newBook.AuthorId = authorId;
             }
             else
@@ -67,6 +74,13 @@ namespace BL.Facades.BookFac
             if (genre == null)
             {
                 var genreId = await genreService.AddGenre(genreDto);
+
+                //# Workaround
+                var checkID = genreQueryObject.GetGenreByName(genreDto.Name);
+
+                if (checkID != null)
+                    genreId = checkID.Id;
+
                 newBook.GenreId = genreId;
             }
             else

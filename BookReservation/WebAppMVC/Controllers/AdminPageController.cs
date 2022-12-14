@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppMVC.Models;
-
+using BL.Facades.BookFac;
 
 namespace WebAppMVC.Controllers
 {
@@ -21,17 +21,19 @@ namespace WebAppMVC.Controllers
 		private readonly IStockService stockService;
 		private readonly IBookService bookService;
 		private readonly IGenreService genreService;
+		private readonly IBookFacade bookFacade;
 
 
         private BookFilterDto bookFilter = new BookFilterDto { OnStock = false };
 
 		public AdminPageController(IUserService userService, IStockService stockService,
-			IBookService bookService, IGenreService genreService)
+			IBookService bookService, IGenreService genreService, IBookFacade bookFacade)
 		{
 			this.userService = userService;
 			this.stockService = stockService;
 			this.bookService = bookService;
 			this.genreService = genreService;
+			this.bookFacade = bookFacade;
 		}
 
 		public IActionResult Index()
@@ -114,7 +116,14 @@ namespace WebAppMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBook(AdminPageAddBookModel model)
         {
-			//# Call facade
+
+			if (model.NewGenre != null && model.NewGenre.Name != "")
+			{
+				model.Genre = model.NewGenre;
+			}
+
+			await bookFacade.addBook(model.Author, model.Book, model.Genre);
+
 			return RedirectToAction(nameof(Index));
         }
     }
