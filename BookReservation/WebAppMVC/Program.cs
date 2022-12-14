@@ -6,6 +6,7 @@ using BL.Services.StockServ;
 using BL.Services.ReviewServ;
 using BL.Services.BookServ;
 using BL.Facades.OrderFac;
+using BL.Facades.BookFac;
 using DAL;
 using DAL.Models;
 using Infrastructure.EFCore.Query;
@@ -21,12 +22,13 @@ using BL.Services.AuthServ;
 using BL.QueryObjects;
 using BL.Services.UserServ;
 using BL.Services.GenreServ;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder();
 
 using (var db = new BookReservationDbContext())
 {
-    db.Database.EnsureDeleted();
+    //db.Database.EnsureDeleted();
     db.Database.EnsureCreated();
 }
 
@@ -80,6 +82,10 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 // Facades and QO DI Setup
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
+builder.Services.AddScoped<IBookFacade, BookFacade>();
+builder.Services.AddScoped<AuthorQueryObject, AuthorQueryObject>();
+builder.Services.AddScoped<GenreQueryObject, GenreQueryObject>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

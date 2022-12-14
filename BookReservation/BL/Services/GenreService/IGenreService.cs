@@ -3,14 +3,14 @@ using BL.DTOs.BasicDtos;
 
 namespace BL.Services.GenreServ
 {
-	public interface IGenreService
-	{
-        void AddGenre(GenreDto genreDto);
+    public interface IGenreService
+    {
+        Task<int> AddGenre(GenreDto genreDto);
 
         void RemoveGenre(int id);
 
-		Task<IEnumerable<GenreDto>> GetAllGenres();
+        Task<IEnumerable<GenreDto>> GetAllGenres();
 
-	}
+    }
 }
 

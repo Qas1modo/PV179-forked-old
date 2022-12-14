@@ -20,10 +20,11 @@ namespace BL.Services.AuthorServ
             this.uow = uow;
         }
 
-        public void AddAuthor(AuthorDto authorDto)
+        public async Task<int> AddAuthor(AuthorDto authorDto)
         {
-            uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
-            uow.CommitAsync();
+            var id = uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
+            await uow.CommitAsync();
+            return id;
         }
 
         public void RemoveAuthor(int id)

@@ -24,6 +24,7 @@
     <None Remove="Services\CartItems\" />
     <None Remove="Services\BookService\" />
     <None Remove="Facades\Order\" />
+    <None Remove="Facades\Book\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
@@ -31,6 +32,7 @@
     <Folder Include="Services\GenreService\" />
     <Folder Include="Services\BookService\" />
     <Folder Include="Facades\Order\" />
+    <Folder Include="Facades\Book\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />

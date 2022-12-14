@@ -3,9 +3,9 @@ using BL.DTOs.BasicDtos;
 
 namespace BL.Services.AuthorServ
 {
-	public interface IAuthorService
-	{
-        void AddAuthor(AuthorDto authorDto);
+    public interface IAuthorService
+    {
+        Task<int> AddAuthor(AuthorDto authorDto);
 
         void RemoveAuthor(int id);
     }
