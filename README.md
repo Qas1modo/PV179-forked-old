@@ -6,6 +6,10 @@
 - Kristián Gutič
 - Richard Lacek
 
+### Nasadenie
+- systém je nasadený na Microsoft Azure
+- url: https://bookreservation.azurewebsites.net
+
 ### Systém bude umožňovať:  
 
 - autentizáciu užívateľov  
@@ -19,6 +23,6 @@
 - vyhľadávanie na základe pár parametrov (napr. žáner, autor, hodnotenie, dostupnosť, …)
 
 
-## Class diagram
+### Diagram tried
 
 ![library.png](./Diagrams/library.png)
