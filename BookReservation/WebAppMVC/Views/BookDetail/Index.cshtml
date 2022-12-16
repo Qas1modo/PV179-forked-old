@@ -20,6 +20,11 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
         Add to cart
     </button>
+
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("DeleteBook", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-danger">Delete Book</a>
+    }
 </div>
 
 <!-- The Modal -->

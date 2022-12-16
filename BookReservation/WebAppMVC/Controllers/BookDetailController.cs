@@ -93,6 +93,13 @@ namespace WebAppMVC.Controllers
             return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
         }
 
+        public async Task<IActionResult> DeleteBook(int bookId)
+        {
+            await bookService.DeleteBook(bookId);
+
+            return Redirect("/mainpage");
+        }
+
         public IActionResult LayoutReservationIndex()
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
