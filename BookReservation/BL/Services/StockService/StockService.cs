@@ -79,7 +79,6 @@ namespace BL.Services.StockServ
             {
                 return false;
             }
-
             return HelperUpdateStock(book, -1);
         }
 
@@ -90,7 +89,6 @@ namespace BL.Services.StockServ
             {
                 return false;
             }
-
             return HelperUpdateStock(book, +1);
         }
 

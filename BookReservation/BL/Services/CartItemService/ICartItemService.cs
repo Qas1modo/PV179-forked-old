@@ -10,7 +10,7 @@ namespace BL.Services.CartItemServ
 
         Task RemoveItem(int id, int userId);
 
-        Task EmptyCart(int userId);
+        Task EmptyCart(int userId, bool commit = true);
 
         Task<IEnumerable<CartItemDetailDto>> GetCartItems(int userId);
     }

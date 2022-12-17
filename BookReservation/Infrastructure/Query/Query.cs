@@ -15,6 +15,8 @@ namespace Infrastructure.Query
 
         public (string column, bool ascending, Type type)? OrderByData;
 
+        public (string column, Type type)? SelectColumn { get; set; }
+
         public int? PageNumber { get; set; }
 
         public int PageSize = 20;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using WebAppMVC.Models;
 using BL.Services.CartItemServ;
 using BL.Facades.OrderFac;
+using DAL.Models;
 
 namespace WebAppMVC.Controllers
 {
@@ -30,12 +31,10 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
-
             var model = new CartIndexModel()
             {
                 cartItems = await cartItemService.GetCartItems(userId),
             };
-
             return View(model);
         }
 
@@ -58,7 +57,6 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
-
             await cartItemService.EmptyCart(userId);
             return RedirectToAction(nameof(Index));
         }
@@ -69,9 +67,15 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("UserId", "Identity error!");
             }
-
-            await orderFacade.MakeOrder(userId);
-            return RedirectToAction(nameof(Index));
+            if (!await orderFacade.MakeOrder(userId))
+            {
+                ModelState.AddModelError("Id", "Cannot have more than 5 concurrent reservations!");
+            }
+            var model = new CartIndexModel()
+            {
+                cartItems = await cartItemService.GetCartItems(userId),
+            };
+            return View("Index", model);
         }
     }
 }

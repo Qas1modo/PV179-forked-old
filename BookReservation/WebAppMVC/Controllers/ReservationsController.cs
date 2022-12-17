@@ -39,7 +39,7 @@ namespace WebAppMVC.Controllers
             {
                 CurrentState = state,
                 Items = result.Items,
-                NextPageEmpty = result.NextPageEmpty,
+                PageCount = (result.ItemsCount - 1) / result.PageSize + 1,
                 PageNumber = result.PageNumber ?? 1,
                 Group = group,
                 UserId = userId,
@@ -70,7 +70,7 @@ namespace WebAppMVC.Controllers
             {
                 if (!await _orderFacade.ReserveBook(id, userId))
                 {
-                    ModelState.AddModelError("Id", "Invalid operation!");
+                    ModelState.AddModelError("Id", "Cannot have more than 5 reservations!");
                 }
             }
             return View("Reservations", Reservations(page, RentState.Expired, userId));
@@ -80,7 +80,7 @@ namespace WebAppMVC.Controllers
         [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Picked(int userId, int id, int page = 1)
         {
-            if (await _reservationService.ChangeState(id, RentState.Active, userId, true) == -1)
+            if (!await _reservationService.ChangeState(id, RentState.Active, userId, commit: true))
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             }
@@ -91,7 +91,7 @@ namespace WebAppMVC.Controllers
         [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Returned(int userId, int id, int page = 1)
         {
-            if (await _reservationService.ChangeState(id, RentState.Returned, userId, true) == -1)
+            if (!await _reservationService.ChangeState(id, RentState.Returned, userId, commit: true))
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             }
@@ -99,9 +99,15 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpGet("reserved/{page:int?}")]
-        public async Task<IActionResult> Reserved(int userId, int page = 1)
+        public IActionResult Reserved(int userId, int page = 1)
         {
             return View("Reservations", Reservations(page, RentState.Reserved, userId));
+        }
+
+        [HttpGet("awaiting/{page:int?}")]
+        public IActionResult Awaiting(int userId, int page = 1)
+        {
+            return View("Reservations", Reservations(page, RentState.Awaiting, userId));
         }
 
         [HttpGet("canceled/{page:int?}")]

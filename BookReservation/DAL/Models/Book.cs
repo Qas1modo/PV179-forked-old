@@ -31,8 +31,6 @@ namespace DAL.Models
 
         public string? Description { get; set; }
 
-        public string? Photo { get; set; }
-
         public bool Deleted { get; set; }
 
         public virtual List<Reservation> Rents { get; set; }

@@ -2,6 +2,7 @@
 {
     public enum RentState
     {
+        Awaiting,
         Reserved,
         Expired,
         Canceled,

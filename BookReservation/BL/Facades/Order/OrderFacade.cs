@@ -4,10 +4,12 @@ using BL.Services.CartItemServ;
 using BL.Services.ReservationServ;
 using BL.Services.StockServ;
 using BL.Services.UserServ;
+using Castle.Core.Internal;
 using DAL;
 using DAL.Enums;
 using DAL.Models;
 using Infrastructure.EFCore.UnitOfWork;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Diagnostics;
@@ -23,16 +25,19 @@ namespace BL.Facades.OrderFac
         private readonly IReservationService rentService;
         private readonly IUoWReservation uow;
         private readonly IMapper mapper;
+        private readonly IQuery<Reservation> query;
 
         public OrderFacade(IStockService stockService,
             ICartItemService cartService,
             IReservationService rentService,
             IUoWReservation uow,
-            IMapper mapper)
+            IMapper mapper,
+            IQuery<Reservation> query)
         {
             this.stockService = stockService;
             this.rentService = rentService;
             this.cartService = cartService;
+            this.query = query;
             this.uow = uow;
             this.mapper = mapper;
         }
@@ -40,24 +45,46 @@ namespace BL.Facades.OrderFac
         public async Task<bool> MakeOrder(int userId)
         {
             User user = await uow.UserRepository.GetByID(userId);
-            foreach (var cartItem in user.CartItems)
+            if (!UserReservations(userId, user.CartItems.Count))
             {
-                bool isReserved = await stockService.ReserveBookStock(cartItem.BookId);
-                if (!isReserved)
-                {
-                    return false;
-                }
-                rentService.CreateReservation(mapper.Map<ReservationDto>(cartItem));
+                return false;
             }
-            await cartService.EmptyCart(userId);
+            RentState state = RentState.Reserved;
+            foreach (CartItem cartItem in user.CartItems)
+            {
+                if (!await stockService.ReserveBookStock(cartItem.BookId))
+                {
+                    state = RentState.Awaiting;
+                }
+                rentService.CreateReservation(mapper.Map<ReservationDto>(cartItem), state);
+            }
+            await cartService.EmptyCart(userId, false);
             await uow.CommitAsync();
             return true;
+        }
+
+        private bool UserReservations(int userId, int reservationCount = 1)
+        {
+            int userReservations = query
+                .Where<RentState>(x => x.Equals(RentState.Reserved) || x.Equals(RentState.Awaiting), "State")
+                .Where<int>(x => x == userId, "UserId")
+                .Execute().ItemsCount;
+            return userReservations + reservationCount < 6 ;
         }
 
         public async Task<bool> ReserveBook(int reservationId, int userId)
         {
-            int bookId = await rentService.ChangeState(reservationId, RentState.Reserved, userId);
-            if (bookId == -1 || !await stockService.ReserveBookStock(bookId))
+            if (!UserReservations(userId))
+            {
+                return false;
+            }
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            RentState state = RentState.Reserved; 
+            if (!await stockService.ReserveBookStock(reservation.BookId))
+            {
+                state = RentState.Awaiting;
+            }
+            if (!await rentService.ChangeState(reservationId, state, userId))
             {
                 return false;
             }
@@ -65,13 +92,36 @@ namespace BL.Facades.OrderFac
             return true;
         }
 
-        public async Task<bool> ReturnBook(int reservationId, int userId,
-            RentState newState = RentState.Returned, bool commit = true)
+        private async Task<bool> IsAwaiting(int bookId)
         {
-            int bookId = await rentService.ChangeState(reservationId, newState, userId);
-            if (bookId == -1 || ! await stockService.BookReturnedStock(bookId))
+            Reservation? waitingReservation = query
+               .Where<RentState>(x => x == RentState.Awaiting, "State")
+               .Where<int>(x => x == bookId, "BookId")
+               .OrderBy<DateTime>("ReservedAt")
+               .Page(1, 1)
+               .Execute().Items
+               .FirstOrDefault();
+            if (waitingReservation != null)
+            {
+                await rentService.ChangeState(waitingReservation.Id, RentState.Reserved, waitingReservation.UserId);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> ReturnBook(int reservationId,
+            int userId,
+            RentState newState = RentState.Returned,
+            bool commit = true)
+        {
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            if (!await rentService.ChangeState(reservationId, newState, userId, reservation))
             {
                 return false;
+            }
+            if (!await IsAwaiting(reservation.BookId))
+            {
+                await stockService.BookReturnedStock(reservation.BookId);
             }
             if (commit) await uow.CommitAsync();
             return true;
@@ -79,14 +129,13 @@ namespace BL.Facades.OrderFac
 
         public async Task ExpireOldReservations()
         {
-            IEnumerable<Reservation> reservations = uow.ReservationRepository
-                .GetQueryable()
-                .Where(x => x.State == RentState.Reserved)
-                .ToList();
+            DateTime currentTime = DateTime.Now;
+            IEnumerable<Reservation> reservations = query
+                .Where<RentState>(x => x == RentState.Reserved, "State")
+                .Execute().Items;
             foreach (Reservation reservation in reservations)
             {
-                if (reservation.State == RentState.Reserved &&
-                    DateTime.Now.Subtract(reservation.ReservedAt).Days > 7)
+                if (DateTime.Now.Subtract(reservation.ReservedAt).Days > 7)
                 {
                     await ReturnBook(reservation.Id, reservation.UserId, RentState.Expired, false);
                 }

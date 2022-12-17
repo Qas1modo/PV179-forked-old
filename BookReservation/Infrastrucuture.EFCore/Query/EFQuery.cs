@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Reflection;
+using System.Linq;
 
 namespace Infrastructure.EFCore.Query
 {
@@ -54,7 +55,7 @@ namespace Infrastructure.EFCore.Query
         {
             ParameterExpression parameter = Expression.Parameter(entityType, "parameter");
             string? objectName = entityType.GetProperty(orderByColumn)?.Name;
-            if (objectName == null)
+            if (objectName is null)
             {
                 throw new ArgumentException($"Invalid column name: {orderByColumn}");
             }

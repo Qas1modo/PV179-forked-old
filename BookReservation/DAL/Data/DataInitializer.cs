@@ -132,11 +132,18 @@ namespace DAL.Data
                 Name = "Karel Hynek Mácha",
             };
 
+            Author author6 = new()
+            {
+                Id = 6,
+                Name = "Andrzej Sapkowski",
+            };
+
             modelBuilder.Entity<Author>().HasData(author1);
             modelBuilder.Entity<Author>().HasData(author2);
             modelBuilder.Entity<Author>().HasData(author3);
             modelBuilder.Entity<Author>().HasData(author4);
             modelBuilder.Entity<Author>().HasData(author5);
+            modelBuilder.Entity<Author>().HasData(author6);
             ///////////////////////////////////////////////////
 
 
@@ -235,7 +242,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 16,
                 Description = "d",
-                Photo = "www.harrrypotterphotos.com",
             };
 
             Book harryPotter2 = new()
@@ -248,7 +254,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 30,
                 Description = "djosfjsdopj",
-                Photo = "www.jupijupijej.com",
             };
 
             Book harryPotter3 = new()
@@ -261,7 +266,6 @@ namespace DAL.Data
                 Total = 1000,
                 Price = 17,
                 Description = "djosfjsdopj",
-                Photo = "wwww.someweb.com",
             };
 
             Book harryPotter4 = new()
@@ -274,7 +278,6 @@ namespace DAL.Data
                 Total = 200,
                 Price = 27,
                 Description = "djosfjsdopj",
-                Photo = "www.uzneviemuz.com",
             };
 
             Book harryPotter5 = new()
@@ -287,7 +290,6 @@ namespace DAL.Data
                 Total = 50,
                 Price = 50,
                 Description = "djosfjsdopj",
-                Photo = "www.harrymaguire.com",
             };
 
             Book harryPotter6 = new()
@@ -300,7 +302,6 @@ namespace DAL.Data
                 Total = 40,
                 Price = 30,
                 Description = "djosfjsdopj",
-                Photo = "www.slafgoalsky.com",
             };
 
             Book gameOfThrones1 = new()
@@ -313,7 +314,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 23,
                 Description = "djosfjsdopj",
-                Photo = "www.cobra11istheworstseries.com",
             };
 
             Book gameOfThrones2 = new()
@@ -326,7 +326,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 35,
                 Description = "djosfjsdopj",
-                Photo = "www.gameofthronesphotos.com",
             };
 
             Book gameOfThrones3 = new()
@@ -339,7 +338,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 46,
                 Description = "djosfjsdopj",
-                Photo = "www.myphoto.com",
             };
 
             Book gameOfThrones4 = new()
@@ -352,7 +350,6 @@ namespace DAL.Data
                 Total = 100,
                 Price = 25,
                 Description = "djosfjsdopj",
-                Photo = "www.yourphoto.com",
             };
 
             Book gameOfThrones5 = new()
@@ -361,13 +358,107 @@ namespace DAL.Data
                 Name = "A Feast for Crows",
                 AuthorId = 2,
                 GenreId = 6,
-                Stock = 1,
+                Stock = 2,
                 Total = 100,
                 Price = 9000,
                 Description = "djosfjsdopj",
-                Photo = "www.amazingphoto.com",
             };
 
+            Book witcher1 = new()
+            {
+                Id = 12,
+                Name = "Witcher - Last Wish",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 25,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher2 = new()
+            {
+                Id = 13,
+                Name = "Witcher - Sword of Destiny",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 30,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher3 = new()
+            {
+                Id = 14,
+                Name = "Witcher - Blood of Elves",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 25,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher4 = new()
+            {
+                Id = 15,
+                Name = "Witcher - Time of Contempt",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 25,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher5 = new()
+            {
+                Id = 16,
+                Name = "Witcher - Baptism of Fire",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 30,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher6 = new()
+            {
+                Id = 17,
+                Name = "Witcher - The Tower of Swallows",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 35,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher7 = new()
+            {
+                Id = 18,
+                Name = "Witcher - Season of Storms",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 35,
+                Description = "djosfjsdopj",
+            };
+
+            Book witcher8 = new()
+            {
+                Id = 19,
+                Name = "Witcher - Baptism of Fire",
+                AuthorId = 6,
+                GenreId = 6,
+                Stock = 100,
+                Total = 100,
+                Price = 25,
+                Description = "djosfjsdopj",
+            };
 
             modelBuilder.Entity<Book>().HasData(harryPotter1);
             modelBuilder.Entity<Book>().HasData(harryPotter2);
@@ -380,6 +471,14 @@ namespace DAL.Data
             modelBuilder.Entity<Book>().HasData(gameOfThrones3);
             modelBuilder.Entity<Book>().HasData(gameOfThrones4);
             modelBuilder.Entity<Book>().HasData(gameOfThrones5);
+            modelBuilder.Entity<Book>().HasData(witcher1);
+            modelBuilder.Entity<Book>().HasData(witcher2);
+            modelBuilder.Entity<Book>().HasData(witcher3);
+            modelBuilder.Entity<Book>().HasData(witcher4);
+            modelBuilder.Entity<Book>().HasData(witcher5);
+            modelBuilder.Entity<Book>().HasData(witcher6);
+            modelBuilder.Entity<Book>().HasData(witcher7);
+            modelBuilder.Entity<Book>().HasData(witcher8);
             ///////////////////////////////////////////////////
 
             ///////////////////////////////////////////////////

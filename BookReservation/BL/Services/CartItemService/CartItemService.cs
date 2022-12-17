@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Transactions;
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
@@ -37,14 +38,14 @@ namespace BL.Services.CartItemServ
             await uow.CommitAsync();
         }
 
-        public async Task EmptyCart(int userId)
+        public async Task EmptyCart(int userId, bool commit = true)
         {
             User user = await uow.UserRepository.GetByID(userId);
             foreach (var cartItem in user.CartItems)
             {
                 uow.CartItemRepository.Delete(cartItem.Id);
             }
-            await uow.CommitAsync();
+            if (commit) await uow.CommitAsync();
         }
 
         public async Task<IEnumerable<CartItemDetailDto>> GetCartItems(int userId)

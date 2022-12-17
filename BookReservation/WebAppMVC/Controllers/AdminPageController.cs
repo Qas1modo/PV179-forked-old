@@ -64,12 +64,12 @@ namespace WebAppMVC.Controllers
 			var model = new AdminPageBooksModel();
 
 			bookFilter.Page = page < 1 ? 1 : page;
-
-			var serviceResult = stockService.ShowBooks(bookFilter);
+			bookFilter.PageSize = 10;
+            var serviceResult = stockService.ShowBooks(bookFilter);
 
 			model.Books = serviceResult.Items;
 			model.Page = serviceResult.PageNumber ?? 1;
-			model.Total = serviceResult.ItemsCount / serviceResult.PageSize;
+			model.Total = (serviceResult.ItemsCount - 1) / serviceResult.PageSize + 1;
 
 			return View(model);
 		}

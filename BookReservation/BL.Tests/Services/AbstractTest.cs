@@ -53,7 +53,6 @@ namespace BL.Tests.Services
                 Total = int.MaxValue,
                 Price = decimal.MaxValue,
                 Description = ":((",
-                Photo = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEAwUE"
             };
 
             this.rent = new Reservation

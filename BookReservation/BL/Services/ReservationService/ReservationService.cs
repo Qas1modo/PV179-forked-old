@@ -23,50 +23,74 @@ namespace BL.Services.ReservationServ
             this.query = query;
         }
 
-        public void CreateReservation(ReservationDto rentDto, bool commit = false)
+        public void CreateReservation(ReservationDto rentDto, RentState state = RentState.Reserved, bool commit = false)
         {
-            rentDto.State = RentState.Reserved;
+            rentDto.State = state;
             rentDto.ReservedAt = DateTime.Now;
             uow.ReservationRepository.Insert(mapper.Map<Reservation>(rentDto));
-            if (commit) uow.CommitAsync(); 
+            if (commit) uow.CommitAsync();
         }
 
-        public async Task<int> ChangeState(int reservationId, RentState newState,
-            int userId = -1, bool commit = false)
+        public async Task<bool> ChangeState(int reservationId, RentState newState,
+            int userId = -1, Reservation? reservation = null, bool commit = false)
         {
-            Reservation rent = await uow.ReservationRepository.GetByID(reservationId);
-            if (userId != -1 && userId != rent.UserId)
+            reservation ??= await uow.ReservationRepository.GetByID(reservationId);
+            if (userId != -1 && userId != reservation.UserId)
             {
-                return -1;
+                return false;
             }
             switch (newState)
             {
+                case RentState.Awaiting:
+                    if (reservation.State == RentState.Expired)
+                    {
+                        reservation.ReservedAt = DateTime.Now;
+                        break;
+                    }
+                    return false;
                 case RentState.Expired:
-                    if (rent.State != RentState.Reserved) return -1;
-                    rent.CanceledAt = DateTime.Now;
-                    break;
+                    if (reservation.State == RentState.Reserved)
+                    {
+                        reservation.CanceledAt = DateTime.Now;
+                        break;
+                    }
+                    return false;
                 case RentState.Canceled:
-                    if (rent.State != RentState.Reserved) return -1;
-                    rent.CanceledAt = DateTime.Now;
-                    break;
+                    if (reservation.State == RentState.Reserved ||
+                        reservation.State == RentState.Awaiting)
+                    {
+                        reservation.CanceledAt = DateTime.Now;
+                        break;
+                    }
+                    return false;
                 case RentState.Reserved:
-                    if (rent.State != RentState.Expired) return -1;
-                    rent.ReservedAt = DateTime.Now;
-                    rent.CanceledAt = null;
-                    break;
+                    if (reservation.State == RentState.Expired ||
+                        reservation.State == RentState.Awaiting)
+                    {
+                        reservation.ReservedAt = DateTime.Now;
+                        reservation.CanceledAt = null;
+                        break;
+                    }
+                    return false;
                 case RentState.Returned:
-                    if (rent.State != RentState.Active) return -1;
-                    rent.ReturnedAt = DateTime.Now;
-                    break;
+                    if (reservation.State == RentState.Active)
+                    {
+                        reservation.ReturnedAt = DateTime.Now;
+                        break;
+                    }
+                    return false;
                 case RentState.Active:
-                    if (rent.State != RentState.Reserved) return -1;
-                    rent.RentedAt = DateTime.Now;
-                    break;
+                    if (reservation.State == RentState.Reserved)
+                    {
+                        reservation.RentedAt = DateTime.Now;
+                        break;
+                    }
+                    return false;
             }
-            rent.State = newState;
-            uow.ReservationRepository.Update(rent);
+            reservation.State = newState;
+            uow.ReservationRepository.Update(reservation);
             if (commit) await uow.CommitAsync();
-            return rent.BookId;
+            return true;
         }
 
         public QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
