@@ -29,7 +29,7 @@ var builder = WebApplication.CreateBuilder();
 
 using (var db = new BookReservationDbContext())
 {
-    db.Database.EnsureDeleted();
+    //db.Database.EnsureDeleted();
     db.Database.EnsureCreated();
 }
 
@@ -85,8 +85,6 @@ builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
-builder.Services.AddScoped<AuthorQueryObject, AuthorQueryObject>();
-builder.Services.AddScoped<GenreQueryObject, GenreQueryObject>();
 
 
 // Add services to the container.

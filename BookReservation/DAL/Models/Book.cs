@@ -27,7 +27,7 @@ namespace DAL.Models
 
         [Required, Range(0, 999999)]
         public decimal Price { get; set; }
-
+        [StringLength(500)]
         public string? Description { get; set; }
 
         public bool Deleted { get; set; }

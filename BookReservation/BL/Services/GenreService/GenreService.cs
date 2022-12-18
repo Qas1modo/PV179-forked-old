@@ -20,25 +20,26 @@ namespace BL.Services.GenreServ
             this.uow = uow;
         }
 
-        public async Task<GenreDto> GetOrAddGenre(string genreName)
+        public async Task<Genre> GetOrAddGenre(string genreName)
         {
             Genre? newGenre = uow.GenreRepository.GetQueryable()
             .Where(x => x.Name == genreName)
             .FirstOrDefault();
             if (newGenre != null)
             {
-                return mapper.Map<GenreDto>(newGenre);
+                return newGenre;
             }
-            var id = uow.GenreRepository.Insert(new Genre { Name = genreName });
+            uow.GenreRepository.Insert(new Genre() { Name = genreName });
             await uow.CommitAsync();
-            return mapper.Map<GenreDto>(await uow.GenreRepository.GetByID(id));
+            return uow.GenreRepository.GetQueryable()
+            .Where(x => x.Name == genreName)
+            .First();
         }
 
-        public async Task<int> AddGenre(GenreDto genreDto)
+        public async Task AddGenre(GenreDto genreDto)
         {
-            var id = uow.GenreRepository.Insert(mapper.Map<Genre>(genreDto));
+            uow.GenreRepository.Insert(mapper.Map<Genre>(genreDto));
             await uow.CommitAsync();
-            return id;
         }
 
         public void RemoveGenre(int id)

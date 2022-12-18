@@ -14,7 +14,7 @@ namespace Infrastructure.Repository
 
         Task<IEnumerable<TEntity>> GetAll();
 
-        int Insert(TEntity entity);
+        void Insert(TEntity entity);
 
         void Delete(int id);
 

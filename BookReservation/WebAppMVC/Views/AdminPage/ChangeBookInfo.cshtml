@@ -1,4 +1,4 @@
-﻿@model AdminChangeBookModel
+﻿@model BL.DTOs.BookChangeDto
 
 <div class="row">
     <div class="col s12">
@@ -19,7 +19,7 @@
             <div class="row valign-wrapper m-2 text-xxl-center">
                 <div class="col s12 l4">Author:</div>
                 <div class="input-field col s12 l8">
-                    @Html.TextBoxFor(model => model.AuthorName, new { required = true })
+                    @Html.TextBoxFor(model => model.NewAuthorName, new { required = true })
                 </div>
             </div>
             <hr />
@@ -39,7 +39,7 @@
             <hr />
             <div class="row valign-wrapper m-2 text-xxl-center">
                 <div class="col s12 l4">Select from existing genres:</div>
-                <select asp-for="GenreName" class="form-control" asp-items="@ViewBag.genres"></select>
+                <select asp-for="NewGenreName" class="form-control" asp-items="@ViewBag.genres"></select>
             </div>
             <hr />
             <div class="row valign-wrapper m-2 text-xxl-center">

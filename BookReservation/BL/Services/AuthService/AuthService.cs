@@ -24,7 +24,7 @@ namespace BL.Services.AuthServ
             queryObject = query;
         }
 
-        public async Task<int> RegisterUserAsync(RegistrationDto input)
+        public async Task RegisterUserAsync(RegistrationDto input)
         {
             using (var hashedPassword = new Rfc2898DeriveBytes(input.OpenPassword, saltSize, iterations, HashAlgorithmName.SHA256))
             {
@@ -33,9 +33,8 @@ namespace BL.Services.AuthServ
             }
             input.Group = DAL.Enums.Group.User;
             User user = mapper.Map<User>(input);
-            int result = uoWUserInfo.UserRepository.Insert(user);
+            uoWUserInfo.UserRepository.Insert(user);
             await uoWUserInfo.CommitAsync();
-            return result;
         }
 
         public UserAuthDto? Login(UserLoginDto input)

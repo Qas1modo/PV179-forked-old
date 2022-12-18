@@ -38,13 +38,16 @@ namespace BL.Config
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
-
+            config.CreateMap<BookChangeDto, Book>()
+                .ForMember(dest => dest.Author, cfg => cfg.Ignore())
+                .ForMember(dest => dest.Genre, cfg => cfg.Ignore())
+                .ReverseMap();
             config.CreateMap<ReservationDto, Reservation>()
                 .ForMember(dest => dest.State, cfg => cfg.MapFrom(src => src.State));
             config.CreateMap<ReviewDto, Review>().ReverseMap();
             config.CreateMap<UserDto, User>().ReverseMap();
             config.CreateMap<CartItem, ReservationDto>().ReverseMap();
-            config.CreateMap<Book, BookBasicInfoDto>().ReverseMap();
+            config.CreateMap<BookBasicInfoDto, Book>().ReverseMap();
             config.CreateMap<User, UserAuthDto>().ReverseMap();
         }
     }

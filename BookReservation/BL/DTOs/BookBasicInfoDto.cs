@@ -33,11 +33,5 @@ namespace BL.DTOs
 
         [Range(0, int.MaxValue), Required]
         public int Stock { get; set; }
-
-        [StringLength(64)]
-        public string? GenreName { get; set; }
-
-        [StringLength(64)]
-        public string? AuthorName { get; set; }
     }
 }

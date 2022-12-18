@@ -20,11 +20,10 @@ namespace BL.Services.AuthorServ
             this.uow = uow;
         }
 
-        public async Task<int> AddAuthor(AuthorDto authorDto)
+        public async Task AddAuthor(AuthorDto authorDto)
         {
-            var id = uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
+            uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
             await uow.CommitAsync();
-            return id;
         }
 
         public void RemoveAuthor(int id)
@@ -32,5 +31,21 @@ namespace BL.Services.AuthorServ
             uow.AuthorRepository.Delete(id);
             uow.CommitAsync();
         }
+
+        public async Task<Author> GetOrAddAuthor(string authorName)
+        {
+            Author? newAuthor = uow.AuthorRepository.GetQueryable()
+            .Where(x => x.Name == authorName)
+            .FirstOrDefault();
+            if (newAuthor != null)
+            {
+                return newAuthor;
+            }
+            uow.AuthorRepository.Insert(new() { Name = authorName });
+            await uow.CommitAsync();
+            return uow.AuthorRepository.GetQueryable()
+            .Where(x => x.Name == authorName)
+            .First();
+        } 
     }
 }

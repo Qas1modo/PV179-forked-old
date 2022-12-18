@@ -1,19 +1,22 @@
-﻿using BL.DTOs.BasicDtos;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebAppMVC.Models
+namespace BL.DTOs
 {
-    public class AdminChangeBookModel
+    public class BookChangeDto
     {
-
         [Required, StringLength(64)]
         public string Name { get; set; }
 
         [StringLength(64)]
-        public string GenreName { get; set; }
+        public string NewGenreName { get; set; }
 
         [StringLength(64)]
-        public string AuthorName { get; set; }
+        public string NewAuthorName { get; set; }
 
         [Required]
         public bool Deleted { get; set; }

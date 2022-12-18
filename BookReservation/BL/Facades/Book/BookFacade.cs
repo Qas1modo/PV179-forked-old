@@ -19,9 +19,7 @@ namespace BL.Facades.BookFac
     {
         private readonly IBookService bookService;
 
-        private readonly AuthorQueryObject authorQueryObject;
-
-        private readonly GenreQueryObject genreQueryObject;
+        private readonly IMapper mapper;
 
         private readonly IAuthorService authorService;
 
@@ -34,75 +32,53 @@ namespace BL.Facades.BookFac
         private readonly IUoWBook uow;
 
         public BookFacade(IBookService bookService,
-            AuthorQueryObject authorQueryObject,
-            GenreQueryObject genreQueryObject,
             IAuthorService authorService,
             IGenreService genreService,
             IReservationService reservationService,
             ICartItemService cartService,
-            IUoWBook uow)
+            IUoWBook uow,
+            IMapper mapper)
         {
             this.bookService = bookService;
-            this.authorQueryObject = authorQueryObject;
-            this.genreQueryObject = genreQueryObject;
             this.authorService = authorService;
             this.genreService = genreService;
             this.reservationService = reservationService;
             this.cartService = cartService;
             this.uow = uow;
+            this.mapper = mapper;
 
         }
 
-        public async Task<int> AddBook(AuthorDto authorDto, BookBasicInfoDto bookDto, GenreDto genreDto)
+        public async Task AddBook(BookDto bookDto)
         {
-            BookDto newBook = new BookDto();
-            newBook.Description = bookDto.Description;
-            newBook.Name = bookDto.Name;
-            newBook.Price = bookDto.Price;
-            newBook.Stock = bookDto.Stock;
-            newBook.Total = bookDto.Stock;
-
-
-            Author? author = authorQueryObject.GetAuthorByName(authorDto.Name);
-            if (author == null)
-            {
-                var authorId = await authorService.AddAuthor(authorDto);
-
-                //# Workaround
-                var checkID = authorQueryObject.GetAuthorByName(authorDto.Name);
-
-                if (checkID != null)
-                    authorId = checkID.Id;
-
-                newBook.AuthorId = authorId;
-            }
-            else
-            {
-                newBook.AuthorId = author.Id;
-            }
-
-            Genre? genre = genreQueryObject.GetGenreByName(genreDto.Name);
-            if (genre == null)
-            {
-                var genreId = await genreService.AddGenre(genreDto);
-
-                //# Workaround
-                var checkID = genreQueryObject.GetGenreByName(genreDto.Name);
-
-                if (checkID != null)
-                    genreId = checkID.Id;
-
-                newBook.GenreId = genreId;
-            }
-            else
-            {
-                newBook.GenreId = genre.Id;
-            }
-
-
-            return await bookService.AddBook(newBook);
+            bookDto.Author = await authorService.GetOrAddAuthor(bookDto.Author.Name);
+            bookDto.Genre = await genreService.GetOrAddGenre(bookDto.Genre.Name);
+            await bookService.AddBook(bookDto);
         }
 
+
+        public async Task<bool> UpdateBook(int bookId, BookChangeDto updatedBook)
+        {
+            Book book = await uow.BookRepository.GetByID(bookId);
+            var newStock = book.Stock - (updatedBook.Total - book.Total);
+            if (newStock < 0)
+            {
+                return false;
+            }
+            book.Stock = newStock;
+            if (book.Genre.Name != updatedBook.NewGenreName)
+            {
+                book.Genre = await genreService.GetOrAddGenre(updatedBook.NewGenreName);
+            }
+            if (book.Author.Name != updatedBook.NewAuthorName)
+            {
+                book.Author = await authorService.GetOrAddAuthor(updatedBook.NewAuthorName);
+            }
+            book = mapper.Map(updatedBook, book);
+            uow.BookRepository.Update(book);
+            await uow.CommitAsync();
+            return true;
+        }
 
         public async Task DeleteBook(int bookId)
         {

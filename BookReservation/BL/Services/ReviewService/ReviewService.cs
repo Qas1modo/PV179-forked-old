@@ -7,6 +7,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using DAL.Models;
 using BL.DTOs;
 using Infrastructure.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace BL.Services.ReviewServ
 {
@@ -59,7 +60,7 @@ namespace BL.Services.ReviewServ
                 .Where<int>(x => x == bookId, "BookId")
                 .OrderBy<DateTime>("AddedAt")
                 .Page(page, pageSize)
-                .Execute(); 
+                .Execute();
             return mapper.Map<QueryResult<Review>, QueryResultDto<ReviewDetailDto>>(result);
         }
     }
