@@ -14,6 +14,6 @@ namespace BL.Services.WishListItemService
 
         Task DeleteWishlistItem(int id, int userId = -1);
 
-        Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1);
+        Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1, int pageSize = 10);
     }
 }

@@ -28,35 +28,7 @@
 	}
 }
 
-<nav>
-	<ul class="pagination justify-content-center">
-		@if (Model.Page > 1)
-		{
-			<li class="page-item">
-				<a class="page-link"
-			   href="@($"/adminpage/Books/{Model.Page - 1}")">
-					Previous
-				</a>
-			</li>
-		}
-		@for (int i = Math.Max(1, Model.Page - 3); i <= Math.Min(Model.Page + 3, Model.Total); ++i)
-		{
-			if (Model.Page == i)
-			{
-				<li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
-				continue;
-			}
-			<li class="page-item">
-				<a class="page-link"
-			   href="@($"/adminpage/Books/{i}")">@i</a>
-			</li>
-		}
-		@if (Model.Page < Model.Total)
-		{
-			<li class="page-item">
-				<a class="page-link"
-			   href="@($"/adminpage/Books/{Model.Page + 1}")">Next</a>
-			</li>
-		}
-	</ul>
-</nav>
+@await Html.PartialAsync("/Views/PartialViews/_PartialPagination.cshtml",
+new PaginationModel { PageCount = Model.Total,
+    PageNumber = Model.Page,
+    Link = "/adminpage/Books"})

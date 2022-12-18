@@ -59,11 +59,11 @@ namespace BL.Services.WishListItemServ
             await uow.CommitAsync();
         }
 
-        public async Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1)
+        public async Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1, int pageSize = 10)
         {
             query.Where<int>(x => x == userId, "UserId");
             query.OrderBy<DateTime>("AddedAt", false);
-            query.Page(page, 15);
+            query.Page(page, pageSize);
             var result = await query.Execute();
             return mapper.Map<QueryResult<WishListItem>, QueryResultDto<WishListDetailDto>>(result);
         }

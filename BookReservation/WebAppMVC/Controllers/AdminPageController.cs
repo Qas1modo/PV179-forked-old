@@ -60,12 +60,12 @@ namespace WebAppMVC.Controllers
 		public async Task<IActionResult> Users(int page = 1)
 		{
 			page = page < 1 ? 1 : page;
-            var users = await userService.ShowUsers(page);
+            var result = await userService.ShowUsers(page);
             var model = new AdminPageUsersModel
 			{
-				Users = users.Items,
+				Users = result.Items,
 				Page = page,
-				Total = users.ItemsCount,
+				Total = (result.ItemsCount - 1) / result.PageSize + 1,
 				SignedUser = GetValidUser(null),
 			};
 			return View(model);
@@ -84,7 +84,7 @@ namespace WebAppMVC.Controllers
 			var serviceResult = await stockService.ShowBooks(bookFilter);
 
 			model.Books = serviceResult.Items;
-			model.Page = serviceResult.PageNumber ?? 1;
+			model.Page = page;
 			model.Total = (serviceResult.ItemsCount - 1) / serviceResult.PageSize + 1;
 
 			return View(model);

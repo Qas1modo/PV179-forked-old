@@ -40,7 +40,7 @@ namespace WebAppMVC.Controllers
         {
             if (page < 1) page = 1;
             int userId = GetValidUser(null);
-            var result = await _wishListService.GetWishList(userId, page);
+            var result = await _wishListService.GetWishList(userId, page, 10);
             WishListModel model = new()
             {
                 Items = result.Items,

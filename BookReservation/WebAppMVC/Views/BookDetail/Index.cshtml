@@ -59,84 +59,56 @@
 </div>
 
 
-@{
-    <h4 class="p-3 card-title">Book reviews</h4>
-    if (Model.Reviews.Count() != 0)
+
+<h4 class="p-3 card-title">Book reviews</h4>
+@if (Model.Reviews.Count() != 0)
+{
+    foreach (var review in Model.Reviews)
     {
-        foreach (var review in Model.Reviews)
-        {
-    <div class="card my-2 p-1" style="width: 100%;">
-                <div class="card-body">
-                    <span class="card-title row justify-content-between">
-                        <span class="col col-sm-9 m-0 text-left" style="font-size: 1.2rem">
-                            @review.Name
-                        </span>
-                        <span class="col col-sm-3 m-0 text-end font-monospace" style="font-size: 1.2rem">
-                            Score: @review.Score
-                        </span>
+        <div class="card my-2 p-1" style="width: 100%;">
+            <div class="card-body">
+                <span class="card-title row justify-content-between">
+                    <span class="col col-sm-9 m-0 text-left" style="font-size: 1.2rem">
+                        @review.Name
                     </span>
-                    <span class="card-text row justify-content-between">
-                        @if (review.Description == null)
-                        {
-                            <p class="col col-sm-9 m-0 text-left text-muted">No description</p>  
-                        }
-                        else 
-                        { 
-                            <p class="col col-sm-9 m-0 text-left">@review.Description</p> 
-                        }
-                        <span class="col col-sm-3 m-0 text-end">
-                            Added at: @review.AddedAt.ToShortDateString()
-                        </span>
+                    <span class="col col-sm-3 m-0 text-end font-monospace" style="font-size: 1.2rem">
+                        Score: @review.Score
                     </span>
-                    @if (review.UserId == Model.UserId || this.User.IsInRole("Admin"))
-                {
-                        <a class="btn btn-danger mt-3"
-                        href="@($"/book/DeleteReview/{Model.BookInfo.Id}/{review.Id}/{Model.Page}")">Delete</a>
+                </span>
+                <span class="card-text row justify-content-between">
+                    @if (review.Description == null)
+                    {
+                        <p class="col col-sm-9 m-0 text-left text-muted">No description</p>  
                     }
-                </div>  
-    </div>
-        }
-    }
-    else if (Model.Page > 1) {
-    <p class="p-3">There are no reviews on this page!</p>
-    }
-    else
-    {
-    <p class="p-3">This product does not have any reviews. Be first to review this product!</p>
-    }
-    <nav>
-                    <ul class="pagination justify-content-center">
-                        @if (Model.Page > 1)
+                    else 
+                    { 
+                        <p class="col col-sm-9 m-0 text-left">@review.Description</p> 
+                    }
+                    <span class="col col-sm-3 m-0 text-end">
+                        Added at: @review.AddedAt.ToShortDateString()
+                    </span>
+                </span>
+                @if (review.UserId == Model.UserId || this.User.IsInRole("Admin"))
             {
-                            <li class="page-item">
-                                <a class="page-link"
-                               href="@($"/book/{Model.BookInfo.Id}/{Model.Page - 1}")">
-                                    Previous
-                                </a>
-                            </li>
-            }
-                        @for (int i = Math.Max(1, Model.Page - 3); i <= Math.Min(Model.Page + 3, Model.PageCount); ++i)
-            {
-                if (Model.Page == i)
-                {
-                                <li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
-                    continue;
+                    <a class="btn btn-danger mt-3"
+                    href="@($"/book/DeleteReview/{Model.BookInfo.Id}/{review.Id}/{Model.Page}")">Delete</a>
                 }
-                            <li class="page-item">
-                                <a class="page-link"
-                               href="@($"/book/{Model.BookInfo.Id}/{i}")">@i</a>
-                            </li>
-            }
-                        @if (Model.Page < Model.PageCount)
-            {
-                            <li class="page-item">
-                                <a class="page-link"
-                               href="@($"/book/{Model.BookInfo.Id}/{Model.Page + 1}")">Next</a>
-                            </li>
-            }
-                    </ul>
-    </nav>
+            </div>  
+        </div>
+    }
 }
+else if (Model.Page > 1) {
+    <p class="p-3">There are no reviews on this page!</p>
+}
+else
+{
+    <p class="p-3">This product does not have any reviews. Be first to review this product!</p>
+}
+
+@await Html.PartialAsync("/Views/PartialViews/_PartialPagination.cshtml",
+new PaginationModel { PageCount = Model.PageCount,
+PageNumber = Model.Page,
+Link = $"/book/{Model.BookInfo.Id}" })
 
 <!-- The Modal1 -->
 <div class="modal" id="myModal1" tabindex="-1" role="dialog">
