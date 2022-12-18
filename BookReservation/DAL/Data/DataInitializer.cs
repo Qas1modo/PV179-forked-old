@@ -20,7 +20,7 @@ namespace DAL.Data
                 ZipCode = 03605,
                 Name = "admin",
                 Email = "admin@mail.com",
-                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
+                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=", //Abc123456
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "911999111",
                 BirthDate = new DateTime(1970, 3, 1),
@@ -36,7 +36,7 @@ namespace DAL.Data
                 ZipCode = 03601,
                 Name = "Peter Marcin",
                 Email = "peter@mail.com",
-                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
+                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=", //Abc123456
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "+421911999222",
                 BirthDate = new DateTime(1980, 3, 1),
@@ -52,7 +52,7 @@ namespace DAL.Data
                 ZipCode = 03602,
                 Name = "Ferko Turan",
                 Email = "feroslav1@mail.com",
-                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
+                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=", //Abc123456
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "+421911999333",
                 BirthDate = new DateTime(1983, 3, 1),
@@ -68,7 +68,7 @@ namespace DAL.Data
                 ZipCode = 03603,
                 Name = "Patrik Vrbovsky",
                 Email = "patrik@mail.com",
-                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
+                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=", //Abc123456
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "+421911999540",
                 BirthDate = new DateTime(1991, 3, 1),
@@ -84,7 +84,7 @@ namespace DAL.Data
                 ZipCode = 03601,
                 Name = "Maurice Richard",
                 Email = "strelec32@mail.com",
-                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=",
+                Password = "79znGdbjJimGOZQdZVxcYNDAd+mJZjqP76afOyQXGuY=", //Abc123456
                 Salt = "tY+cZjt0T9wFwkkBE46bkQ==",
                 Phone = "+421911999489",
                 BirthDate = new DateTime(2010, 3, 1),

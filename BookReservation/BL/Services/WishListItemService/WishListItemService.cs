@@ -48,7 +48,9 @@ namespace BL.Services.WishListItemServ
             return true;
         }
 
-        public async Task DeleteWishlistItem(int id, int userId = -1)
+        public async Task DeleteWishlistItem(int id, 
+            int userId = -1,
+            bool commit = true)
         {
             WishListItem item = await uow.WishlistRepository.GetByID(id);
             if (item.UserId != userId && userId != -1)
@@ -56,7 +58,7 @@ namespace BL.Services.WishListItemServ
                 return;
             }
             uow.WishlistRepository.Delete(item);
-            await uow.CommitAsync();
+            if (commit) await uow.CommitAsync();
         }
 
         public async Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1, int pageSize = 10)

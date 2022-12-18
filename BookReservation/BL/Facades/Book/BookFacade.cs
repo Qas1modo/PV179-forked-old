@@ -94,7 +94,8 @@ namespace BL.Facades.BookFac
             }
             foreach (var wishlistItem in book.Wishlist)
             {
-                await wishListItemService.DeleteWishlistItem(wishlistItem.Id);
+                await wishListItemService.DeleteWishlistItem(wishlistItem.Id,
+                    commit: false);
             }
             book.Deleted = true;
             uow.BookRepository.Update(book);

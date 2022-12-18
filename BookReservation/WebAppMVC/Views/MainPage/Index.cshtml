@@ -79,6 +79,7 @@
 <a class="btn btn-danger" href="@Url.Action("Index", "MainPage", new { page = 1 })">
 	Cancel filter
 </a>
+<hr />
 @if (Model == null || Model.Books.Count() == 0)
 {
 	<div class="justify-content-center align-items-center">
@@ -87,7 +88,6 @@
 }
 else
 {
-	<hr />
 	<div class="container">
 
 		<div class="row">

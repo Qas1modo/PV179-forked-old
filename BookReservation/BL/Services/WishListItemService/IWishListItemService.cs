@@ -12,8 +12,12 @@ namespace BL.Services.WishListItemService
     {
         Task<bool> AddToWishlist(WishListItemDto input);
 
-        Task DeleteWishlistItem(int id, int userId = -1);
+        Task DeleteWishlistItem(int id, 
+            int userId = -1,
+            bool commit =true);
 
-        Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1, int pageSize = 10);
+        Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId,
+            int page = 1,
+            int pageSize = 10);
     }
 }
