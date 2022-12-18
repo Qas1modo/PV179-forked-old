@@ -1,12 +1,8 @@
 ﻿using System;
 using AutoMapper;
-using BL.DTOs;
 using BL.DTOs.BasicDtos;
 using BL.Services.BookServ;
-using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
-using BL.Facades.BookFac;
-using BL.QueryObjects;
 using DAL.Models;
 using BL.Services.AuthorServ;
 using BL.Services.GenreServ;

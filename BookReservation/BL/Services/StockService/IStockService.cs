@@ -13,8 +13,6 @@ namespace BL.Services.StockServ
     {
         Task<QueryResultDto<BookBasicInfoDto>> ShowBooks(BookFilterDto filter);
 
-        Task<BookAvailabilityDto> GetBookStock(int bookId);
-
         Task<bool> ReserveBookStock(int bookId);
 
         Task<bool> BookReturnedStock(int bookId);

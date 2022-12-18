@@ -6,11 +6,7 @@ namespace BL.Services.AuthorServ
 {
     public interface IAuthorService
     {
-        Task AddAuthor(AuthorDto authorDto);
-
         Task<Author> GetOrAddAuthor(string authorName);
-
-        void RemoveAuthor(int id);
     }
 }
 

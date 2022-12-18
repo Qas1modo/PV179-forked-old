@@ -66,12 +66,6 @@ namespace BL.Services.StockServ
             return mapper.Map<QueryResultDto<BookBasicInfoDto>>(await query.Execute());
         }
 
-        public async Task<BookAvailabilityDto> GetBookStock(int bookId)
-        {
-            Book book = await uow.BookRepository.GetByID(bookId);
-            return mapper.Map<BookAvailabilityDto>(book);
-        }
-
         public async Task<bool> ReserveBookStock(int bookId)
         {
             Book book = await uow.BookRepository.GetByID(bookId);

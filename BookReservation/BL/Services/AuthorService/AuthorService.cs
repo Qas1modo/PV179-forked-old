@@ -6,46 +6,32 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
+using BL.QueryObjects;
 
 namespace BL.Services.AuthorServ
 {
     public class AuthorService : IAuthorService
     {
-        private readonly IMapper mapper;
         private readonly IUoWAuthor uow;
+        private readonly AuthorQueryObject queryObject;
 
-        public AuthorService(IUoWAuthor uow, IMapper mapper)
+        public AuthorService(IUoWAuthor uow,
+            AuthorQueryObject queryObject)
         {
-            this.mapper = mapper;
+            this.queryObject = queryObject;
             this.uow = uow;
-        }
-
-        public async Task AddAuthor(AuthorDto authorDto)
-        {
-            uow.AuthorRepository.Insert(mapper.Map<Author>(authorDto));
-            await uow.CommitAsync();
-        }
-
-        public void RemoveAuthor(int id)
-        {
-            uow.AuthorRepository.Delete(id);
-            uow.CommitAsync();
         }
 
         public async Task<Author> GetOrAddAuthor(string authorName)
         {
-            Author? newAuthor = uow.AuthorRepository.GetQueryable()
-            .Where(x => x.Name == authorName)
-            .FirstOrDefault();
+            Author? newAuthor = queryObject.GetAuthorByName(authorName);
             if (newAuthor != null)
             {
                 return newAuthor;
             }
             uow.AuthorRepository.Insert(new() { Name = authorName });
             await uow.CommitAsync();
-            return uow.AuthorRepository.GetQueryable()
-            .Where(x => x.Name == authorName)
-            .First();
+            return queryObject.GetExistingAuthor(authorName);
         } 
     }
 }

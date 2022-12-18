@@ -171,11 +171,12 @@
             </div>
             <hr />
         }
-        @if (Model.Items.Count() < 1) 
+        @if (Model.Items.Count() < 1)
         {
             <div class="justify-content-center align-items-center">
                 <span class="display-6">There are no reservations on this page</span>
             </div>
+            <hr />
         }
         @await Html.PartialAsync("/Views/PartialViews/_PartialPagination.cshtml",
         new PaginationModel { PageCount = Model.PageCount,

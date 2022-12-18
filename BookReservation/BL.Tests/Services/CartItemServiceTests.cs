@@ -26,7 +26,6 @@ namespace BL.Tests.Services
                 UserId = user.Id,
                 BookId = book.Id,
                 LoanPeriod = 10,
-                TotalPrice = book.Price
             };
 
             mapper.Setup(x => x.Map<CartItem>(It.IsAny<CartItemDto>())).Verifiable();

@@ -90,6 +90,8 @@ builder.Services.AddScoped<IWishListItemService, WishListItemService>();
 // Facades and QO DI Setup
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
+builder.Services.AddScoped<AuthorQueryObject, AuthorQueryObject>();
+builder.Services.AddScoped<GenreQueryObject, GenreQueryObject>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 

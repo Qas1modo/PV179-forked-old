@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs.BasicDtos;
+using BL.QueryObjects;
 using BL.Services.CartItemServ;
 using BL.Services.ReservationServ;
 using BL.Services.StockServ;

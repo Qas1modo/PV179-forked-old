@@ -6,6 +6,7 @@ using Infrastructure.EFCore.UnitOfWork;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DAL.Models;
+using BL.QueryObjects;
 
 namespace BL.Services.GenreServ
 {
@@ -13,39 +14,33 @@ namespace BL.Services.GenreServ
     {
         private readonly IMapper mapper;
         private readonly IUoWGenre uow;
+        private readonly GenreQueryObject queryObject;
 
-        public GenreService(IUoWGenre uow, IMapper mapper)
+        public GenreService(IUoWGenre uow,
+            IMapper mapper,
+            GenreQueryObject queryObject)
         {
             this.mapper = mapper;
             this.uow = uow;
+            this.queryObject = queryObject;
         }
 
         public async Task<Genre> GetOrAddGenre(string genreName)
         {
-            Genre? newGenre = uow.GenreRepository.GetQueryable()
-            .Where(x => x.Name == genreName)
-            .FirstOrDefault();
+            Genre? newGenre = queryObject.GetGenreByName(genreName);
             if (newGenre != null)
             {
                 return newGenre;
             }
             uow.GenreRepository.Insert(new Genre() { Name = genreName });
             await uow.CommitAsync();
-            return uow.GenreRepository.GetQueryable()
-            .Where(x => x.Name == genreName)
-            .First();
+            return queryObject.GetExistingGenre(genreName);
         }
 
         public async Task AddGenre(GenreDto genreDto)
         {
             uow.GenreRepository.Insert(mapper.Map<Genre>(genreDto));
             await uow.CommitAsync();
-        }
-
-        public void RemoveGenre(int id)
-        {
-            uow.GenreRepository.Delete(id);
-            uow.CommitAsync();
         }
 
         public async Task<IEnumerable<GenreDto>> GetAllGenres()

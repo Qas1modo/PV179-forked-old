@@ -14,21 +14,25 @@ namespace BL.QueryObjects
     public class UserQueryObject
     {
 
-        private readonly IUoWUserInfo uoWUserInfo;
+        private readonly IUoWUserInfo uow;
 
-        public UserQueryObject(IUoWUserInfo unitOfWork)
+        public UserQueryObject(IUoWUserInfo uoWUserInfo)
         {
-            this.uoWUserInfo = unitOfWork;
+            this.uow = uoWUserInfo;
         }
 
         public User? GetUserByEmail(string email)
         {
-            return uoWUserInfo.UserRepository.GetQueryable().Where(x => x.Email == email).FirstOrDefault();
+            return uow.UserRepository.GetQueryable()
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
         }
 
         public User? GetUserByName(string name)
         {
-            return uoWUserInfo.UserRepository.GetQueryable().Where(x => x.Name == name).FirstOrDefault();
+            return uow.UserRepository.GetQueryable()
+                .Where(x => x.Name == name)
+                .FirstOrDefault();
         }
     }
 }
