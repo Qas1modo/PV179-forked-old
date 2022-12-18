@@ -17,5 +17,7 @@ namespace DAL.Models
 
         [ForeignKey(nameof(BookId))]
         public virtual Book Book { get; set; }
+
+        public DateTime AddedAt { get; set; }
     }
 }

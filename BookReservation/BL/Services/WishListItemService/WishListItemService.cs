@@ -10,6 +10,7 @@ using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +42,7 @@ namespace BL.Services.WishListItemServ
             {
                 return false;
             }
+            input.AddedAt = DateTime.Now;
             uow.WishlistRepository.Insert(mapper.Map<WishListItem>(input));
             await uow.CommitAsync();
             return true;
@@ -60,6 +62,7 @@ namespace BL.Services.WishListItemServ
         public async Task<QueryResultDto<WishListDetailDto>> GetWishList(int userId, int page = 1)
         {
             query.Where<int>(x => x == userId, "UserId");
+            query.OrderBy<DateTime>("AddedAt", false);
             query.Page(page, 15);
             var result = await query.Execute();
             return mapper.Map<QueryResult<WishListItem>, QueryResultDto<WishListDetailDto>>(result);

@@ -36,7 +36,10 @@
             </div>
             <div class="col-sm">
                 <div class="row text-end">
-                    <span class="m-0" style="font-size: 1.5rem">@(item.Price)/day</span>
+                    <span class="m-0 font-monospace" style="font-size: 1.5rem">@(item.Price)/day</span>
+                </div>
+                <div class="row text-end">
+                    <span class="m-0" style="font-size: 1.2rem">Added at @item.AddedAt.ToShortDateString()</span>
                 </div>
             </div>
             <div class="row justify-content-end">

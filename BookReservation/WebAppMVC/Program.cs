@@ -30,7 +30,7 @@ var builder = WebApplication.CreateBuilder();
 
 using (var db = new BookReservationDbContext())
 {
-    //db.Database.EnsureDeleted();
+    db.Database.EnsureDeleted();
     db.Database.EnsureCreated();
 }
 

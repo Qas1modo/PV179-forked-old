@@ -12,5 +12,6 @@ namespace BL.DTOs.BasicDtos
 
         public int BookId { get; set; }
 
+        public DateTime AddedAt { get; set; }
     }
 }
