@@ -56,7 +56,7 @@ namespace WebAppMVC.Controllers
                 PageSize = 15
             };
             // Filter books
-            var serviceResult = stockService.ShowBooks(filter);
+            var serviceResult = await stockService.ShowBooks(filter);
             // Prepare model
             var model = new MainPageIndexModel
             {

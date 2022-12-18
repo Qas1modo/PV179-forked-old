@@ -6,10 +6,10 @@ namespace BL.Services.ReviewServ
 {
     public interface IReviewService
     {
-        Task AddReview(ReviewDto reviewDto);
+        Task<bool> AddReview(ReviewDto reviewDto);
 
-        Task DeleteReview(int reviewId);
+        Task<bool> DeleteReview(int reviewId, int userId = -1, bool commit = true);
 
-        Task<IEnumerable<ReviewDetailDto>> ShowReviews(int bookId, int number = 5);
+        Task<QueryResultDto<ReviewDetailDto>> ShowReviews(int bookId, int page, int pageSize);
     }
 }

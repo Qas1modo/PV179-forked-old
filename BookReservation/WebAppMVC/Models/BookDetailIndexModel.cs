@@ -5,13 +5,16 @@ namespace WebAppMVC.Models
 {
     public class BookDetailIndexModel
     {
-        public BookBasicInfoDto bookInfo { get; set; }
+        public BookBasicInfoDto BookInfo { get; set; }
 
-        public IEnumerable<ReviewDetailDto> reviews { get; set; }
+        public IEnumerable<ReviewDetailDto> Reviews { get; set; }
 
-        public string group { get; set; }
+        public int UserId { get; set; }
 
-        public bool hasMore { get; set; }
+        public int PageCount { get; set; }
+
+        public int Page { get; set; }
+
     }
 }
 

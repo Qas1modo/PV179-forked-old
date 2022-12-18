@@ -25,7 +25,7 @@ namespace Infrastructure.EFCore.Query
             entityType = typeof(TEntity);
         }
 
-        public override QueryResult<TEntity> Execute()
+        public override async Task<QueryResult<TEntity>> Execute()
         {
             IQueryable<TEntity> query = context.Set<TEntity>();
             foreach (var expression in WherePredicates)
@@ -44,7 +44,7 @@ namespace Infrastructure.EFCore.Query
             {
                 query = query.Skip(((int)PageNumber - 1) * PageSize).Take(PageSize + 1);
             }
-            IEnumerable<TEntity> items = query.ToList();
+            IEnumerable<TEntity> items = await query.ToListAsync();
             return new QueryResult<TEntity>(items.Take(PageSize), totalCount,
                 items.Count() != PageSize + 1,
                 PageSize,

@@ -15,17 +15,12 @@ namespace BL.Services.UserServ
 
         Task<PersonalInfoDto> ShowUserData(int userId);
 
-        Task<IEnumerable<UserDto>> ShowUsers();
-
-        QueryResultDto<UserDto> ShowUsersPaging(int pageNumber);
-
+        Task<QueryResultDto<UserDto>> ShowUsers(int pageNumber);
 
 		int IdUserWithEmail(string email);
 
         int IdUserWithUsername(string username);
 
         Task UpdateUserPermission(int userId, Group newGroup);
-
-        void DeleteUser(int userId);
     }
 }

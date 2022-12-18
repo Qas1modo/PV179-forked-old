@@ -42,13 +42,13 @@ namespace WebAppMVC.Controllers
 		}
 
 		[HttpGet("AdminPage/Users/{page?}")]
-		public IActionResult Users(int page = 1)
+		public async Task<IActionResult> Users(int page = 1)
 		{
 			page = page < 1 ? 1 : page;
 
 			var model = new AdminPageUsersModel();
 
-			var users = userService.ShowUsersPaging(page);
+			var users = await userService.ShowUsers(page);
 
 			model.Users = users.Items;
 			model.Page = users.PageNumber ?? 1;
@@ -58,14 +58,14 @@ namespace WebAppMVC.Controllers
 		}
 
 		[HttpGet("AdminPage/Books/{page?}")]
-		public IActionResult Books(int page = 1)
+		public async Task<IActionResult> Books(int page = 1)
 		{
 
 			var model = new AdminPageBooksModel();
 
 			bookFilter.Page = page < 1 ? 1 : page;
 			bookFilter.PageSize = 10;
-            var serviceResult = stockService.ShowBooks(bookFilter);
+            var serviceResult = await stockService.ShowBooks(bookFilter);
 
 			model.Books = serviceResult.Items;
 			model.Page = serviceResult.PageNumber ?? 1;
@@ -74,29 +74,75 @@ namespace WebAppMVC.Controllers
 			return View(model);
 		}
 
-		public async Task<IActionResult> ChangeBookInfo(int id, BookDetailIndexModel model)
+		[HttpGet]
+		public async Task<IActionResult> ChangeBookInfo(int id)
 		{
-			var book = await bookService.GetBook(id);
+            var genres = await genreService.GetAllGenres();
+            SelectList dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
+            ViewBag.genres = dropDownItems;
 
-			if (book == null)
+            BookBasicInfoDto book = await bookService.GetBook(id);
+            if (book == null)
+            {
+                return RedirectToAction(nameof(Books));
+            }
+			AdminChangeBookModel model = new()
 			{
-				return RedirectToAction(nameof(Books));
-			}
+				AuthorName = book.Author.Name,
+				GenreName = book.Genre.Name,
+				Deleted = book.Deleted,
+				Description = book.Description,
+				Price = book.Price,
+				Name = book.Name,
+				Total = book.Total,
+			};
+            return View("ChangeBookInfo", model);
 
-			if (model.bookInfo == null)
+        }
+
+		[HttpPost]
+        public async Task<IActionResult> ChangeBookInfo(int id, AdminChangeBookModel model)
+		{
+
+            BookBasicInfoDto book = await bookService.GetBook(id);
+            var newStock = book.Stock - (model.Total - book.Total);
+			if (newStock < 0)
 			{
-				return View(new BookDetailIndexModel { bookInfo = book });
-			}
-
-			book.Author = model.bookInfo.Author;
-			book.Name = model.bookInfo.Name;
-			book.Stock = model.bookInfo.Stock;
-			book.Description = model.bookInfo.Description;
-
-			await bookService.UpdateBook(book.Id, book);
-
-			return RedirectToAction(nameof(ChangeBookInfo), new { id = book.Id });
-		}
+				ModelState.AddModelError("Total" ,"New total cannot be applied!");
+            }
+			if (!ModelState.IsValid)
+			{
+                return View("ChangeBookInfo", book);
+            }
+			book.Name = model.Name;
+			book.Stock = newStock;
+			book.Total = model.Total;
+			book.AuthorName = model.AuthorName;
+			book.GenreName = model.GenreName;
+            book.Description = model.Description;
+			if (await bookService.UpdateBook(book.Id, book))
+			{
+                ModelState.AddModelError("Name", "Changes applied succesfully!");
+            }
+			else
+			{
+                ModelState.AddModelError("AuthorName", "Invalid author name!");
+            }
+            var genres = await genreService.GetAllGenres();
+            SelectList dropDownItems = new SelectList(genres.Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), "Key", "Value");
+            ViewBag.genres = dropDownItems;
+            AdminChangeBookModel newModel = new()
+            {
+                AuthorName = model.AuthorName,
+                GenreName = book.GenreName,
+                Deleted = book.Deleted,
+                Description = book.Description,
+                Price = book.Price,
+                Name = book.Name,
+                Total = book.Total,
+            };
+            return View("ChangeBookInfo", newModel);
+        }
 
 		public async Task<IActionResult> AddBook()
 		{
@@ -125,7 +171,7 @@ namespace WebAppMVC.Controllers
 				model.Genre= new BL.DTOs.BasicDtos.GenreDto { Name = model.GenreName };
 			}
 
-			await bookFacade.addBook(model.Author, model.Book, model.Genre);
+			await bookFacade.AddBook(model.Author, model.Book, model.Genre);
 
 			return RedirectToAction(nameof(Index));
         }

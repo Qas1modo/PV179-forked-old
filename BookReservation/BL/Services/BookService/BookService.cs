@@ -31,20 +31,35 @@ namespace BL.Services.BookServ
             return mapper.Map<BookBasicInfoDto>(book);
         }
 
-        public async Task UpdateBook(int bookId, BookBasicInfoDto updatedBook)
+        public async Task<bool> UpdateBook(int bookId, BookBasicInfoDto updatedBook)
         {
             Book book = await uow.BookRepository.GetByID(bookId);
+            if (book.Genre.Name != updatedBook.GenreName)
+            {
+                Genre? newGenre = uow.GenreRepository.GetQueryable()
+                .Where(x => x.Name == updatedBook.GenreName)
+                .FirstOrDefault();
+                if (newGenre == null)
+                {
+                    return false;
+                }
+                book.GenreId = newGenre.Id;
+            }
+            if (book.Author.Name != updatedBook.AuthorName)
+            {
+                Author? newAuthor = uow.AuthorRepository.GetQueryable()
+                .Where(x => x.Name == updatedBook.AuthorName)
+                .FirstOrDefault();
+                if (newAuthor == null)
+                {
+                    return false;
+                }
+                book.AuthorId = newAuthor.Id;
+            }
             book = mapper.Map(updatedBook, book);
             uow.BookRepository.Update(book);
             await uow.CommitAsync();
-        }
-
-        public async Task DeleteBook(int bookId)
-        {
-            Book book = await uow.BookRepository.GetByID(bookId);
-            book.Deleted = true;
-            uow.BookRepository.Update(book);
-            await uow.CommitAsync();
+            return true;
         }
     }
 }

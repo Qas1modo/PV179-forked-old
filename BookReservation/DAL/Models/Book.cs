@@ -6,7 +6,7 @@ namespace DAL.Models
 {
     public class Book : BaseEntity
     {
-        [Required, MaxLength(64)]
+        [Required, StringLength(64)]
         public string Name { get; set; }
 
         [ForeignKey(nameof(AuthorId))]
@@ -19,7 +19,6 @@ namespace DAL.Models
 
         public int GenreId { get; set; }
 
-        // ErrorMessage = ""?
         [Range(0, int.MaxValue), Required]
         public int Stock { get; set; }
 

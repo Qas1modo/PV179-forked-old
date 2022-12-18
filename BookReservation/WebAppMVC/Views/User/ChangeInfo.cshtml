@@ -58,7 +58,7 @@
             <div class="row valign-wrapper m-2 text-center">
                 <div class="col s12 l4">Street number:</div>
                 <div class="input-field col s12 l8">
-                    @Html.TextBoxFor(model => model.StNumber, new { placeholder = "Street number", required = true })
+                    @Html.TextBoxFor(model => model.StNumber, new { placeholder = "Street number", type = "number", required = true })
                 </div>
             </div>
             <hr />
@@ -72,7 +72,7 @@
             <div class="row valign-wrapper m-2 text-center">
                 <div class="col s12 l4">Zip code:</div>
                 <div class="input-field col s12 l8">
-                    @Html.TextBoxFor(model => model.ZipCode, new { placeholder = "Zip code", required = true })
+                    @Html.TextBoxFor(model => model.ZipCode, new { placeholder = "Zip code", type = "number", required = true })
                 </div>
             </div>
             <hr />

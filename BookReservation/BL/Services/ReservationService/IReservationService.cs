@@ -20,7 +20,9 @@ namespace BL.Services.ReservationServ
         Task<bool> ChangeState(int reservationId, RentState newState,
             int userId, Reservation? reservation = null, bool commit = false);
 
-        QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
+        Task CancelReservation(int reservationId);
+
+        Task<QueryResultDto<ReservationDetailDto>> ShowReservations(int userId,
             int pageNumber,
             RentState state);
     }

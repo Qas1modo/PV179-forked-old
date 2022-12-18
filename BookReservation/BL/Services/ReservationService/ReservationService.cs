@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
 using BL.DTOs;
 using BL.DTOs.BasicDtos;
 using DAL.Enums;
@@ -30,6 +31,21 @@ namespace BL.Services.ReservationServ
             uow.ReservationRepository.Insert(mapper.Map<Reservation>(rentDto));
             if (commit) uow.CommitAsync();
         }
+
+        public async Task CancelReservation(int reservationId)
+        {
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            RentState state = reservation.State;
+            if (state == RentState.Awaiting ||
+                state == RentState.Reserved ||
+                state == RentState.Expired)
+            {
+                reservation.CanceledAt = DateTime.Now;
+                reservation.State = RentState.Canceled;
+                uow.ReservationRepository.Update(reservation);
+            }
+        }
+
 
         public async Task<bool> ChangeState(int reservationId, RentState newState,
             int userId = -1, Reservation? reservation = null, bool commit = false)
@@ -93,7 +109,7 @@ namespace BL.Services.ReservationServ
             return true;
         }
 
-        public QueryResultDto<ReservationDetailDto> ShowReservations(int userId,
+        public async Task<QueryResultDto<ReservationDetailDto>> ShowReservations(int userId,
             int pageNumber,
             RentState state)
         {
@@ -101,7 +117,7 @@ namespace BL.Services.ReservationServ
             query.Where<RentState>(x => x.Equals(state), "State");
             query.OrderBy<DateTime>("ReservedAt", false);
             query.Page(pageNumber, 10);
-            var result = query.Execute();
+            var result = await query.Execute();
             return mapper.Map<QueryResult<Reservation>, QueryResultDto<ReservationDetailDto>>(result);
         }
     }

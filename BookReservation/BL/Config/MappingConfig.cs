@@ -22,22 +22,23 @@ namespace BL.Config
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
             config.CreateMap<PersonalInfoDto, User>().ReverseMap();
-            config.CreateMap<ReviewDetailDto, Review>().ReverseMap();
-            config.CreateMap<Review, ReviewDetailDto>()
-                .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.User.Name));
             config.CreateMap<AuthorDto, Author>().ReverseMap();
             config.CreateMap<BookDto, Book>()
                 .ForMember(dest => dest.Deleted, cfg => cfg.MapFrom(src => false))
                 .ReverseMap();
+            config.CreateMap<Review, ReviewDetailDto>()
+                .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.User.Name));
             config.CreateMap<CartItemDto, CartItem>().ReverseMap();
             config.CreateMap<GenreDto, Genre>().ReverseMap();
             config.CreateMap<QueryResult<Reservation>, QueryResultDto<ReservationDetailDto>>();
-			config.CreateMap<QueryResult<User>, QueryResultDto<UserDto>>();
+            config.CreateMap<QueryResult<Review>, QueryResultDto<ReviewDetailDto>>();
+            config.CreateMap<QueryResult<User>, QueryResultDto<UserDto>>();
 			config.CreateMap<Reservation, ReservationDetailDto>()
                 .ForMember(dest => dest.Name, cfg => cfg.MapFrom(src => src.Book.Name))
                 .ForMember(dest => dest.Author, cfg => cfg.MapFrom(src => src.Book.Author.Name))
                 .ForMember(dest => dest.Genre, cfg => cfg.MapFrom(src => src.Book.Genre.Name))
                 .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => src.Book.Price));
+
             config.CreateMap<ReservationDto, Reservation>()
                 .ForMember(dest => dest.State, cfg => cfg.MapFrom(src => src.State));
             config.CreateMap<ReviewDto, Review>().ReverseMap();

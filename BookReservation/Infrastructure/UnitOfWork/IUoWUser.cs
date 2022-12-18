@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.UnitOfWork
 {
-    public interface IUoWCartItem: IUnitOfWork
+    public interface IUoWUser : IUnitOfWork
     {
         IRepository<User> UserRepository { get; }
-        IRepository<Book> BookRepository { get; }
-        IRepository<CartItem> CartItemRepository { get; }
+        IRepository<Review> ReviewRepository { get; }
+        IRepository<Reservation> ReservationRepository { get; }
     }
 }

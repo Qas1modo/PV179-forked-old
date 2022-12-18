@@ -40,6 +40,6 @@ namespace Infrastructure.Query
             return this;
         }
 
-        public abstract QueryResult<TEntity> Execute();
+        public abstract Task<QueryResult<TEntity>> Execute();
     }
 }

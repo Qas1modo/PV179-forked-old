@@ -8,6 +8,8 @@
 
         public int Score { get; set; }
 
+        public DateTime AddedAt { get; set; }
+
         public string? Description { get; set; }
     }
 }

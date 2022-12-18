@@ -26,8 +26,6 @@ namespace BL.Services.UserServ
         private readonly UserQueryObject queryObject;
         private readonly IQuery<User> query;
 
-
-
 		public UserService(IUoWUserInfo uow, IMapper mapper, UserQueryObject userQuery, IQuery<User> query)
         {
             this.mapper = mapper;
@@ -61,16 +59,10 @@ namespace BL.Services.UserServ
             return user == null ? -1 : user.Id;
         }
 
-        public async Task<IEnumerable<UserDto>> ShowUsers()
-        {
-            IEnumerable<User> users = await uow.UserRepository.GetAll();
-            return mapper.Map<IEnumerable<UserDto>>(users);
-        }
-
-		public QueryResultDto<UserDto> ShowUsersPaging(int pageNumber)
+		public async Task<QueryResultDto<UserDto>> ShowUsers(int pageNumber)
 		{
 			query.Page(pageNumber, 20);
-			var result = query.Execute();
+			var result = await query.Execute();
 			return mapper.Map<QueryResult<User>, QueryResultDto<UserDto>>(result);
 		}
 
@@ -80,11 +72,6 @@ namespace BL.Services.UserServ
             user.Group = newGroup;
             uow.UserRepository.Update(user);
             await uow.CommitAsync();
-        }
-
-        public void DeleteUser(int userId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

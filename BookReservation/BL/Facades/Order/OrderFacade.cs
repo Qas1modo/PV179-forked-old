@@ -45,13 +45,17 @@ namespace BL.Facades.OrderFac
         public async Task<bool> MakeOrder(int userId)
         {
             User user = await uow.UserRepository.GetByID(userId);
-            if (!UserReservations(userId, user.CartItems.Count))
+            if (!await UserReservations(userId, user.CartItems.Count))
             {
                 return false;
             }
             RentState state = RentState.Reserved;
             foreach (CartItem cartItem in user.CartItems)
             {
+                if (cartItem.Book.Deleted)
+                {
+                    return false;
+                }
                 if (!await stockService.ReserveBookStock(cartItem.BookId))
                 {
                     state = RentState.Awaiting;
@@ -63,22 +67,22 @@ namespace BL.Facades.OrderFac
             return true;
         }
 
-        private bool UserReservations(int userId, int reservationCount = 1)
+        private async Task<bool> UserReservations(int userId, int reservationCount = 1)
         {
-            int userReservations = query
+            int userReservations = (await query
                 .Where<RentState>(x => x.Equals(RentState.Reserved) || x.Equals(RentState.Awaiting), "State")
                 .Where<int>(x => x == userId, "UserId")
-                .Execute().ItemsCount;
+                .Execute()).ItemsCount;
             return userReservations + reservationCount < 6 ;
         }
 
         public async Task<bool> ReserveBook(int reservationId, int userId)
         {
-            if (!UserReservations(userId))
+            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
+            if (!await UserReservations(userId) || reservation.Book.Deleted)
             {
                 return false;
             }
-            Reservation reservation = await uow.ReservationRepository.GetByID(reservationId);
             RentState state = RentState.Reserved; 
             if (!await stockService.ReserveBookStock(reservation.BookId))
             {
@@ -94,12 +98,12 @@ namespace BL.Facades.OrderFac
 
         private async Task<bool> IsAwaiting(int bookId)
         {
-            Reservation? waitingReservation = query
+            Reservation? waitingReservation = (await query
                .Where<RentState>(x => x == RentState.Awaiting, "State")
                .Where<int>(x => x == bookId, "BookId")
                .OrderBy<DateTime>("ReservedAt")
                .Page(1, 1)
-               .Execute().Items
+               .Execute()).Items
                .FirstOrDefault();
             if (waitingReservation != null)
             {
@@ -130,9 +134,9 @@ namespace BL.Facades.OrderFac
         public async Task ExpireOldReservations()
         {
             DateTime currentTime = DateTime.Now;
-            IEnumerable<Reservation> reservations = query
+            IEnumerable<Reservation> reservations = (await query
                 .Where<RentState>(x => x == RentState.Reserved, "State")
-                .Execute().Items;
+                .Execute()).Items;
             foreach (Reservation reservation in reservations)
             {
                 if (DateTime.Now.Subtract(reservation.ReservedAt).Days > 7)

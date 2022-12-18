@@ -23,19 +23,23 @@ namespace BL.Services.CartItemServ
 
         public async Task AddItem(CartItemDto itemDto)
         {
+            if ((await uow.BookRepository.GetByID(itemDto.BookId)).Deleted)
+            {
+                return;
+            }
             uow.CartItemRepository.Insert(mapper.Map<CartItem>(itemDto));
             await uow.CommitAsync();
         }
 
-        public async Task RemoveItem(int id, int userId)
+        public async Task RemoveItem(int id, int userId = -1, bool commit = true)
         {
             CartItem item = await uow.CartItemRepository.GetByID(id);
-            if (item.UserId != userId)
+            if (item.UserId != userId && userId != -1)
             {
                 return;
             }
             uow.CartItemRepository.Delete(item);
-            await uow.CommitAsync();
+            if (commit) await uow.CommitAsync();
         }
 
         public async Task EmptyCart(int userId, bool commit = true)

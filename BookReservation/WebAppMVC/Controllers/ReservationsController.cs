@@ -2,16 +2,9 @@
 using BL.DTOs;
 using BL.Facades.OrderFac;
 using BL.Services.ReservationServ;
-using BL.Services.UserServ;
 using DAL.Enums;
-using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Drawing.Printing;
-using System.Security.Claims;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
@@ -29,12 +22,12 @@ namespace WebAppMVC.Controllers
             _orderFacade = orderFacade;
         }
 
-        private ReservationModel<ReservationDetailDto>? Reservations(int page, RentState state, int userId)
+        private async Task<ReservationModel<ReservationDetailDto>> Reservations(int page, RentState state, int userId)
         {
             if (page < 1) page = 1;
             string group = GetGroup();
             userId = GetValidUser(userId, group);
-            var result = _reservationService.ShowReservations(userId, page, state);
+            var result = await _reservationService.ShowReservations(userId, page, state);
             ReservationModel<ReservationDetailDto> model = new()
             {
                 CurrentState = state,
@@ -53,13 +46,13 @@ namespace WebAppMVC.Controllers
         {
             if (!CheckPermissions(userId))
             {
-                return View("Reservations", Reservations(page, RentState.Reserved, userId));
+                return View("Reservations", await Reservations(page, RentState.Reserved, userId));
             }
             if (!await _orderFacade.ReturnBook(id, userId, RentState.Canceled))
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             };
-            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+            return View("Reservations", await Reservations(page, RentState.Reserved, userId));
         }
 
         [Route("renew/{id:int}/{page:int?}")]
@@ -73,7 +66,7 @@ namespace WebAppMVC.Controllers
                     ModelState.AddModelError("Id", "Cannot have more than 5 reservations!");
                 }
             }
-            return View("Reservations", Reservations(page, RentState.Expired, userId));
+            return View("Reservations", await Reservations(page, RentState.Expired, userId));
         }
 
         [Route("picked/{id:int}/{page:int?}")]
@@ -84,7 +77,7 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             }
-            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+            return View("Reservations", await Reservations(page, RentState.Reserved, userId));
         }
 
         [Route("returned/{id:int}/{page:int?}")]
@@ -95,50 +88,50 @@ namespace WebAppMVC.Controllers
             {
                 ModelState.AddModelError("Id", "Invalid operation!");
             }
-            return View("Reservations", Reservations(page, RentState.Active, userId));
+            return View("Reservations", await Reservations(page, RentState.Active, userId));
         }
 
         [HttpGet("reserved/{page:int?}")]
-        public IActionResult Reserved(int userId, int page = 1)
+        public async Task<IActionResult> Reserved(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+            return View("Reservations", await Reservations(page, RentState.Reserved, userId));
         }
 
         [HttpGet("awaiting/{page:int?}")]
-        public IActionResult Awaiting(int userId, int page = 1)
+        public async Task<IActionResult> Awaiting(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Awaiting, userId));
+            return View("Reservations", await Reservations(page, RentState.Awaiting, userId));
         }
 
         [HttpGet("canceled/{page:int?}")]
-        public IActionResult Canceled(int userId, int page = 1)
+        public async Task<IActionResult> Canceled(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Canceled, userId));
+            return View("Reservations", await Reservations(page, RentState.Canceled, userId));
         }
 
         [HttpGet("active/{page:int?}")]
-        public IActionResult Active(int userId, int page = 1)
+        public async Task<IActionResult> Active(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Active, userId));
+            return View("Reservations", await Reservations(page, RentState.Active, userId));
         }
 
         [HttpGet("returned/{page:int?}")]
-        public IActionResult Returned(int userId, int page = 1)
+        public async Task<IActionResult> Returned(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Returned, userId));
+            return View("Reservations", await Reservations(page, RentState.Returned, userId));
         }
 
         [HttpGet("expired/{page:int?}")]
-        public IActionResult Expired(int userId, int page = 1)
+        public async Task<IActionResult> Expired(int userId, int page = 1)
         {
-            return View("Reservations", Reservations(page, RentState.Expired, userId));
+            return View("Reservations", await Reservations(page, RentState.Expired, userId));
         }
 
         [HttpGet("{page:int?}")]
-        public IActionResult Index(int userId, int page = 1)
+        public async Task<IActionResult> Index(int userId, int page = 1)
         {
 
-            return View("Reservations", Reservations(page, RentState.Reserved, userId));
+            return View("Reservations", await Reservations(page, RentState.Reserved, userId));
         }
     }
 }

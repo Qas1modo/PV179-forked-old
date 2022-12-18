@@ -6,7 +6,9 @@ namespace BL.Facades.BookFac
 {
     public interface IBookFacade
     {
-        Task<int> addBook(AuthorDto authorDto, BookBasicInfoDto bookDto, GenreDto genreDto);
+        Task<int> AddBook(AuthorDto authorDto, BookBasicInfoDto bookDto, GenreDto genreDto);
+
+        Task DeleteBook(int bookId);
     }
 }
 

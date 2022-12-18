@@ -1,32 +1,38 @@
 ﻿@model BookDetailIndexModel
 
+
 <div class="card-body">
     <h4 class="card-title">
-        @Model.bookInfo.Name
+        @Model.BookInfo.Name
     </h4>
 
     <h5 class="card-subtitle mb-2 text-muted">
-        @Model.bookInfo.Author.Name
+        @Model.BookInfo.Author.Name
     </h5>
 
     <h5 class="card-subtitle mb-2 text-muted">
-        @Model.bookInfo.Genre.Name
+        @Model.BookInfo.Genre.Name
     </h5>
-
-    <p class="card-text">
-        @Model.bookInfo.Description
+    <span class="card-text text-start font-monospace" style="font-size: 1.3rem">
+        @(Model.BookInfo.Price)/day [@Model.BookInfo.Stock ks]
+    </span>
+    <hr />
+    <p class="card-text row m-1 text-left" style="overflow-wrap: anywhere">
+            lwkjernbfjkhiewsafdbjuhidsaffjkhfdsbjhvkfdszhfjkvzdsbjkhvbdsjkhvbdszjkhvbzjkhdsffgvjeuwksivcjlkhisd\bfgvjkhlsd\bvjlhds\bvjlhisd\bfjulhds\bfjlkhsd\bfjlhs\dbjlhfzs\dbjlhfbs\djhlfvb sajhvbzsjlhbvczsjlhzfvbjhsldbfsjlkhdfbsjhldfbhsjdbfsjhldfbsjlkhdfbsjhzbfsjhbfsjhbfs\jhdbfs\jhdbf\jkhdbdfs\jlkhbf\jkzhsbf\kjhdbf\jkhdfvb\sjkhdfvb\sjhdbfs\jhdbfs\jhdbfjhs\dbfjhs\dbfjh\sdvbfjh\svbfjhd\bjh\
     </p>
-
+    <hr />
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
         Add to cart
     </button>
-
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
+        Add review
+    </button>
     @if (this.User.IsInRole("Admin"))
     {
-        <a href="@Url.Action("DeleteBook", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-danger">Delete Book</a>
+        <a href="@Url.Action("DeleteBook", "BookDetail", new { bookId = Model.BookInfo.Id })" class="btn btn-danger">Delete Book</a>
     }
 </div>
-
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
 <!-- The Modal -->
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -46,7 +52,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Submit</button>
+                    <button type="submit" formaction="@Url.Action("AddToCart", "BookDetail", new { bookId = Model.BookInfo.Id, page = Model.Page})" class="btn btn-primary mb-2">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -54,46 +60,85 @@
     </div>
 </div>
 
-<h4 class="mt-5 card-title">Book reviews</h4>
+
 @{
-    if (Model.reviews.Count() != 0)
+    <h4 class="p-3 card-title">Book reviews</h4>
+    if (Model.Reviews.Count() != 0)
     {
-        foreach (var review in Model.reviews)
+        foreach (var review in Model.Reviews)
         {
-            <div class="card my-3" style="width: 100%;">
-
+    <div class="card my-2 p-1" style="width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title">
-                        @review.Name
-                    </h5>
-
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        Score: @review.Score
-                    </h6>
-
-                    @if (review.Description != null)
-                    {
-                        <p class="card-text">
-                            @review.Description
-                        </p>
+                    <span class="card-title row justify-content-between">
+                        <span class="col col-sm-9 m-0 text-left" style="font-size: 1.2rem">
+                            @review.Name
+                        </span>
+                        <span class="col col-sm-3 m-0 text-end font-monospace" style="font-size: 1.2rem">
+                            Score: @review.Score
+                        </span>
+                    </span>
+                    <span class="card-text row justify-content-between">
+                        @if (review.Description == null)
+                        {
+                            <p class="col col-sm-9 m-0 text-left text-muted">No description</p>  
+                        }
+                        else 
+                        { 
+                            <p class="col col-sm-9 m-0 text-left">@review.Description</p> 
+                        }
+                        <span class="col col-sm-3 m-0 text-end">
+                            Added at: @review.AddedAt.ToShortDateString()
+                        </span>
+                    </span>
+                    @if (review.UserId == Model.UserId || this.User.IsInRole("Admin"))
+                {
+                        <a class="btn btn-danger mt-3"
+                        href="@($"/book/DeleteReview/{Model.BookInfo.Id}/{review.Id}/{Model.Page}")">Delete</a>
                     }
-                </div>
-            </div>
+                </div>  
+    </div>
         }
-        <a class="btn btn-primary @(Model.hasMore == true ? "" : "d-none")" href="@Url.Action("MoreReviews", "BookDetail",
-                                new { bookId = Model.bookInfo.Id,
-                                    showedReviews = Model.reviews.Count() })">Show more reviews</a>
     }
-
+    else if (Model.Page > 1) {
+    <p class="p-3">There are no reviews on this page!</p>
+    }
     else
     {
-        <p>This product does not have any reviews. Be first to review this product!</p>
+    <p class="p-3">This product does not have any reviews. Be first to review this product!</p>
     }
+    <nav>
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Page > 1)
+            {
+                            <li class="page-item">
+                                <a class="page-link"
+                               href="@($"/book/{Model.BookInfo.Id}/{Model.Page - 1}")">
+                                    Previous
+                                </a>
+                            </li>
+            }
+                        @for (int i = Math.Max(1, Model.Page - 3); i <= Math.Min(Model.Page + 3, Model.PageCount); ++i)
+            {
+                if (Model.Page == i)
+                {
+                                <li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
+                    continue;
+                }
+                            <li class="page-item">
+                                <a class="page-link"
+                               href="@($"/book/{Model.BookInfo.Id}/{i}")">@i</a>
+                            </li>
+            }
+                        @if (Model.Page < Model.PageCount)
+            {
+                            <li class="page-item">
+                                <a class="page-link"
+                               href="@($"/book/{Model.BookInfo.Id}/{Model.Page + 1}")">Next</a>
+                            </li>
+            }
+                    </ul>
+    </nav>
 }
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
-    Add review
-</button>
 
 <!-- The Modal1 -->
 <div class="modal" id="myModal1" tabindex="-1" role="dialog">
@@ -160,7 +205,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" formaction="@Url.Action("AddReview", "BookDetail", new { bookId = Model.bookInfo.Id })" class="btn btn-primary mb-2">Submit</button>
+                    <button type="submit" formaction="@Url.Action("AddReview", "BookDetail", new { bookId = Model.BookInfo.Id, page = Model.Page})" class="btn btn-primary mb-2">Submit</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>

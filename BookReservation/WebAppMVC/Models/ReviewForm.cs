@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace WebAppMVC.Models
 {
     public class ReviewForm
     {
-        public string description { get; set; }
+        [StringLength(300, ErrorMessage = "Maximum size of message is 300 characters!")]
+        public string Description { get; set; }
 
-        public int inlineRadioOptions { get; set; }
+        [Range(0, 10, ErrorMessage = "Invalid score!"), Required]
+        public int InlineRadioOptions { get; set; }
     }
 }
 

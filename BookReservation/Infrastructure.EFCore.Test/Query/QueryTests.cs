@@ -42,7 +42,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<string>(a => a == "Robert", "Name");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var expectedResult = dbContext.Authors
                 .Where(a => a.Name == "Robert")
@@ -56,7 +56,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a == 13, "Id");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             Assert.False(result.Items.Any());
         }
@@ -66,7 +66,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<string>(a => a.StartsWith("P"), "Name");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var expectedResult = dbContext.Authors
                .Where(a => a.Name.StartsWith("P"))
@@ -80,7 +80,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a > 5, "Id");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                .Where(a => a.Id > 5)
@@ -94,7 +94,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.OrderBy<string>("Name", true);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .OrderBy(a => a.Name)
@@ -108,7 +108,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.OrderBy<int>("Id", false);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .OrderByDescending(a => a.Id)
@@ -122,7 +122,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(3, 3);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .Skip(6)
@@ -137,7 +137,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(3, 4);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .Skip(8)
@@ -152,7 +152,7 @@ namespace Infrastructure.EFCore.Test.Query
         {
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Page(4, 4);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = new List<Author>();
 
@@ -165,7 +165,7 @@ namespace Infrastructure.EFCore.Test.Query
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a < 9, "Id");
             efquery.Page(2, 4);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id < 9)
@@ -182,7 +182,7 @@ namespace Infrastructure.EFCore.Test.Query
             var efquery = new EFQuery<Author>(dbContext);
             efquery.Where<int>(a => a < 9, "Id");
             efquery.OrderBy<int>("Id", false);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id < 9)
@@ -199,7 +199,7 @@ namespace Infrastructure.EFCore.Test.Query
             efquery.Where<int>(a => a > 3, "Id");
             efquery.OrderBy<string>("Name", true);
             efquery.Page(3, 2);
-            var result = efquery.Execute();
+            var result = efquery.Execute().Result;
 
             var ExpectedResult = dbContext.Authors
                 .Where(a => a.Id > 3)

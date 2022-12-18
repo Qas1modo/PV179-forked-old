@@ -68,6 +68,7 @@ builder.Services.AddScoped<IUoWGenre, EFUoWGenre>();
 builder.Services.AddScoped<IUoWReservation, EFUoWReservation>();
 builder.Services.AddScoped<IUoWReview, EFUoWReview>();
 builder.Services.AddScoped<IUoWUserInfo, EFUoWUserInfo>();
+builder.Services.AddScoped<IUoWUser, EFUoWUser>();
 
 // Services DI Setup
 builder.Services.AddScoped<IStockService, StockService>();
@@ -79,7 +80,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
-
 
 // Facades and QO DI Setup
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();

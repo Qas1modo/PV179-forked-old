@@ -7,6 +7,7 @@ using BL.Services.CartItemServ;
 using WebAppMVC.Models;
 using BL.DTOs.BasicDtos;
 using Microsoft.AspNetCore.Authorization;
+using BL.Facades.BookFac;
 
 namespace WebAppMVC.Controllers
 {
@@ -18,86 +19,120 @@ namespace WebAppMVC.Controllers
 
         private readonly ICartItemService cartItemService;
 
+        private readonly IBookFacade bookFacade;
+
         public BookDetailController(IBookService bookService,
             IReviewService reviewService,
-            ICartItemService cartItemService)
+            ICartItemService cartItemService,
+            IBookFacade bookFacade)
         {
             this.bookService = bookService;
             this.reviewService = reviewService;
             this.cartItemService = cartItemService;
+            this.bookFacade = bookFacade;
         }
 
-        [Route("book/{bookId}")]
-        public async Task<IActionResult> Index(int bookId)
+        private async Task<BookDetailIndexModel> GetModel(int bookId,
+            int page, 
+            int pageSize = 15)
         {
-            var model = new BookDetailIndexModel()
+            var reviews = await reviewService.ShowReviews(bookId, page, pageSize);
+            return new BookDetailIndexModel()
             {
-                bookInfo = await bookService.GetBook(bookId),
-                reviews = await reviewService.ShowReviews(bookId),
-                group = GetGroup(),
-                hasMore = true
+                BookInfo = await bookService.GetBook(bookId),
+                UserId = GetValidUser(null),
+                Reviews = reviews.Items,
+                Page = page,
+                PageCount = (reviews.ItemsCount - 1) / reviews.PageSize + 1
             };
-
-            return View(model);
         }
 
-        [Route("book/{bookId}/{showedReviews}")]
-        public async Task<IActionResult> MoreReviews(int bookId, int showedReviews)
+        [Route("book/{bookId:int}/{page:int?}")]
+        public async Task<IActionResult> Index(int bookId, int page = 1)
         {
-            var newReviews = await reviewService.ShowReviews(bookId, showedReviews + 10);
-
-            var model = new BookDetailIndexModel()
-            {
-                bookInfo = await bookService.GetBook(bookId),
-                reviews = newReviews,
-                hasMore = newReviews.Count() != showedReviews
-            };
-
-            return View("../BookDetail/Index", model);
+            return View(await GetModel(bookId, page));
         }
 
-        [Authorize]
-        [Route("book/AddToCart/{bookId}")]
-        public async Task<IActionResult> AddToCart([FromForm] AddToCartForm form, int bookId)
+        [Authorize, HttpPost]
+        [Route("book/AddToCart/{bookId:int}/{page:int?}")]
+        public async Task<IActionResult> AddToCart([FromForm] AddToCartForm form,
+            int bookId,
+            int page = 1)
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
+                return RedirectToAction(nameof(Index), new { bookId = bookId });
             }
 
-            CartItemDto newItem = new CartItemDto();
-            newItem.BookId = bookId;
-            newItem.UserId = userId;
-            newItem.LoanPeriod = form.days;
+            CartItemDto newItem = new()
+            {
+                BookId = bookId,
+                UserId = userId,
+                LoanPeriod = form.days
+            };
             await cartItemService.AddItem(newItem);
-
             return RedirectToAction(nameof(Index), new { bookId = bookId });
         }
 
-        [Authorize]
-        [Route("book/AddReview/{bookId}")]
-        public async Task<IActionResult> AddReview([FromForm] ReviewForm form, int bookId)
+        [Authorize, HttpPost]
+        [Route("book/AddReview/{bookId:int}/{page:int?}")]
+        public async Task<IActionResult> AddReview([FromForm] ReviewForm form,
+            int bookId,
+            int page = 1)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index", await GetModel(bookId, page));
+            }
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
+                return RedirectToAction(nameof(Index), new { bookId = bookId });
             }
+            ReviewDto newReview = new()
+            {
+                UserId = userId,
+                BookId = bookId,
+                Score = form.InlineRadioOptions,
+                Description = form.Description
+            };
 
-            ReviewDto newReview = new ReviewDto();
-            newReview.UserId = userId;
-            newReview.BookId = bookId;
-            newReview.Score = form.inlineRadioOptions;
-            newReview.Description = form.description;
-            await reviewService.AddReview(newReview);
-
-            return RedirectToAction(nameof(Index), new { bookId = bookId }); ;
+            if (!await reviewService.AddReview(newReview))
+            {
+                ModelState.AddModelError("BookId", "You have already wrote the review for this book!");
+            }
+            return View("Index", await GetModel(bookId, page));
         }
 
+        [Authorize]
+        [Route("book/DeleteReview/{bookId:int}/{reviewId:int}/{page:int?}")]
+        public async Task<IActionResult> DeleteReview(int bookId,
+        int reviewId,
+        int page = 1)
+        {
+            string group = GetGroup();
+            int userId;
+            if (group == "Admin")
+            {
+                userId = -1;
+            } 
+            else
+            {
+                userId = GetValidUser(null);
+            }
+            if (!await reviewService.DeleteReview(reviewId, userId))
+            {
+                ModelState.AddModelError("ReservationId", "You do not have sufficient permissions");
+            }
+            return View("Index", await GetModel(bookId, page));
+        }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBook(int bookId)
         {
-            await bookService.DeleteBook(bookId);
-
-            return Redirect("/mainpage");
+            await bookFacade.DeleteBook(bookId);
+            return Redirect("/");
         }
 
         public IActionResult LayoutReservationIndex()
