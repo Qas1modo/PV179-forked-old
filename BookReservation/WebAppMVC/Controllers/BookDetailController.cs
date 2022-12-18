@@ -135,6 +135,7 @@ namespace WebAppMVC.Controllers
             return View("Index", await GetModel(bookId, page));
         }
 
+        [Authorize]
         [HttpGet("book/AddToWishlist/{bookId:int}/{page:int?}")]
         public async Task<IActionResult> AddToWishlist(int bookId, int page = 1)
         {
