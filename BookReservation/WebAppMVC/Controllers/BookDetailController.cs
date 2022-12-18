@@ -42,10 +42,14 @@ namespace WebAppMVC.Controllers
             int pageSize = 15)
         {
             var reviews = await reviewService.ShowReviews(bookId, page, pageSize);
+            if (!int.TryParse(User.Identity?.Name, out int signedUser))
+            {
+                signedUser = -1;
+            }
             return new BookDetailIndexModel()
             {
                 BookInfo = await bookService.GetBook(bookId),
-                UserId = GetValidUser(null),
+                UserId = signedUser,
                 Reviews = reviews.Items,
                 Page = page,
                 PageCount = (reviews.ItemsCount - 1) / reviews.PageSize + 1
