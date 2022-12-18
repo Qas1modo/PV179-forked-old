@@ -8,7 +8,7 @@ namespace BL.Facades.BookFac
     {
         Task AddBook(BookDto bookDto);
 
-        Task<bool> UpdateBook(int bookId, BookChangeDto updatedBook);
+        Task<bool> UpdateBook(int bookId, BookDto updatedBook);
 
         Task DeleteBook(int bookId);
     }

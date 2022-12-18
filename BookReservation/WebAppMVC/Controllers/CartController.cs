@@ -33,7 +33,7 @@ namespace WebAppMVC.Controllers
             }
             var model = new CartIndexModel()
             {
-                cartItems = await cartItemService.GetCartItems(userId),
+                CartItems = await cartItemService.GetCartItems(userId),
             };
             return View(model);
         }
@@ -73,7 +73,7 @@ namespace WebAppMVC.Controllers
             }
             var model = new CartIndexModel()
             {
-                cartItems = await cartItemService.GetCartItems(userId),
+                CartItems = await cartItemService.GetCartItems(userId),
             };
             return View("Index", model);
         }

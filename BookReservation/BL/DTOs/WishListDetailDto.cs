@@ -1,5 +1,4 @@
-﻿using BL.DTOs.BasicDtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs
 {
-    public class CartItemDetailDto
+    public class WishListDetailDto
     {
         public int Id { get; set; }
 
@@ -20,7 +19,5 @@ namespace BL.DTOs
         public string Name { get; set; }
 
         public decimal Price { get; set; }
-
-        public int LoanPeriod { get; set; }
     }
 }

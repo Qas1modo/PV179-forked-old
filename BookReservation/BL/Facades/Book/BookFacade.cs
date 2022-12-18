@@ -12,6 +12,7 @@ using BL.Services.AuthorServ;
 using BL.Services.GenreServ;
 using BL.Services.ReservationServ;
 using BL.Services.CartItemServ;
+using BL.Services.WishListItemService;
 
 namespace BL.Facades.BookFac
 {
@@ -27,6 +28,8 @@ namespace BL.Facades.BookFac
 
         private readonly IReservationService reservationService;
 
+        private readonly IWishListItemService wishListItemService;
+
         private readonly ICartItemService cartService;
 
         private readonly IUoWBook uow;
@@ -36,6 +39,7 @@ namespace BL.Facades.BookFac
             IGenreService genreService,
             IReservationService reservationService,
             ICartItemService cartService,
+            IWishListItemService wishListItemService,
             IUoWBook uow,
             IMapper mapper)
         {
@@ -46,6 +50,7 @@ namespace BL.Facades.BookFac
             this.cartService = cartService;
             this.uow = uow;
             this.mapper = mapper;
+            this.wishListItemService = wishListItemService;
 
         }
 
@@ -57,7 +62,7 @@ namespace BL.Facades.BookFac
         }
 
 
-        public async Task<bool> UpdateBook(int bookId, BookChangeDto updatedBook)
+        public async Task<bool> UpdateBook(int bookId, BookDto updatedBook)
         {
             Book book = await uow.BookRepository.GetByID(bookId);
             var newStock = book.Stock - (updatedBook.Total - book.Total);
@@ -65,14 +70,14 @@ namespace BL.Facades.BookFac
             {
                 return false;
             }
-            book.Stock = newStock;
-            if (book.Genre.Name != updatedBook.NewGenreName)
+            updatedBook.Stock = newStock;
+            if (book.Genre.Name != updatedBook.Genre.Name)
             {
-                book.Genre = await genreService.GetOrAddGenre(updatedBook.NewGenreName);
+                updatedBook.Genre = await genreService.GetOrAddGenre(updatedBook.Genre.Name);
             }
-            if (book.Author.Name != updatedBook.NewAuthorName)
+            if (book.Author.Name != updatedBook.Author.Name)
             {
-                book.Author = await authorService.GetOrAddAuthor(updatedBook.NewAuthorName);
+                updatedBook.Author = await authorService.GetOrAddAuthor(updatedBook.Author.Name);
             }
             book = mapper.Map(updatedBook, book);
             uow.BookRepository.Update(book);
@@ -90,6 +95,10 @@ namespace BL.Facades.BookFac
             foreach (var cartItem in book.CartItems)
             {
                 await cartService.RemoveItem(cartItem.Id, commit: false);
+            }
+            foreach (var wishlistItem in book.Wishlist)
+            {
+                await wishListItemService.DeleteWishlistItem(wishlistItem.Id);
             }
             book.Deleted = true;
             uow.BookRepository.Update(book);

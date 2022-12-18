@@ -8,6 +8,7 @@ using WebAppMVC.Models;
 using BL.DTOs.BasicDtos;
 using Microsoft.AspNetCore.Authorization;
 using BL.Facades.BookFac;
+using BL.Services.WishListItemService;
 
 namespace WebAppMVC.Controllers
 {
@@ -19,17 +20,21 @@ namespace WebAppMVC.Controllers
 
         private readonly ICartItemService cartItemService;
 
+        private readonly IWishListItemService wishlistService;
+
         private readonly IBookFacade bookFacade;
 
         public BookDetailController(IBookService bookService,
             IReviewService reviewService,
             ICartItemService cartItemService,
-            IBookFacade bookFacade)
+            IBookFacade bookFacade,
+            IWishListItemService wishlistService)
         {
             this.bookService = bookService;
             this.reviewService = reviewService;
             this.cartItemService = cartItemService;
             this.bookFacade = bookFacade;
+            this.wishlistService = wishlistService;
         }
 
         private async Task<BookDetailIndexModel> GetModel(int bookId,
@@ -61,8 +66,7 @@ namespace WebAppMVC.Controllers
         {
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
-                ModelState.AddModelError("UserId", "Identity error!");
-                return RedirectToAction(nameof(Index), new { bookId = bookId });
+                return RedirectToAction(nameof(Index), new { bookId });
             }
 
             CartItemDto newItem = new()
@@ -72,11 +76,10 @@ namespace WebAppMVC.Controllers
                 LoanPeriod = form.days
             };
             await cartItemService.AddItem(newItem);
-            return RedirectToAction(nameof(Index), new { bookId = bookId });
+            return RedirectToAction(nameof(Index), new { bookId, page });
         }
 
-        [Authorize, HttpPost]
-        [Route("book/AddReview/{bookId:int}/{page:int?}")]
+        [Authorize, HttpPost("book/AddReview/{bookId:int}/{page:int?}")]
         public async Task<IActionResult> AddReview([FromForm] ReviewForm form,
             int bookId,
             int page = 1)
@@ -88,7 +91,7 @@ namespace WebAppMVC.Controllers
             if (!int.TryParse(User.Identity?.Name, out int userId))
             {
                 ModelState.AddModelError("UserId", "Identity error!");
-                return RedirectToAction(nameof(Index), new { bookId = bookId });
+                return RedirectToAction(nameof(Index), new { bookId });
             }
             ReviewDto newReview = new()
             {
@@ -128,11 +131,19 @@ namespace WebAppMVC.Controllers
             return View("Index", await GetModel(bookId, page));
         }
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteBook(int bookId)
+        [HttpGet("book/AddToWishlist/{bookId:int}/{page:int?}")]
+        public async Task<IActionResult> AddToWishlist(int bookId, int page = 1)
         {
-            await bookFacade.DeleteBook(bookId);
-            return Redirect("/");
+            int userId = GetValidUser(null);
+            if (await wishlistService.AddToWishlist(new WishListItemDto { BookId = bookId, UserId = userId }))
+            {
+                ModelState.AddModelError("UserId", "Book added to wishlist");
+            }
+            else
+            {
+                ModelState.AddModelError("UserId", "Book already on wishlist!");
+            }
+            return View("Index", await GetModel(bookId, page));
         }
 
         public IActionResult LayoutReservationIndex()

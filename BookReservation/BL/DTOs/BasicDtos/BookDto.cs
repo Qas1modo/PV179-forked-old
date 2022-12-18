@@ -17,10 +17,6 @@ namespace BL.DTOs.BasicDtos
 
         public Genre Genre { get; set; }
 
-        [StringLength(64)]
-        public string NewGenreName { get; set; }
-
-
         [Range(0, int.MaxValue)]
         public int Stock { get; set; }
 

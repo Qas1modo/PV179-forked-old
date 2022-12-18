@@ -1,0 +1,80 @@
+﻿@model WishListModel
+
+<h3 class="display-5 text-center">Your wishlist</h3>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+@{
+    <hr />
+    if (Model.Items.Count() == 0)
+    {
+        if (Model.PageNumber > 1) 
+        {
+            <div class="row">
+                <span class="display-6">No books in wish list on this page.</span>
+            </div>
+        }
+        else 
+        {
+            <div class="row">
+                <span class="display-6">No books in wish list.</span>
+            </div>
+        }
+    }
+    foreach (var item in Model.Items)
+    {
+        <hr />
+        <div class="row m-1">
+            <div class="col-sm">
+                <div class="row">
+                    <a class="text-decoration-none" href="/book/@item.BookId" style="font-size: 1.5rem">@item.Name</a>
+                </div>
+                <div class="row">
+                    <h6 class="text-muted m-0">@item.AuthorName</h6>
+                </div>
+                <div class="row font-monospace">
+                    <span>@item.GenreName</span>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="row text-end">
+                    <span class="m-0" style="font-size: 1.5rem">@(item.Price)/day</span>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <a href="@Url.Action("DeleteItem", "WishList", new { itemId = item.Id })" class="btn col col-sm-2 btn-danger m-2">Delete</a>
+            </div>
+        </div>
+    }
+    <hr />
+    <nav>
+        <ul class="pagination justify-content-center">
+            @if (Model.PageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                   href="@($"/wishlist/{Model.PageNumber - 1}")">
+                        Previous
+                    </a>
+                </li>
+            }
+            @for (int i = Math.Max(1, Model.PageNumber - 3); i <= Math.Min(Model.PageNumber + 3, Model.PageCount); ++i)
+            {
+                if (Model.PageNumber == i)
+                {
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#" disabled>@i</a></li>
+                    continue;
+                }
+                <li class="page-item">
+                    <a class="page-link"
+                   href="@($"/wishlist/{i}")">@i</a>
+                </li>
+            }
+            @if (Model.PageNumber < Model.PageCount)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                   href="@($"/wishlist/{Model.PageNumber + 1}")">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

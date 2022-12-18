@@ -1,29 +1,32 @@
 ﻿@model AdminPageBooksModel
 
 <h1>Books</h1>
-<ol class="list-group list-group-numbered">
-
-	@{
-		if (Model.Books == null || Model.Books.Count() == 0)
+<hr />
+@{
+	if (Model.Books == null || Model.Books.Count() == 0)
+	{
+		<h4>No Books</h4>
+	}
+	else
+	{
+		foreach (var book in Model.Books)
 		{
-			<li class="list-style-type: none;"><h4>No Books</h4></li>
-		}
-		else
-		{
-			foreach (var book in Model.Books)
-			{
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-						<div class="fw-bold">@book.Name</div>
-						@book.Author.Name
-					</div>
-					<span class="badge bg-primary rounded-pill">@book.Stock</span>
-					<a href="@Url.Action("ChangeBookInfo", "AdminPage", new { id = book.Id })" class="stretched-link"></a>
-				</li>
-			}
+			<div class="row m-2">
+				<a class="col col-sm-8 text-decoration-none" 
+				href="@Url.Action("ChangeBookInfo", "AdminPage", new { id = book.Id })">
+					<span class="row" style="font-size: 1.3rem">@book.Name</span>
+					<span class="row text-muted">@book.Author.Name</span>
+				</a>
+				<span class="col col-sm-2 font-monospace" style="font-size: 1.3rem">@book.Stock ks</span>
+				<div class="col col-sm-2">
+					<a href="@Url.Action("DeleteBook", "AdminPage", new { bookId = book.Id })"
+						class="btn btn-danger">Delete Book</a>
+				</div>
+			</div>
+			<hr/>
 		}
 	}
-</ol>
+}
 
 <nav>
 	<ul class="pagination justify-content-center">

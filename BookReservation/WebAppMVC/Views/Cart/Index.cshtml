@@ -4,19 +4,19 @@
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 @{
     decimal totalPrice = 0;
-    foreach (var item in Model.cartItems)
+    foreach (var item in Model.CartItems)
     {
         <hr />
         <div class="row m-1">
             <div class="col-sm">
                 <div class="row">
-                    <a class="text-decoration-none" href="/book/@item.Id" style="font-size: 1.5rem">@item.Name</a>
+                    <a class="text-decoration-none" href="/book/@item.BookId" style="font-size: 1.5rem">@item.Name</a>
                 </div>
                 <div class="row">
-                     <h6 class="text-muted m-0">@item.Author</h6>
+                     <h6 class="text-muted m-0">@item.AuthorName</h6>
                 </div>
                 <div class="row font-monospace">
-                    <span>@(item.Genre)</span>
+                    <span>@(item.GenreName)</span>
                 </div>
             </div>
             <div class="col-sm">
@@ -25,7 +25,7 @@
                         decimal price = item.Price * item.LoanPeriod;
                         totalPrice += price;
                     }
-                    <span class="h5 m-0" style="font-size: 1.5rem">@price</span>
+                    <span class="m-0" style="font-size: 1.5rem">@price</span>
                 </div>
                 <div class="row text-end">
                     <span class="text-muted">@(item.Price)/day</span>
@@ -40,7 +40,7 @@
         </div>
     }
     <hr />
-    if (Model.cartItems.Count() == 0)
+    if (Model.CartItems.Count() == 0)
     {
     <h5 class="display-6">Your cart is empty!</h5>
     }

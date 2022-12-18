@@ -27,10 +27,8 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
         Add review
     </button>
-    @if (this.User.IsInRole("Admin"))
-    {
-        <a href="@Url.Action("DeleteBook", "BookDetail", new { bookId = Model.BookInfo.Id })" class="btn btn-danger">Delete Book</a>
-    }
+    <a href="@Url.ActionLink("AddToWishlist", "BookDetail", new { bookId = Model.BookInfo.Id, page = Model.Page })" class="btn btn-primary">Add to wishlist</a>
+ 
 </div>
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 <!-- The Modal -->

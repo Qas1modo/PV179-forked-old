@@ -1,5 +1,4 @@
 using AutoMapper;
-using BL.Config;
 using BL.Services.CartItemServ;
 using BL.Services.ReservationServ;
 using BL.Services.StockServ;
@@ -17,13 +16,15 @@ using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
 using BL.Services.AuthServ;
 using BL.QueryObjects;
 using BL.Services.UserServ;
 using BL.Services.GenreServ;
 using BL.Services.AuthorServ;
-using Microsoft.Extensions.Configuration;
+using WebAppMVC.Config;
+using BL.Facades.UserFac;
+using BL.Services.WishListItemService;
+using BL.Services.WishListItemServ;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -46,6 +47,8 @@ builder.Services.AddTransient<IQuery<Genre>, EFQuery<Genre>>();
 builder.Services.AddTransient<IQuery<Reservation>, EFQuery<Reservation>>();
 builder.Services.AddTransient<IQuery<Review>, EFQuery<Review>>();
 builder.Services.AddTransient<IQuery<User>, EFQuery<User>>();
+builder.Services.AddTransient<IQuery<WishListItem>, EFQuery<WishListItem>>();
+
 
 // Context DI Setup
 builder.Services.AddScoped<BookReservationDbContext, BookReservationDbContext>();
@@ -58,6 +61,7 @@ builder.Services.AddScoped<IRepository<CartItem>, EFGenericRepository<CartItem>>
 builder.Services.AddScoped<IRepository<Reservation>, EFGenericRepository<Reservation>>();
 builder.Services.AddScoped<IRepository<Review>, EFGenericRepository<Review>>();
 builder.Services.AddScoped<IRepository<User>, EFGenericRepository<User>>();
+builder.Services.AddScoped<IRepository<WishListItem>, EFGenericRepository<WishListItem>>();
 
 // UnitOfWork DI Setup
 builder.Services.AddScoped<IUoWBook, EFUoWBook>();
@@ -69,6 +73,7 @@ builder.Services.AddScoped<IUoWReservation, EFUoWReservation>();
 builder.Services.AddScoped<IUoWReview, EFUoWReview>();
 builder.Services.AddScoped<IUoWUserInfo, EFUoWUserInfo>();
 builder.Services.AddScoped<IUoWUser, EFUoWUser>();
+builder.Services.AddScoped<IUoWWishList, EFUoWWishList>();
 
 // Services DI Setup
 builder.Services.AddScoped<IStockService, StockService>();
@@ -80,11 +85,13 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IWishListItemService, WishListItemService>();
 
 // Facades and QO DI Setup
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 builder.Services.AddScoped<UserQueryObject, UserQueryObject>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
+builder.Services.AddScoped<IUserFacade, UserFacade>();
 
 
 // Add services to the container.

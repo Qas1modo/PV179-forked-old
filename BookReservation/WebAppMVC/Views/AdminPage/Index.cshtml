@@ -1,6 +1,7 @@
 ﻿<h1>Admin page</h1>
-
-<div class="card w-75">
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<hr />
+<div class="card w-50 m-3">
     <div class="card-body">
         <h5 class="card-title">Users</h5>
         <p class="card-text">Delete, edit user info</p>
@@ -8,7 +9,7 @@
     </div>
 </div>
 
-<div class="card w-50">
+<div class="card w-50 m-3">
     <div class="card-body">
         <h5 class="card-title">Books</h5>
         <p class="card-text">Add or change book properties</p>
@@ -17,4 +18,10 @@
     </div>
 </div>
 
+<div class="card w-50 m-3">
+    <div class="card-body">
+        <h5 class="card-title">Expire old reservations</h5>
+        <p class="card-text">Expire reservation older than 7 days (should be run automaticily by midnight)</p>
+        <a class="btn btn-primary" asp-controller="AdminPage" asp-action="ExpireOldReservations">Expire reservations</a>
+    </div>
 </div>

@@ -37,5 +37,7 @@ namespace DAL.Models
         public virtual List<Review> Reviews { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }
+
+        public virtual List<WishListItem> Wishlist { get; set; }
     }
 }
